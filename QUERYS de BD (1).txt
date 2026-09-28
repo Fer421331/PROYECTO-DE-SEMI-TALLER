@@ -1,0 +1,555 @@
+1
+USE lacteos_axume;
+
+USE lacteos_axume;
+
+-- ============================================
+-- 1. TABLA: roles
+-- ============================================
+
+CREATE TABLE IF NOT EXISTS roles (
+    rolescod VARCHAR(128) NOT NULL,
+    rolesdsc VARCHAR(255) NOT NULL,
+    rolesest CHAR(3) NOT NULL,
+    
+    PRIMARY KEY (rolescod)
+) ENGINE=InnoDB;
+
+
+-- ============================================
+-- 2. TABLA: funciones
+-- ============================================
+
+CREATE TABLE IF NOT EXISTS funciones (
+    fncod VARCHAR(255) NOT NULL,
+    fndsc VARCHAR(255) NOT NULL,
+    fnest CHAR(3) NOT NULL,
+    fntyp CHAR(3) NOT NULL,
+    
+    PRIMARY KEY (fncod)
+) ENGINE=InnoDB;
+
+
+-- ============================================
+-- 3. TABLA: usuario
+-- ============================================
+
+CREATE TABLE IF NOT EXISTS usuario (
+    usercod BIGINT NOT NULL AUTO_INCREMENT,
+    useremail VARCHAR(80) NOT NULL,
+    username VARCHAR(80) NOT NULL,
+    userpswd VARCHAR(128) NOT NULL,
+    userfching DATETIME NOT NULL,
+    userpswdest CHAR(3) NOT NULL,
+    userpswdexp DATETIME NULL,
+    userest CHAR(3) NOT NULL,
+    useractcod VARCHAR(128) NULL,
+    userpswdchg VARCHAR(128) NULL,
+    usertipo CHAR(3) NOT NULL,
+    
+    PRIMARY KEY (usercod),
+    UNIQUE KEY uq_usuario_email (useremail)
+) ENGINE=InnoDB;
+
+
+-- ============================================
+-- 4. TABLA: roles_usuarios
+-- ============================================
+
+CREATE TABLE IF NOT EXISTS roles_usuarios (
+    usercod BIGINT NOT NULL,
+    rolescod VARCHAR(128) NOT NULL,
+    roleuserest CHAR(3) NOT NULL,
+    roleuserfch DATETIME NOT NULL,
+    roleuserexp DATETIME NULL,
+    
+    PRIMARY KEY (usercod, rolescod),
+    
+    CONSTRAINT fk_roles_usuarios_usuario
+        FOREIGN KEY (usercod)
+        REFERENCES usuario (usercod),
+        
+    CONSTRAINT fk_roles_usuarios_roles
+        FOREIGN KEY (rolescod)
+        REFERENCES roles (rolescod)
+) ENGINE=InnoDB;
+
+
+-- ============================================
+-- 5. TABLA: funciones_roles
+-- ============================================
+
+CREATE TABLE IF NOT EXISTS funciones_roles (
+    rolescod VARCHAR(128) NOT NULL,
+    fncod VARCHAR(255) NOT NULL,
+    fnrolest CHAR(3) NOT NULL,
+    fnexp DATETIME NULL,
+    
+    PRIMARY KEY (rolescod, fncod),
+    
+    CONSTRAINT fk_funciones_roles_roles
+        FOREIGN KEY (rolescod)
+        REFERENCES roles (rolescod),
+        
+    CONSTRAINT fk_funciones_roles_funciones
+        FOREIGN KEY (fncod)
+        REFERENCES funciones (fncod)
+) ENGINE=InnoDB;
+
+
+-- ============================================
+-- 6. TABLA: bitacora
+-- ============================================
+
+CREATE TABLE IF NOT EXISTS bitacora (
+    bitacoracod INT NOT NULL AUTO_INCREMENT,
+    bitcorafch DATETIME NOT NULL,
+    bitprograma VARCHAR(255) NOT NULL,
+    bitdescripcion VARCHAR(255) NOT NULL,
+    bitobservacion VARCHAR(255) NULL,
+    bittipo CHAR(3) NOT NULL,
+    bitusuario BIGINT NOT NULL,
+    
+    PRIMARY KEY (bitacoracod),
+    
+    CONSTRAINT fk_bitacora_usuario
+        FOREIGN KEY (bitusuario)
+        REFERENCES usuario (usercod)
+) ENGINE=InnoDB;
+
+
+-- ============================================
+-- 7. TABLA: tokens_recuperacion
+-- ============================================
+
+CREATE TABLE IF NOT EXISTS tokens_recuperacion (
+    token_id INT NOT NULL AUTO_INCREMENT,
+    usercod BIGINT NOT NULL,
+    token_hash VARCHAR(255) NOT NULL,
+    token_expiration DATETIME NOT NULL,
+    token_usado TINYINT(1) NOT NULL DEFAULT 0,
+    token_fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    
+    PRIMARY KEY (token_id),
+    
+    CONSTRAINT fk_tokens_recuperacion_usuario
+        FOREIGN KEY (usercod)
+        REFERENCES usuario (usercod)
+) ENGINE=InnoDB;
+
+
+
+
+
+2
+USE lacteos_axume;
+
+-- =========================================================
+-- 8. CATEGORIAS
+-- =========================================================
+
+CREATE TABLE IF NOT EXISTS categorias (
+    categoria_id INT NOT NULL AUTO_INCREMENT,
+    categoria_nombre VARCHAR(100) NOT NULL,
+    categoria_descripcion TEXT,
+    categoria_estado CHAR(3) NOT NULL,
+    categoria_fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    categoria_fecha_actualizacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (categoria_id)
+) ENGINE=InnoDB;
+
+
+-- =========================================================
+-- 9. MARCAS
+-- =========================================================
+
+CREATE TABLE IF NOT EXISTS marcas (
+    marca_id INT NOT NULL AUTO_INCREMENT,
+    marca_nombre VARCHAR(100) NOT NULL,
+    marca_descripcion TEXT,
+    marca_estado CHAR(3) NOT NULL,
+    marca_fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    marca_fecha_actualizacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (marca_id)
+) ENGINE=InnoDB;
+
+
+-- =========================================================
+-- 10. PRODUCTOS
+-- =========================================================
+
+CREATE TABLE IF NOT EXISTS productos (
+    producto_id INT NOT NULL AUTO_INCREMENT,
+    categoria_id INT NOT NULL,
+    marca_id INT NOT NULL,
+    producto_sku VARCHAR(40) NOT NULL,
+    producto_nombre VARCHAR(150) NOT NULL,
+    producto_slug VARCHAR(180) NOT NULL,
+    producto_descripcion TEXT,
+    producto_costo DECIMAL(10,2) NOT NULL,
+    producto_precio DECIMAL(10,2) NOT NULL,
+    producto_stock INT NOT NULL,
+    producto_activo CHAR(3) NOT NULL,
+    producto_estado CHAR(3) NOT NULL,
+    producto_fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    producto_fecha_actualizacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (producto_id),
+
+    CONSTRAINT fk_productos_categorias
+        FOREIGN KEY (categoria_id)
+        REFERENCES categorias (categoria_id),
+
+    CONSTRAINT fk_productos_marcas
+        FOREIGN KEY (marca_id)
+        REFERENCES marcas (marca_id)
+) ENGINE=InnoDB;
+
+
+-- =========================================================
+-- 11. PRODUCTO_IMAGENES
+-- =========================================================
+
+CREATE TABLE IF NOT EXISTS producto_imagenes (
+    imagen_id INT NOT NULL AUTO_INCREMENT,
+    producto_id INT NOT NULL,
+    imagen_ruta VARCHAR(255) NOT NULL,
+    imagen_principal TINYINT(1) NOT NULL,
+    imagen_orden SMALLINT NOT NULL,
+    imagen_estado CHAR(3) NOT NULL,
+
+    PRIMARY KEY (imagen_id),
+
+    CONSTRAINT fk_producto_imagenes_productos
+        FOREIGN KEY (producto_id)
+        REFERENCES productos (producto_id)
+) ENGINE=InnoDB;
+
+
+-- =========================================================
+-- 12. INVENTARIO_MOVIMIENTOS
+-- =========================================================
+
+CREATE TABLE IF NOT EXISTS inventario_movimientos (
+    movimiento_id INT NOT NULL AUTO_INCREMENT,
+    producto_id INT NOT NULL,
+    usercod BIGINT NOT NULL,
+    movimiento_tipo ENUM('ENTRADA','SALIDA','AJUSTE') NOT NULL,
+    movimiento_cantidad INT NOT NULL,
+    movimiento_stock_anterior INT NOT NULL,
+    movimiento_stock_nuevo INT NOT NULL,
+    movimiento_observacion VARCHAR(255),
+    movimiento_fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (movimiento_id),
+
+    CONSTRAINT fk_inventario_movimientos_productos
+        FOREIGN KEY (producto_id)
+        REFERENCES productos (producto_id),
+
+    CONSTRAINT fk_inventario_movimientos_usuario
+        FOREIGN KEY (usercod)
+        REFERENCES usuario (usercod)
+) ENGINE=InnoDB;
+
+
+
+
+
+3.
+
+USE lacteos_axume;
+
+-- =========================================================
+-- 13. METODOS_PAGO
+-- =========================================================
+
+CREATE TABLE IF NOT EXISTS metodos_pago (
+    metodo_pago_id INT NOT NULL AUTO_INCREMENT,
+    metodo_nombre VARCHAR(200) NOT NULL,
+    metodo_descripcion VARCHAR(255),
+    metodo_estado CHAR(3) NOT NULL,
+    metodo_fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (metodo_pago_id)
+) ENGINE=InnoDB;
+
+
+-- =========================================================
+-- 14. CARRITO
+-- =========================================================
+
+CREATE TABLE IF NOT EXISTS carrito (
+    carrito_id INT NOT NULL AUTO_INCREMENT,
+    usercod BIGINT NOT NULL,
+    carrito_estado CHAR(3) NOT NULL,
+    carrito_fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    carrito_fecha_actualizacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (carrito_id),
+
+    CONSTRAINT fk_carrito_usuario
+        FOREIGN KEY (usercod)
+        REFERENCES usuario (usercod)
+) ENGINE=InnoDB;
+
+
+-- =========================================================
+-- 15. RESERVAS_STOCK
+-- =========================================================
+
+CREATE TABLE IF NOT EXISTS reservas_stock (
+    reserva_id INT NOT NULL AUTO_INCREMENT,
+    producto_id INT NOT NULL,
+    usercod BIGINT NOT NULL,
+    cantidad_reservada INT NOT NULL,
+    reserva_estado CHAR(3) NOT NULL,
+    reserva_fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    reserva_fecha_expiracion DATETIME NULL,
+    reserva_fecha_confirmacion DATETIME NULL,
+    reserva_fecha_liberacion DATETIME NULL,
+
+    PRIMARY KEY (reserva_id),
+
+    CONSTRAINT fk_reservas_stock_producto
+        FOREIGN KEY (producto_id)
+        REFERENCES productos (producto_id),
+
+    CONSTRAINT fk_reservas_stock_usuario
+        FOREIGN KEY (usercod)
+        REFERENCES usuario (usercod)
+) ENGINE=InnoDB;
+
+
+-- =========================================================
+-- 16. VENTAS
+-- =========================================================
+
+CREATE TABLE IF NOT EXISTS ventas (
+    venta_id INT NOT NULL AUTO_INCREMENT,
+    usercod BIGINT NOT NULL,
+    direccion_id INT NOT NULL,
+    metodo_pago_id INT NOT NULL,
+    venta_fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    venta_subtotal DECIMAL(10,2) NOT NULL,
+    venta_impuesto DECIMAL(10,2) NOT NULL,
+    venta_descuento DECIMAL(10,2) NOT NULL,
+    venta_total DECIMAL(10,2) NOT NULL,
+    venta_estado CHAR(3) NOT NULL,
+    venta_observaciones TEXT,
+
+    PRIMARY KEY (venta_id),
+
+    CONSTRAINT fk_ventas_usuario
+        FOREIGN KEY (usercod)
+        REFERENCES usuario (usercod),
+
+    CONSTRAINT fk_ventas_metodo_pago
+        FOREIGN KEY (metodo_pago_id)
+        REFERENCES metodos_pago (metodo_pago_id)
+) ENGINE=InnoDB;
+
+
+-- =========================================================
+-- 17. PAGOS
+-- =========================================================
+
+CREATE TABLE IF NOT EXISTS pagos (
+    pago_id INT NOT NULL AUTO_INCREMENT,
+    venta_id INT NOT NULL,
+    metodo_pago_id INT NOT NULL,
+    pago_monto DECIMAL(10,2) NOT NULL,
+    pago_referencia VARCHAR(150),
+    pago_estado CHAR(3) NOT NULL,
+    pago_fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (pago_id),
+
+    CONSTRAINT fk_pagos_venta
+        FOREIGN KEY (venta_id)
+        REFERENCES ventas (venta_id),
+
+    CONSTRAINT fk_pagos_metodo_pago
+        FOREIGN KEY (metodo_pago_id)
+        REFERENCES metodos_pago (metodo_pago_id)
+) ENGINE=InnoDB;
+
+
+-- =========================================================
+-- 18. VENTA_DETALLE
+-- =========================================================
+
+CREATE TABLE IF NOT EXISTS venta_detalle (
+    detalle_venta_id INT NOT NULL AUTO_INCREMENT,
+    venta_id INT NOT NULL,
+    producto_id INT NOT NULL,
+    producto_nombre VARCHAR(150) NOT NULL,
+    precio_unitario DECIMAL(10,2) NOT NULL,
+    cantidad INT NOT NULL,
+    descuento DECIMAL(10,2) NOT NULL,
+    subtotal DECIMAL(10,2) NOT NULL,
+
+    PRIMARY KEY (detalle_venta_id),
+
+    CONSTRAINT fk_venta_detalle_venta
+        FOREIGN KEY (venta_id)
+        REFERENCES ventas (venta_id),
+
+    CONSTRAINT fk_venta_detalle_producto
+        FOREIGN KEY (producto_id)
+        REFERENCES productos (producto_id)
+) ENGINE=InnoDB;
+
+
+-- =========================================================
+-- 19. CARRITO_DETALLE
+-- =========================================================
+
+CREATE TABLE IF NOT EXISTS carrito_detalle (
+    detalle_id INT NOT NULL AUTO_INCREMENT,
+    carrito_id INT NOT NULL,
+    producto_id INT NOT NULL,
+    cantidad INT NOT NULL,
+    precio_unitario DECIMAL(10,2) NOT NULL,
+    subtotal DECIMAL(10,2) NOT NULL,
+
+    PRIMARY KEY (detalle_id),
+
+    CONSTRAINT fk_carrito_detalle_carrito
+        FOREIGN KEY (carrito_id)
+        REFERENCES carrito (carrito_id),
+
+    CONSTRAINT fk_carrito_detalle_producto
+        FOREIGN KEY (producto_id)
+        REFERENCES productos (producto_id)
+) ENGINE=InnoDB;
+
+4.
+USE lacteos_axume;
+
+-- =========================================================
+-- 20. RUTAS_ENTREGA
+-- =========================================================
+
+CREATE TABLE IF NOT EXISTS rutas_entrega (
+    id_ruta INT NOT NULL AUTO_INCREMENT,
+    origen VARCHAR(100) NOT NULL,
+    destino VARCHAR(100) NOT NULL,
+    distancia_km DECIMAL(6,2) NOT NULL,
+    duracion_min INT NOT NULL,
+    estado CHAR(3) NOT NULL,
+
+    PRIMARY KEY (id_ruta)
+) ENGINE=InnoDB;
+
+
+-- =========================================================
+-- 21. DIRECCIONES_USUARIO
+-- =========================================================
+
+CREATE TABLE IF NOT EXISTS direcciones_usuario (
+    direccion_id INT NOT NULL AUTO_INCREMENT,
+    usercod BIGINT NOT NULL,
+    direccion_alias VARCHAR(50) NOT NULL,
+    direccion_receptor VARCHAR(150) NOT NULL,
+    direccion_telefono VARCHAR(20) NOT NULL,
+    direccion_departamento VARCHAR(100) NOT NULL,
+    direccion_ciudad VARCHAR(100) NOT NULL,
+    id_ruta INT NOT NULL,
+    direccion_detalle TEXT NOT NULL,
+    direccion_referencia TEXT,
+    direccion_predeterminada TINYINT(1) NOT NULL,
+    direccion_estado CHAR(3) NOT NULL,
+    direccion_fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    direccion_fecha_actualizacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (direccion_id),
+
+    CONSTRAINT fk_direcciones_usuario_usuario
+        FOREIGN KEY (usercod)
+        REFERENCES usuario (usercod),
+
+    CONSTRAINT fk_direcciones_usuario_ruta
+        FOREIGN KEY (id_ruta)
+        REFERENCES rutas_entrega (id_ruta)
+) ENGINE=InnoDB;
+
+
+-- =========================================================
+-- 22. FAVORITOS
+-- =========================================================
+
+CREATE TABLE IF NOT EXISTS favoritos (
+    favorito_id INT NOT NULL AUTO_INCREMENT,
+    usercod BIGINT NOT NULL,
+    producto_id INT NOT NULL,
+    favorito_fecha DATETIME NOT NULL,
+
+    PRIMARY KEY (favorito_id),
+
+    CONSTRAINT fk_favoritos_usuario
+        FOREIGN KEY (usercod)
+        REFERENCES usuario (usercod),
+
+    CONSTRAINT fk_favoritos_producto
+        FOREIGN KEY (producto_id)
+        REFERENCES productos (producto_id)
+) ENGINE=InnoDB;
+
+
+-- =========================================================
+-- RELACION VENTAS -> DIRECCIONES_USUARIO
+-- =========================================================
+
+ALTER TABLE ventas
+    ADD CONSTRAINT fk_ventas_direccion
+    FOREIGN KEY (direccion_id)
+    REFERENCES direcciones_usuario (direccion_id);
+
+5.USE lacteos_axume;
+
+SELECT
+    TABLE_NAME AS tabla,
+    COLUMN_NAME AS columna,
+    REFERENCED_TABLE_NAME AS tabla_referenciada,
+    REFERENCED_COLUMN_NAME AS columna_referenciada
+FROM information_schema.KEY_COLUMN_USAGE
+WHERE TABLE_SCHEMA = 'lacteos_axume'
+  AND REFERENCED_TABLE_NAME IS NOT NULL
+ORDER BY TABLE_NAME, COLUMN_NAME;
+
+
+6.USE lacteos_axume;
+
+INSERT INTO usuario (
+    useremail,
+    username,
+    userpswd,
+    userfching,
+    userpswdest,
+    userpswdexp,
+    userest,
+    useractcod,
+    userpswdchg,
+    usertipo
+)
+VALUES (
+    'admin@lacteosaxume.com',
+    'Administrador',
+    '$2b$10$rLjfHUk/815ehoR6PkfLuudLP5p6urHYysqfnsOpVgBMLSnbaJi5m',
+    NOW(),
+    'ACT',
+    NULL,
+    'ACT',
+    NULL,
+    NULL,
+    'ADM'
+);
+
+7. SELECT
+    usercod,
+    useremail,
+    username,
+    userest,
+    usertipo
+FROM usuario;
