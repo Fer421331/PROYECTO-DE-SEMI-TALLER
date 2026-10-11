@@ -22,9 +22,15 @@
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
+<<<<<<< HEAD
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.19.2",
+=======
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^24.19.1",
+>>>>>>> da64b9b3a7a567b0fb76947c5478d82a39f74db6
     "nodemon": "^3.1.14",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
