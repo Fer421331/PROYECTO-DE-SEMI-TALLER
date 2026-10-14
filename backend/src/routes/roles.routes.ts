@@ -15,10 +15,10 @@ router.use(verificarToken);
 router.get("/all", getAllRoles);
 router.get("/one", getRoleById);
 
-router.post("/", createRole);
+router.post("/create", createRole);
 
-router.put("/", updateRole);
+router.put("/update", updateRole);
 
-router.delete("/", deleteRole);
+router.delete("/delete", deleteRole);
 
 export default router;
