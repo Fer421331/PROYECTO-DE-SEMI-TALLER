@@ -14,8 +14,8 @@ router.use(verificarToken);
 
 router.get('/all', obtenerProductoImagenes);
 router.get('/one', obtenerProductoImagenePorId);
-router.post('/', crearProductoImagene);
-router.put('/', actualizarProductoImagene);
-router.delete('/', eliminarProductoImagene);
+router.post('/create', crearProductoImagene);
+router.put('/update', actualizarProductoImagene);
+router.delete('/delete', eliminarProductoImagene);
 
 export default router;
