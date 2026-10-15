@@ -1,9 +1,18 @@
 import { Router } from 'express';
-import { obtenerFavoritos, obtenerFavoritoPorId, crearFavorito, actualizarFavorito, eliminarFavorito } from '../controladores/controladorFavoritos';
+import {
+  obtenerFavoritos,
+  obtenerFavoritoPorId,
+  crearFavorito,
+  actualizarFavorito,
+  eliminarFavorito
+} from '../controllers/favoritos/controladorFavoritos.js';
+
 const router = Router();
-router.get('/', obtenerFavoritos);
-router.get('/:id', obtenerFavoritoPorId);
-router.post('/', crearFavorito);
-router.put('/:id', actualizarFavorito);
-router.delete('/:id', eliminarFavorito);
+
+router.get('/all', obtenerFavoritos);
+router.get('/one', obtenerFavoritoPorId);
+router.post('/create', crearFavorito);
+router.put('/update', actualizarFavorito);
+router.delete('/delete', eliminarFavorito);
+
 export default router;

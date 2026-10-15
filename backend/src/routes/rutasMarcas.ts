@@ -14,8 +14,8 @@ router.use(verificarToken);
 
 router.get('/all', obtenerMarcas);
 router.get('/one', obtenerMarcaPorId);
-router.post('/', crearMarca);
-router.put('/', actualizarMarca);
-router.delete('/', eliminarMarca);
+router.post('/create', crearMarca);
+router.put('/update', actualizarMarca);
+router.delete('/delete', eliminarMarca);
 
 export default router;

@@ -14,8 +14,8 @@ router.use(verificarToken);
 
 router.get('/all', obtenerCategorias);
 router.get('/one', obtenerCategoriaPorId);
-router.post('/', crearCategoria);
-router.put('/', actualizarCategoria);
-router.delete('/', eliminarCategoria);
+router.post('/create', crearCategoria);
+router.put('/update', actualizarCategoria);
+router.delete('/delete', eliminarCategoria);
 
 export default router;
