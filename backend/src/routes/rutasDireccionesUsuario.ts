@@ -14,8 +14,8 @@ router.use(verificarToken);
 
 router.get('/all', obtenerDireccionesUsuario);
 router.get('/one', obtenerDireccionesUsuarioPorId);
-router.post('/', crearDireccionesUsuario);
-router.put('/', actualizarDireccionesUsuario);
-router.delete('/', eliminarDireccionesUsuario);
+router.post('/create', crearDireccionesUsuario);
+router.put('/update', actualizarDireccionesUsuario);
+router.delete('/delete', eliminarDireccionesUsuario);
 
 export default router;
