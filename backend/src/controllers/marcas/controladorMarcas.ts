@@ -47,12 +47,6 @@ export const crearMarca = async (req: Request, res: Response): Promise<Response>
   const { marca_nombre, marca_descripcion, marca_estado } = req.body;
 
   try {
-    if (!marca_nombre || !marca_estado) {
-      return res.status(400).json(
-        errorResponse("El nombre y el estado de la marca son obligatorios")
-      );
-    }
-
     const nuevaMarca = await Marca.create({
       marca_nombre,
       marca_descripcion,
@@ -87,6 +81,7 @@ export const actualizarMarca = async (req: Request, res: Response): Promise<Resp
     marca.marca_nombre = marca_nombre ?? marca.marca_nombre;
     marca.marca_descripcion = marca_descripcion ?? marca.marca_descripcion;
     marca.marca_estado = marca_estado ?? marca.marca_estado;
+    marca.marca_fecha_actualizacion = new Date();
 
     await marca.save();
 

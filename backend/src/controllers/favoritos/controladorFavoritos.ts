@@ -47,22 +47,29 @@ export const crearFavorito = async (req: Request, res: Response): Promise<Respon
   const { usercod, producto_id, favorito_fecha } = req.body;
 
   try {
-    if (!usercod || !producto_id) {
-      return res.status(400).json(
-        errorResponse("El código de usuario (usercod) y el producto (producto_id) son obligatorios")
+    const existente = await Favorito.findOne({ where: { usercod, producto_id } });
+
+    if (existente) {
+      return res.status(409).json(
+        errorResponse("El producto ya está en los favoritos del usuario")
       );
     }
 
     const nuevoFavorito = await Favorito.create({
       usercod,
       producto_id,
-      favorito_fecha,
+      favorito_fecha: favorito_fecha ?? new Date(),
     });
 
     return res.status(201).json(
       successResponse(nuevoFavorito, "Favorito creado correctamente")
     );
   } catch (error) {
+    if (error instanceof Error && error.name === 'SequelizeForeignKeyConstraintError') {
+      return res.status(400).json(
+        errorResponse("El usuario o el producto indicado no existe")
+      );
+    }
     const msg = error instanceof Error ? error.message : "Error al crear el favorito";
     return res.status(500).json(errorResponse(msg));
   }
@@ -92,6 +99,11 @@ export const actualizarFavorito = async (req: Request, res: Response): Promise<R
 
     return res.json(successResponse(favorito, "Favorito actualizado correctamente"));
   } catch (error) {
+    if (error instanceof Error && error.name === 'SequelizeForeignKeyConstraintError') {
+      return res.status(400).json(
+        errorResponse("El usuario o el producto indicado no existe")
+      );
+    }
     const msg = error instanceof Error ? error.message : "Error al actualizar el favorito";
     return res.status(500).json(errorResponse(msg));
   }
