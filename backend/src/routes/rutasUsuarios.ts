@@ -14,8 +14,8 @@ router.use(verificarToken);
 
 router.get('/all', obtenerUsuarios);
 router.get('/one', obtenerUsuarioPorId);
-router.post('/', crearUsuario);
-router.put('/', actualizarUsuario);
-router.delete('/', eliminarUsuario);
+router.post('/create', crearUsuario);
+router.put('/update', actualizarUsuario);
+router.delete('/delete', eliminarUsuario);
 
 export default router;
