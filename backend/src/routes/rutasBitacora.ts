@@ -17,16 +17,15 @@ router.use(verificarToken);
 // Obtener todas las bitácoras
 router.get('/all', obtenerBitacora);
 
-// Obtener una bitácora por ID
+// Obtener una bitácora por código
 router.get(
   '/one',
   [
     query('bitacoracod')
       .notEmpty()
       .withMessage('El código de la bitácora es obligatorio')
-      .bail()
       .isInt({ min: 1 })
-      .withMessage('El código de la bitácora debe ser un número entero positivo'),
+      .withMessage('El código debe ser un número entero positivo'),
   ],
   obtenerBitacoraPorId
 );
@@ -37,47 +36,60 @@ router.post(
   [
     body('bitcorafch')
       .notEmpty()
-      .withMessage('La fecha de la bitácora es obligatoria')
-      .bail()
+      .withMessage('La fecha es obligatoria')
       .isISO8601()
-      .withMessage('La fecha de la bitácora debe ser válida'),
+      .withMessage('La fecha debe tener un formato válido'),
 
     body('bitprograma')
-      .trim()
       .notEmpty()
       .withMessage('El programa es obligatorio')
-      .bail()
-      .isLength({ max: 255 })
-      .withMessage('El programa no puede superar los 255 caracteres'),
+      .isString()
+      .withMessage('El programa debe ser texto')
+      .trim(),
 
     body('bitdescripcion')
-      .trim()
       .notEmpty()
       .withMessage('La descripción es obligatoria')
-      .bail()
-      .isLength({ max: 255 })
-      .withMessage('La descripción no puede superar los 255 caracteres'),
+      .isString()
+      .withMessage('La descripción debe ser texto')
+      .trim(),
 
     body('bitobservacion')
-      .optional({ values: 'null' })
-      .trim()
-      .isLength({ max: 255 })
-      .withMessage('La observación no puede superar los 255 caracteres'),
+      .optional({ nullable: true, checkFalsy: true })
+      .isString()
+      .withMessage('La observación debe ser texto')
+      .trim(),
 
     body('bittipo')
-      .trim()
       .notEmpty()
       .withMessage('El tipo de bitácora es obligatorio')
-      .bail()
-      .isLength({ min: 3, max: 3 })
-      .withMessage('El tipo de bitácora debe tener exactamente 3 caracteres'),
+      .isString()
+      .withMessage('El tipo debe ser texto')
+      .trim(),
 
     body('bitusuario')
       .notEmpty()
       .withMessage('El usuario es obligatorio')
-      .bail()
       .isInt({ min: 1 })
       .withMessage('El usuario debe ser un número entero positivo'),
+      
+    body('bitobservacion')
+      .optional({ values: 'null' })
+      .isString()
+      .withMessage('La observación debe ser texto')
+      .bail()
+      .isLength({ max: 255 })
+      .withMessage('La observación no puede superar los 255 caracteres'),
+
+    body('bittipo')
+      .notEmpty()
+      .withMessage('El tipo de bitácora es obligatorio')
+      .bail()
+      .isString()
+      .withMessage('El tipo de bitácora debe ser texto')
+      .bail()
+      .isLength({ min: 3, max: 3 })
+      .withMessage('El tipo de bitácora debe tener exactamente 3 caracteres'),
   ],
   crearBitacora
 );
@@ -89,56 +101,45 @@ router.put(
     query('bitacoracod')
       .notEmpty()
       .withMessage('El código de la bitácora es obligatorio')
-      .bail()
       .isInt({ min: 1 })
-      .withMessage('El código de la bitácora debe ser un número entero positivo'),
+      .withMessage('El código debe ser un número entero positivo'),
 
     body('bitcorafch')
-      .optional()
       .notEmpty()
-      .withMessage('La fecha no puede estar vacía')
-      .bail()
+      .withMessage('La fecha es obligatoria')
       .isISO8601()
-      .withMessage('La fecha de la bitácora debe ser válida'),
+      .withMessage('La fecha debe tener un formato válido'),
 
     body('bitprograma')
-      .optional()
-      .trim()
       .notEmpty()
-      .withMessage('El programa no puede estar vacío')
-      .bail()
-      .isLength({ max: 255 })
-      .withMessage('El programa no puede superar los 255 caracteres'),
+      .withMessage('El programa es obligatorio')
+      .isString()
+      .withMessage('El programa debe ser texto')
+      .trim(),
 
     body('bitdescripcion')
-      .optional()
-      .trim()
       .notEmpty()
-      .withMessage('La descripción no puede estar vacía')
-      .bail()
-      .isLength({ max: 255 })
-      .withMessage('La descripción no puede superar los 255 caracteres'),
+      .withMessage('La descripción es obligatoria')
+      .isString()
+      .withMessage('La descripción debe ser texto')
+      .trim(),
 
     body('bitobservacion')
-      .optional({ values: 'null' })
-      .trim()
-      .isLength({ max: 255 })
-      .withMessage('La observación no puede superar los 255 caracteres'),
+      .optional({ nullable: true, checkFalsy: true })
+      .isString()
+      .withMessage('La observación debe ser texto')
+      .trim(),
 
     body('bittipo')
-      .optional()
-      .trim()
       .notEmpty()
-      .withMessage('El tipo de bitácora no puede estar vacío')
-      .bail()
-      .isLength({ min: 3, max: 3 })
-      .withMessage('El tipo de bitácora debe tener exactamente 3 caracteres'),
+      .withMessage('El tipo de bitácora es obligatorio')
+      .isString()
+      .withMessage('El tipo debe ser texto')
+      .trim(),
 
     body('bitusuario')
-      .optional()
       .notEmpty()
-      .withMessage('El usuario no puede estar vacío')
-      .bail()
+      .withMessage('El usuario es obligatorio')
       .isInt({ min: 1 })
       .withMessage('El usuario debe ser un número entero positivo'),
   ],
@@ -152,9 +153,8 @@ router.delete(
     query('bitacoracod')
       .notEmpty()
       .withMessage('El código de la bitácora es obligatorio')
-      .bail()
       .isInt({ min: 1 })
-      .withMessage('El código de la bitácora debe ser un número entero positivo'),
+      .withMessage('El código debe ser un número entero positivo'),
   ],
   eliminarBitacora
 );
