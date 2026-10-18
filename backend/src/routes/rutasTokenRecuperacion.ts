@@ -14,8 +14,8 @@ router.use(verificarToken);
 
 router.get('/all', obtenerTokenRecuperacion);
 router.get('/one', obtenerTokenRecuperacionPorId);
-router.post('/', crearTokenRecuperacion);
-router.put('/', actualizarTokenRecuperacion);
-router.delete('/', eliminarTokenRecuperacion);
+router.post('/create', crearTokenRecuperacion);
+router.put('/update', actualizarTokenRecuperacion);
+router.delete('/delete', eliminarTokenRecuperacion);
 
 export default router;
