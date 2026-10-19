@@ -22,10 +22,10 @@ export const obtenerFuncionesPorId = async (req: Request, res: Response): Promis
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { id } = req.query;
+  const { fncod } = req.query;
 
   try {
-    const funcion = await Funcion.findByPk(id as string);
+    const funcion = await Funcion.findByPk(fncod as string);
 
     if (!funcion) {
       return res.status(404).json(errorResponse("Función no encontrada"));
@@ -75,11 +75,11 @@ export const actualizarFunciones = async (req: Request, res: Response): Promise<
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { id } = req.query;
+  const { fncod } = req.query;
   const { fndsc, fnest, fntyp } = req.body;
 
   try {
-    const funcion = await Funcion.findByPk(id as string);
+    const funcion = await Funcion.findByPk(fncod as string);
 
     if (!funcion) {
       return res.status(404).json(errorResponse("Función no encontrada"));
@@ -106,10 +106,10 @@ export const eliminarFunciones = async (req: Request, res: Response): Promise<Re
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { id } = req.query;
+  const { fncod } = req.query;
 
   try {
-    const funcion = await Funcion.findByPk(id as string);
+    const funcion = await Funcion.findByPk(fncod as string);
 
     if (!funcion) {
       return res.status(404).json(errorResponse("Función no encontrada"));

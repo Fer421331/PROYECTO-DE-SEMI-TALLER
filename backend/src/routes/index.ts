@@ -2,7 +2,8 @@
 
 import { Router } from 'express';
 
-import rolesRoutes from './roles.routes.js';
+//import rolesRoutes from './roles.routes.js';
+import rolesRoutes from './rutasRoles.js';
 import bitacoraRoutes from './rutasBitacora.js';
 import carritoRoutes from './rutasCarrito.js';
 import carritoDetalleRoutes from './rutasCarritoDetalle.js';
@@ -23,6 +24,7 @@ import tokenRecuperacionRoutes from './rutasTokenRecuperacion.js';
 import usuariosRoutes from './rutasUsuarios.js';
 import ventaDetalleRoutes from './rutasVentaDetalle.js';
 import ventasRoutes from './rutasVentas.js';
+import rolesUsuariosRoutes from './rutasRolesUsuarios.js';
 
 import { login } from '../controllers/auth/auth.controller.js';
 
@@ -51,5 +53,6 @@ router.use('/token-recuperacion', tokenRecuperacionRoutes);
 router.use('/usuarios', usuariosRoutes);
 router.use('/venta-detalle', ventaDetalleRoutes);
 router.use('/ventas', ventasRoutes);
+router.use('/roles-usuarios', rolesUsuariosRoutes);
 
 export default router;
