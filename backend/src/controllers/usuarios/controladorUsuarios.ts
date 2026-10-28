@@ -1,4 +1,4 @@
-import bcrypt from 'bcryptjs';
+import argon2 from "argon2";
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import Usuario from '../../models/Usuario.model.js';
@@ -95,7 +95,7 @@ export const crearUsuario = async (req: Request, res: Response): Promise<Respons
       );
     }
 
-    const userpswd = await bcrypt.hash(password, 10);
+    const userpswd = await argon2.hash(password, {type: argon2.argon2id,});
 
     const nuevoUsuario = await Usuario.create({
       useremail: useremail.trim(),

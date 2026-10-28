@@ -1,39 +1,54 @@
+
 import { Request, Response } from "express";
-import bcrypt from "bcrypt";
+import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import { errorResponse } from "../../utils/sendResponses.js";
 import Usuario from "../../models/Usuario.model.js";
 
 export const login = async (req: Request, res: Response) => {
   try {
-    const ENV = process.env;
     const { user, password } = req.body;
 
     if (!user || !password) {
-      return res.status(400).json(errorResponse("Usuario y contraseña son requeridos"));
+      return res
+        .status(400)
+        .json(errorResponse("Usuario y contraseña son requeridos"));
     }
 
-    const usuarioEncontrado = await Usuario.findOne
-    ({ where: 
-      { username: user } }); 
+    const usuarioEncontrado = await Usuario.findOne({
+      where: { username: user },
+    });
+
     if (!usuarioEncontrado) {
-      return res.status(401).json(errorResponse("Credenciales incorrectas"));
+      return res
+        .status(401)
+        .json(errorResponse("Credenciales incorrectas"));
     }
 
-    const isMatch = await bcrypt.compare(password, usuarioEncontrado.userpswd);
+    // Verificar la contraseña con Argon2
+    const isMatch = await argon2.verify(
+      usuarioEncontrado.userpswd,
+      password
+    );
+
     if (!isMatch) {
-      return res.status(401).json(errorResponse("Credenciales incorrectas"));
+      return res
+        .status(401)
+        .json(errorResponse("Credenciales incorrectas"));
     }
 
+    const secretKey = process.env.JWT_SECRET;
 
-const secretKey = ENV.JWT_SECRET;
+    if (!secretKey) {
+      throw new Error("JWT_SECRET no está configurado");
+    }
 
-const token = jwt.sign(
-  { Id: usuarioEncontrado.usercod },
-  secretKey, 
-  { expiresIn: "8h" }
-);
-
+    // Generar el JWT
+    const token = jwt.sign(
+      { Id: usuarioEncontrado.usercod },
+      secretKey,
+      { expiresIn: "8h" }
+    );
 
     return res.json({
       ok: true,
@@ -41,12 +56,13 @@ const token = jwt.sign(
       user: {
         id: usuarioEncontrado.usercod,
         email: usuarioEncontrado.useremail,
-        nombre: usuarioEncontrado.username
-      }
+        nombre: usuarioEncontrado.username,
+      },
     });
-
   } catch (error) {
-    const msg = error instanceof Error ? error.message : "Error en el login";
+    const msg =
+      error instanceof Error ? error.message : "Error en el login";
+
     return res.status(500).json(errorResponse(msg));
   }
 };
