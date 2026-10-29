@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { body, query } from 'express-validator';
+import { body, query } from 'express-validator';
 import { verificarToken } from '../config/auth.middleware.js';
+
 
 import {
   obtenerProductoImagenes,
@@ -14,6 +16,7 @@ const router: Router = Router();
 
 router.use(verificarToken);
 
+// Obtener todas las imágenes
 // Obtener todas las imágenes
 router.get('/all', obtenerProductoImagenes);
 
@@ -45,17 +48,16 @@ router.post(
     body('imagen_ruta')
       .trim()
       .notEmpty()
-      .withMessage('La ruta de la imagen es obligatoria')
+      .withMessage('La URL de la imagen es obligatoria')
       .bail()
       .isLength({ max: 255 })
-      .withMessage('La ruta no puede superar los 255 caracteres')
+      .withMessage('La URL no puede superar los 255 caracteres')
       .bail()
-      .not()
-      .matches(/\.\.|\\/)
-      .withMessage('La ruta de la imagen no es válida')
-      .bail()
-      .matches(/\.(jpe?g|png|webp|gif|avif)$/i)
-      .withMessage('La imagen debe ser jpg, jpeg, png, webp, gif o avif'),
+      .isURL({
+        protocols: ['http', 'https'],
+        require_protocol: true,
+      })
+      .withMessage('Debes proporcionar una URL válida de la imagen'),
 
     body('imagen_principal')
       .exists({ values: 'null' })
@@ -92,7 +94,9 @@ router.post(
       );
 
       if (desconocidos.length > 0) {
-        throw new Error(`Campos no permitidos: ${desconocidos.join(', ')}`);
+        throw new Error(
+          `Campos no permitidos: ${desconocidos.join(', ')}`
+        );
       }
 
       return true;
@@ -121,17 +125,16 @@ router.put(
       .optional()
       .trim()
       .notEmpty()
-      .withMessage('La ruta de la imagen no puede estar vacía')
+      .withMessage('La URL de la imagen no puede estar vacía')
       .bail()
       .isLength({ max: 255 })
-      .withMessage('La ruta no puede superar los 255 caracteres')
+      .withMessage('La URL no puede superar los 255 caracteres')
       .bail()
-      .not()
-      .matches(/\.\.|\\/)
-      .withMessage('La ruta de la imagen no es válida')
-      .bail()
-      .matches(/\.(jpe?g|png|webp|gif|avif)$/i)
-      .withMessage('La imagen debe ser jpg, jpeg, png, webp, gif o avif'),
+      .isURL({
+        protocols: ['http', 'https'],
+        require_protocol: true,
+      })
+      .withMessage('Debes proporcionar una URL válida de la imagen'),
 
     body('imagen_principal')
       .optional()
@@ -160,7 +163,9 @@ router.put(
       const enviado = Object.keys(req.body ?? {});
 
       if (enviado.length === 0) {
-        throw new Error('Debes enviar al menos un campo para actualizar');
+        throw new Error(
+          'Debes enviar al menos un campo para actualizar'
+        );
       }
 
       const desconocidos = enviado.filter(
@@ -168,7 +173,9 @@ router.put(
       );
 
       if (desconocidos.length > 0) {
-        throw new Error(`Campos no permitidos: ${desconocidos.join(', ')}`);
+        throw new Error(
+          `Campos no permitidos: ${desconocidos.join(', ')}`
+        );
       }
 
       return true;
