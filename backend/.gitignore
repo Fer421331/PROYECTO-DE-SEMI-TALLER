@@ -1,1 +1,4 @@
 .env
+# Archivos cargados mediante la API
+public/uploads/*
+!public/uploads/.gitkeep

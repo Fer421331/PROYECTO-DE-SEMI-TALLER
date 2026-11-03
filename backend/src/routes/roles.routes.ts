@@ -8,7 +8,7 @@ import {
   createRole,
   updateRole,
   deleteRole
-} from '../controllers/roles/roles.controller.js';
+} from '../controllers/roles/controladorRoles.js';
 
 const router: Router = Router();
 

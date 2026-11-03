@@ -1,0 +1,5541 @@
+{
+  "openapi": "3.0.3",
+  "tags": [
+    {
+      "name": "/Roles"
+    },
+    {
+      "name": "/Roles"
+    },
+    {
+      "name": "/Bitacora"
+    },
+    {
+      "name": "/Carrito"
+    },
+    {
+      "name": "/Carrito Detalle"
+    },
+    {
+      "name": "/Categorias"
+    },
+    {
+      "name": "/Direcciones Usuario"
+    },
+    {
+      "name": "/ Entrega"
+    },
+    {
+      "name": "/Funciones"
+    },
+    {
+      "name": "/Favoritos"
+    },
+    {
+      "name": "/Funciones Roles"
+    },
+    {
+      "name": "/Inventario"
+    },
+    {
+      "name": "/Marcas"
+    },
+    {
+      "name": "/Metodos Pago"
+    },
+    {
+      "name": "/Pagos"
+    },
+    {
+      "name": "/Correos"
+    },
+    {
+      "name": "/Producto Imagenes"
+    },
+    {
+      "name": "/Productos"
+    },
+    {
+      "name": "/Reservas Stock"
+    },
+    {
+      "name": "/Token Recuperacion"
+    },
+    {
+      "name": "/Usuarios"
+    },
+    {
+      "name": "/Venta Detalle"
+    },
+    {
+      "name": "/Ventas"
+    },
+    {
+      "name": "/Roles Usuarios"
+    },
+    {
+      "name": "Autenticación"
+    },
+    {
+      "name": "Correo"
+    },
+    {
+      "name": "Archivos"
+    }
+  ],
+  "paths": {
+    "/api/roles/all": {
+      "get": {
+        "tags": [
+          "/Roles"
+        ],
+        "summary": "GET /api/roles/all",
+        "description": "Operación del módulo /Roles. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/roles/one": {
+      "get": {
+        "tags": [
+          "/Roles"
+        ],
+        "summary": "GET /api/roles/one",
+        "description": "Operación del módulo /Roles. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "rolescod",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/roles/create": {
+      "post": {
+        "tags": [
+          "/Roles"
+        ],
+        "summary": "POST /api/roles/create",
+        "description": "Operación del módulo /Roles. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/roles/update": {
+      "put": {
+        "tags": [
+          "/Roles"
+        ],
+        "summary": "PUT /api/roles/update",
+        "description": "Operación del módulo /Roles. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "rolescod",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/roles/delete": {
+      "delete": {
+        "tags": [
+          "/Roles"
+        ],
+        "summary": "DELETE /api/roles/delete",
+        "description": "Operación del módulo /Roles. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "rolescod",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/bitacora/all": {
+      "get": {
+        "tags": [
+          "/Bitacora"
+        ],
+        "summary": "GET /api/bitacora/all",
+        "description": "Operación del módulo /Bitacora. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/bitacora/one": {
+      "get": {
+        "tags": [
+          "/Bitacora"
+        ],
+        "summary": "GET /api/bitacora/one",
+        "description": "Operación del módulo /Bitacora. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "bitacoracod",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/bitacora/create": {
+      "post": {
+        "tags": [
+          "/Bitacora"
+        ],
+        "summary": "POST /api/bitacora/create",
+        "description": "Operación del módulo /Bitacora. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bitacora/update": {
+      "put": {
+        "tags": [
+          "/Bitacora"
+        ],
+        "summary": "PUT /api/bitacora/update",
+        "description": "Operación del módulo /Bitacora. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "bitacoracod",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bitacora/delete": {
+      "delete": {
+        "tags": [
+          "/Bitacora"
+        ],
+        "summary": "DELETE /api/bitacora/delete",
+        "description": "Operación del módulo /Bitacora. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "bitacoracod",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/carrito/all": {
+      "get": {
+        "tags": [
+          "/Carrito"
+        ],
+        "summary": "GET /api/carrito/all",
+        "description": "Operación del módulo /Carrito. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/carrito/one": {
+      "get": {
+        "tags": [
+          "/Carrito"
+        ],
+        "summary": "GET /api/carrito/one",
+        "description": "Operación del módulo /Carrito. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/carrito": {
+      "post": {
+        "tags": [
+          "/Carrito"
+        ],
+        "summary": "POST /api/carrito",
+        "description": "Operación del módulo /Carrito. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "/Carrito"
+        ],
+        "summary": "PUT /api/carrito",
+        "description": "Operación del módulo /Carrito. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "/Carrito"
+        ],
+        "summary": "DELETE /api/carrito",
+        "description": "Operación del módulo /Carrito. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/carrito-detalle/all": {
+      "get": {
+        "tags": [
+          "/Carrito Detalle"
+        ],
+        "summary": "GET /api/carrito-detalle/all",
+        "description": "Operación del módulo /Carrito Detalle. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/carrito-detalle/one": {
+      "get": {
+        "tags": [
+          "/Carrito Detalle"
+        ],
+        "summary": "GET /api/carrito-detalle/one",
+        "description": "Operación del módulo /Carrito Detalle. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/carrito-detalle": {
+      "post": {
+        "tags": [
+          "/Carrito Detalle"
+        ],
+        "summary": "POST /api/carrito-detalle",
+        "description": "Operación del módulo /Carrito Detalle. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "/Carrito Detalle"
+        ],
+        "summary": "PUT /api/carrito-detalle",
+        "description": "Operación del módulo /Carrito Detalle. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "/Carrito Detalle"
+        ],
+        "summary": "DELETE /api/carrito-detalle",
+        "description": "Operación del módulo /Carrito Detalle. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/categorias/all": {
+      "get": {
+        "tags": [
+          "/Categorias"
+        ],
+        "summary": "GET /api/categorias/all",
+        "description": "Operación del módulo /Categorias. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/categorias/one": {
+      "get": {
+        "tags": [
+          "/Categorias"
+        ],
+        "summary": "GET /api/categorias/one",
+        "description": "Operación del módulo /Categorias. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/categorias/create": {
+      "post": {
+        "tags": [
+          "/Categorias"
+        ],
+        "summary": "POST /api/categorias/create",
+        "description": "Operación del módulo /Categorias. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/categorias/update": {
+      "put": {
+        "tags": [
+          "/Categorias"
+        ],
+        "summary": "PUT /api/categorias/update",
+        "description": "Operación del módulo /Categorias. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/categorias/delete": {
+      "delete": {
+        "tags": [
+          "/Categorias"
+        ],
+        "summary": "DELETE /api/categorias/delete",
+        "description": "Operación del módulo /Categorias. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/direcciones-usuario/all": {
+      "get": {
+        "tags": [
+          "/Direcciones Usuario"
+        ],
+        "summary": "GET /api/direcciones-usuario/all",
+        "description": "Operación del módulo /Direcciones Usuario. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/direcciones-usuario/one": {
+      "get": {
+        "tags": [
+          "/Direcciones Usuario"
+        ],
+        "summary": "GET /api/direcciones-usuario/one",
+        "description": "Operación del módulo /Direcciones Usuario. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/direcciones-usuario/create": {
+      "post": {
+        "tags": [
+          "/Direcciones Usuario"
+        ],
+        "summary": "POST /api/direcciones-usuario/create",
+        "description": "Operación del módulo /Direcciones Usuario. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/direcciones-usuario/update": {
+      "put": {
+        "tags": [
+          "/Direcciones Usuario"
+        ],
+        "summary": "PUT /api/direcciones-usuario/update",
+        "description": "Operación del módulo /Direcciones Usuario. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/direcciones-usuario/delete": {
+      "delete": {
+        "tags": [
+          "/Direcciones Usuario"
+        ],
+        "summary": "DELETE /api/direcciones-usuario/delete",
+        "description": "Operación del módulo /Direcciones Usuario. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/rutas-entrega/all": {
+      "get": {
+        "tags": [
+          "/ Entrega"
+        ],
+        "summary": "GET /api/rutas-entrega/all",
+        "description": "Operación del módulo / Entrega. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/rutas-entrega/one": {
+      "get": {
+        "tags": [
+          "/ Entrega"
+        ],
+        "summary": "GET /api/rutas-entrega/one",
+        "description": "Operación del módulo / Entrega. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id_ruta",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/rutas-entrega": {
+      "post": {
+        "tags": [
+          "/ Entrega"
+        ],
+        "summary": "POST /api/rutas-entrega",
+        "description": "Operación del módulo / Entrega. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "/ Entrega"
+        ],
+        "summary": "PUT /api/rutas-entrega",
+        "description": "Operación del módulo / Entrega. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id_ruta",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "/ Entrega"
+        ],
+        "summary": "DELETE /api/rutas-entrega",
+        "description": "Operación del módulo / Entrega. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id_ruta",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/funciones/all": {
+      "get": {
+        "tags": [
+          "/Funciones"
+        ],
+        "summary": "GET /api/funciones/all",
+        "description": "Operación del módulo /Funciones. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/funciones/one": {
+      "get": {
+        "tags": [
+          "/Funciones"
+        ],
+        "summary": "GET /api/funciones/one",
+        "description": "Operación del módulo /Funciones. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "fncod",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/funciones/create": {
+      "post": {
+        "tags": [
+          "/Funciones"
+        ],
+        "summary": "POST /api/funciones/create",
+        "description": "Operación del módulo /Funciones. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/funciones/update": {
+      "put": {
+        "tags": [
+          "/Funciones"
+        ],
+        "summary": "PUT /api/funciones/update",
+        "description": "Operación del módulo /Funciones. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "fncod",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/funciones/delete": {
+      "delete": {
+        "tags": [
+          "/Funciones"
+        ],
+        "summary": "DELETE /api/funciones/delete",
+        "description": "Operación del módulo /Funciones. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "fncod",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/favoritos/all": {
+      "get": {
+        "tags": [
+          "/Favoritos"
+        ],
+        "summary": "GET /api/favoritos/all",
+        "description": "Operación del módulo /Favoritos. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/favoritos/one": {
+      "get": {
+        "tags": [
+          "/Favoritos"
+        ],
+        "summary": "GET /api/favoritos/one",
+        "description": "Operación del módulo /Favoritos. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/favoritos/create": {
+      "post": {
+        "tags": [
+          "/Favoritos"
+        ],
+        "summary": "POST /api/favoritos/create",
+        "description": "Operación del módulo /Favoritos. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/favoritos/update": {
+      "put": {
+        "tags": [
+          "/Favoritos"
+        ],
+        "summary": "PUT /api/favoritos/update",
+        "description": "Operación del módulo /Favoritos. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/favoritos/delete": {
+      "delete": {
+        "tags": [
+          "/Favoritos"
+        ],
+        "summary": "DELETE /api/favoritos/delete",
+        "description": "Operación del módulo /Favoritos. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/funciones-roles/all": {
+      "get": {
+        "tags": [
+          "/Funciones Roles"
+        ],
+        "summary": "GET /api/funciones-roles/all",
+        "description": "Operación del módulo /Funciones Roles. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/funciones-roles/one": {
+      "get": {
+        "tags": [
+          "/Funciones Roles"
+        ],
+        "summary": "GET /api/funciones-roles/one",
+        "description": "Operación del módulo /Funciones Roles. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "rolescod",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/funciones-roles/create": {
+      "post": {
+        "tags": [
+          "/Funciones Roles"
+        ],
+        "summary": "POST /api/funciones-roles/create",
+        "description": "Operación del módulo /Funciones Roles. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/funciones-roles/update": {
+      "put": {
+        "tags": [
+          "/Funciones Roles"
+        ],
+        "summary": "PUT /api/funciones-roles/update",
+        "description": "Operación del módulo /Funciones Roles. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "rolescod",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/funciones-roles/delete": {
+      "delete": {
+        "tags": [
+          "/Funciones Roles"
+        ],
+        "summary": "DELETE /api/funciones-roles/delete",
+        "description": "Operación del módulo /Funciones Roles. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "rolescod",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/inventario/all": {
+      "get": {
+        "tags": [
+          "/Inventario"
+        ],
+        "summary": "GET /api/inventario/all",
+        "description": "Operación del módulo /Inventario. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/inventario/one": {
+      "get": {
+        "tags": [
+          "/Inventario"
+        ],
+        "summary": "GET /api/inventario/one",
+        "description": "Operación del módulo /Inventario. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/inventario": {
+      "post": {
+        "tags": [
+          "/Inventario"
+        ],
+        "summary": "POST /api/inventario",
+        "description": "Operación del módulo /Inventario. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "/Inventario"
+        ],
+        "summary": "PUT /api/inventario",
+        "description": "Operación del módulo /Inventario. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "/Inventario"
+        ],
+        "summary": "DELETE /api/inventario",
+        "description": "Operación del módulo /Inventario. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/marcas/all": {
+      "get": {
+        "tags": [
+          "/Marcas"
+        ],
+        "summary": "GET /api/marcas/all",
+        "description": "Operación del módulo /Marcas. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/marcas/one": {
+      "get": {
+        "tags": [
+          "/Marcas"
+        ],
+        "summary": "GET /api/marcas/one",
+        "description": "Operación del módulo /Marcas. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/marcas/create": {
+      "post": {
+        "tags": [
+          "/Marcas"
+        ],
+        "summary": "POST /api/marcas/create",
+        "description": "Operación del módulo /Marcas. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/marcas/update": {
+      "put": {
+        "tags": [
+          "/Marcas"
+        ],
+        "summary": "PUT /api/marcas/update",
+        "description": "Operación del módulo /Marcas. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/marcas/delete": {
+      "delete": {
+        "tags": [
+          "/Marcas"
+        ],
+        "summary": "DELETE /api/marcas/delete",
+        "description": "Operación del módulo /Marcas. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/metodos-pago/all": {
+      "get": {
+        "tags": [
+          "/Metodos Pago"
+        ],
+        "summary": "GET /api/metodos-pago/all",
+        "description": "Operación del módulo /Metodos Pago. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/metodos-pago/one": {
+      "get": {
+        "tags": [
+          "/Metodos Pago"
+        ],
+        "summary": "GET /api/metodos-pago/one",
+        "description": "Operación del módulo /Metodos Pago. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/metodos-pago": {
+      "post": {
+        "tags": [
+          "/Metodos Pago"
+        ],
+        "summary": "POST /api/metodos-pago",
+        "description": "Operación del módulo /Metodos Pago. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "/Metodos Pago"
+        ],
+        "summary": "PUT /api/metodos-pago",
+        "description": "Operación del módulo /Metodos Pago. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "/Metodos Pago"
+        ],
+        "summary": "DELETE /api/metodos-pago",
+        "description": "Operación del módulo /Metodos Pago. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/pagos/all": {
+      "get": {
+        "tags": [
+          "/Pagos"
+        ],
+        "summary": "GET /api/pagos/all",
+        "description": "Operación del módulo /Pagos. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/pagos/one": {
+      "get": {
+        "tags": [
+          "/Pagos"
+        ],
+        "summary": "GET /api/pagos/one",
+        "description": "Operación del módulo /Pagos. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/pagos": {
+      "post": {
+        "tags": [
+          "/Pagos"
+        ],
+        "summary": "POST /api/pagos",
+        "description": "Operación del módulo /Pagos. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "/Pagos"
+        ],
+        "summary": "PUT /api/pagos",
+        "description": "Operación del módulo /Pagos. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "/Pagos"
+        ],
+        "summary": "DELETE /api/pagos",
+        "description": "Operación del módulo /Pagos. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/correos/prueba": {
+      "post": {
+        "tags": [
+          "Correo"
+        ],
+        "summary": "Enviar correo de prueba",
+        "description": "Envía un correo de texto usando el SMTP configurado. Requiere JWT.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "destinatario",
+                  "asunto",
+                  "mensaje"
+                ],
+                "properties": {
+                  "destinatario": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "destino@correo.com"
+                  },
+                  "asunto": {
+                    "type": "string",
+                    "example": "Prueba desde Swagger"
+                  },
+                  "mensaje": {
+                    "type": "string",
+                    "example": "Correo de prueba enviado desde Lácteos Axúme."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Correo enviado."
+          },
+          "400": {
+            "description": "Datos inválidos."
+          },
+          "401": {
+            "description": "No autenticado."
+          },
+          "500": {
+            "description": "Error SMTP."
+          }
+        }
+      }
+    },
+    "/api/producto-imagenes/all": {
+      "get": {
+        "tags": [
+          "/Producto Imagenes"
+        ],
+        "summary": "GET /api/producto-imagenes/all",
+        "description": "Operación del módulo /Producto Imagenes. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/producto-imagenes/one": {
+      "get": {
+        "tags": [
+          "/Producto Imagenes"
+        ],
+        "summary": "GET /api/producto-imagenes/one",
+        "description": "Operación del módulo /Producto Imagenes. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/producto-imagenes/create": {
+      "post": {
+        "tags": [
+          "/Producto Imagenes"
+        ],
+        "summary": "POST /api/producto-imagenes/create",
+        "description": "Operación del módulo /Producto Imagenes. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/producto-imagenes/update": {
+      "put": {
+        "tags": [
+          "/Producto Imagenes"
+        ],
+        "summary": "PUT /api/producto-imagenes/update",
+        "description": "Operación del módulo /Producto Imagenes. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/producto-imagenes/delete": {
+      "delete": {
+        "tags": [
+          "/Producto Imagenes"
+        ],
+        "summary": "DELETE /api/producto-imagenes/delete",
+        "description": "Operación del módulo /Producto Imagenes. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/producto-imagenes/upload": {
+      "post": {
+        "tags": [
+          "Archivos"
+        ],
+        "summary": "Subir imagen de producto",
+        "description": "Sube JPG, JPEG, PNG o WEBP de hasta 5 MB. Devuelve la ruta pública del archivo.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "imagen"
+                ],
+                "properties": {
+                  "imagen": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Archivo almacenado."
+          },
+          "400": {
+            "description": "Archivo no válido."
+          },
+          "401": {
+            "description": "No autenticado."
+          }
+        }
+      }
+    },
+    "/api/productos/all": {
+      "get": {
+        "tags": [
+          "/Productos"
+        ],
+        "summary": "GET /api/productos/all",
+        "description": "Operación del módulo /Productos. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/productos/one": {
+      "get": {
+        "tags": [
+          "/Productos"
+        ],
+        "summary": "GET /api/productos/one",
+        "description": "Operación del módulo /Productos. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/productos/create": {
+      "post": {
+        "tags": [
+          "/Productos"
+        ],
+        "summary": "POST /api/productos/create",
+        "description": "Operación del módulo /Productos. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/productos/update": {
+      "put": {
+        "tags": [
+          "/Productos"
+        ],
+        "summary": "PUT /api/productos/update",
+        "description": "Operación del módulo /Productos. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/productos/delete": {
+      "delete": {
+        "tags": [
+          "/Productos"
+        ],
+        "summary": "DELETE /api/productos/delete",
+        "description": "Operación del módulo /Productos. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/reservas-stock/all": {
+      "get": {
+        "tags": [
+          "/Reservas Stock"
+        ],
+        "summary": "GET /api/reservas-stock/all",
+        "description": "Operación del módulo /Reservas Stock. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/reservas-stock/one": {
+      "get": {
+        "tags": [
+          "/Reservas Stock"
+        ],
+        "summary": "GET /api/reservas-stock/one",
+        "description": "Operación del módulo /Reservas Stock. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/reservas-stock": {
+      "post": {
+        "tags": [
+          "/Reservas Stock"
+        ],
+        "summary": "POST /api/reservas-stock",
+        "description": "Operación del módulo /Reservas Stock. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "/Reservas Stock"
+        ],
+        "summary": "PUT /api/reservas-stock",
+        "description": "Operación del módulo /Reservas Stock. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "/Reservas Stock"
+        ],
+        "summary": "DELETE /api/reservas-stock",
+        "description": "Operación del módulo /Reservas Stock. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/token-recuperacion/all": {
+      "get": {
+        "tags": [
+          "/Token Recuperacion"
+        ],
+        "summary": "GET /api/token-recuperacion/all",
+        "description": "Operación del módulo /Token Recuperacion. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/token-recuperacion/one": {
+      "get": {
+        "tags": [
+          "/Token Recuperacion"
+        ],
+        "summary": "GET /api/token-recuperacion/one",
+        "description": "Operación del módulo /Token Recuperacion. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "token_id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/token-recuperacion": {
+      "post": {
+        "tags": [
+          "/Token Recuperacion"
+        ],
+        "summary": "POST /api/token-recuperacion",
+        "description": "Operación del módulo /Token Recuperacion. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "/Token Recuperacion"
+        ],
+        "summary": "PUT /api/token-recuperacion",
+        "description": "Operación del módulo /Token Recuperacion. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "token_id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "/Token Recuperacion"
+        ],
+        "summary": "DELETE /api/token-recuperacion",
+        "description": "Operación del módulo /Token Recuperacion. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "token_id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/usuarios/all": {
+      "get": {
+        "tags": [
+          "/Usuarios"
+        ],
+        "summary": "GET /api/usuarios/all",
+        "description": "Operación del módulo /Usuarios. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/usuarios/one": {
+      "get": {
+        "tags": [
+          "/Usuarios"
+        ],
+        "summary": "GET /api/usuarios/one",
+        "description": "Operación del módulo /Usuarios. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usercod",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/usuarios/create": {
+      "post": {
+        "tags": [
+          "/Usuarios"
+        ],
+        "summary": "POST /api/usuarios/create",
+        "description": "Operación del módulo /Usuarios. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/usuarios/update": {
+      "put": {
+        "tags": [
+          "/Usuarios"
+        ],
+        "summary": "PUT /api/usuarios/update",
+        "description": "Operación del módulo /Usuarios. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usercod",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/usuarios/delete": {
+      "delete": {
+        "tags": [
+          "/Usuarios"
+        ],
+        "summary": "DELETE /api/usuarios/delete",
+        "description": "Operación del módulo /Usuarios. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usercod",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/venta-detalle/all": {
+      "get": {
+        "tags": [
+          "/Venta Detalle"
+        ],
+        "summary": "GET /api/venta-detalle/all",
+        "description": "Operación del módulo /Venta Detalle. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/venta-detalle/one": {
+      "get": {
+        "tags": [
+          "/Venta Detalle"
+        ],
+        "summary": "GET /api/venta-detalle/one",
+        "description": "Operación del módulo /Venta Detalle. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "detalle_venta_id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/venta-detalle": {
+      "post": {
+        "tags": [
+          "/Venta Detalle"
+        ],
+        "summary": "POST /api/venta-detalle",
+        "description": "Operación del módulo /Venta Detalle. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "/Venta Detalle"
+        ],
+        "summary": "PUT /api/venta-detalle",
+        "description": "Operación del módulo /Venta Detalle. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "detalle_venta_id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "/Venta Detalle"
+        ],
+        "summary": "DELETE /api/venta-detalle",
+        "description": "Operación del módulo /Venta Detalle. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "detalle_venta_id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/ventas/all": {
+      "get": {
+        "tags": [
+          "/Ventas"
+        ],
+        "summary": "GET /api/ventas/all",
+        "description": "Operación del módulo /Ventas. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/ventas/one": {
+      "get": {
+        "tags": [
+          "/Ventas"
+        ],
+        "summary": "GET /api/ventas/one",
+        "description": "Operación del módulo /Ventas. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "venta_id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/ventas/create": {
+      "post": {
+        "tags": [
+          "/Ventas"
+        ],
+        "summary": "POST /api/ventas/create",
+        "description": "Operación del módulo /Ventas. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ventas/update": {
+      "put": {
+        "tags": [
+          "/Ventas"
+        ],
+        "summary": "PUT /api/ventas/update",
+        "description": "Operación del módulo /Ventas. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "venta_id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ventas/delete": {
+      "delete": {
+        "tags": [
+          "/Ventas"
+        ],
+        "summary": "DELETE /api/ventas/delete",
+        "description": "Operación del módulo /Ventas. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "venta_id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/roles-usuarios/all": {
+      "get": {
+        "tags": [
+          "/Roles Usuarios"
+        ],
+        "summary": "GET /api/roles-usuarios/all",
+        "description": "Operación del módulo /Roles Usuarios. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/roles-usuarios/one": {
+      "get": {
+        "tags": [
+          "/Roles Usuarios"
+        ],
+        "summary": "GET /api/roles-usuarios/one",
+        "description": "Operación del módulo /Roles Usuarios. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usercod",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/roles-usuarios/create": {
+      "post": {
+        "tags": [
+          "/Roles Usuarios"
+        ],
+        "summary": "POST /api/roles-usuarios/create",
+        "description": "Operación del módulo /Roles Usuarios. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/roles-usuarios/update": {
+      "put": {
+        "tags": [
+          "/Roles Usuarios"
+        ],
+        "summary": "PUT /api/roles-usuarios/update",
+        "description": "Operación del módulo /Roles Usuarios. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usercod",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Enviar los campos definidos por las validaciones del endpoint."
+              },
+              "examples": {
+                "payload": {
+                  "summary": "Ejemplo de objeto JSON",
+                  "value": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/roles-usuarios/delete": {
+      "delete": {
+        "tags": [
+          "/Roles Usuarios"
+        ],
+        "summary": "DELETE /api/roles-usuarios/delete",
+        "description": "Operación del módulo /Roles Usuarios. Los campos y validaciones se aplican según el controlador y las reglas de Express Validator del proyecto.",
+        "responses": {
+          "200": {
+            "description": "Operación realizada correctamente."
+          },
+          "400": {
+            "description": "Solicitud inválida o validación fallida."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "Registro no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usercod",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Identificador requerido por esta operación."
+          }
+        ]
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "Autenticación"
+        ],
+        "summary": "Iniciar sesión",
+        "description": "Valida las credenciales y devuelve un JWT para las operaciones protegidas.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "user",
+                  "password"
+                ],
+                "properties": {
+                  "user": {
+                    "type": "string",
+                    "example": "Administrador"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password",
+                    "example": "********"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Autenticación correcta. Copie el token para usar Authorize."
+          },
+          "400": {
+            "description": "Usuario y contraseña requeridos."
+          },
+          "401": {
+            "description": "Credenciales incorrectas."
+          },
+          "500": {
+            "description": "Error interno."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "GenericObject": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
