@@ -14,108 +14,69 @@ const router: Router = Router();
 
 router.use(verificarToken);
 
+const MAX_INT = 2147483647;
+const MAX_CANTIDAD = 10000;
+
+const validarId = query('id')
+  .notEmpty()
+  .withMessage('El ID es obligatorio')
+  .isInt({ min: 1, max: MAX_INT })
+  .withMessage('El ID debe ser un número entero positivo');
+
+const soloCampos = (permitidos: string[]) =>
+  body().custom((_, { req }) => {
+    const desconocidos = Object.keys(req.body ?? {}).filter((c) => !permitidos.includes(c));
+    if (desconocidos.length > 0) {
+      throw new Error(`Campos no permitidos: ${desconocidos.join(', ')}`);
+    }
+    return true;
+  });
+
+const validarCantidad = body('cantidad')
+  .notEmpty()
+  .withMessage('La cantidad es obligatoria')
+  .bail()
+  .isInt({ min: 1, max: MAX_CANTIDAD })
+  .withMessage(`La cantidad debe ser un entero entre 1 y ${MAX_CANTIDAD}`);
+
 // Obtener todos los detalles
 router.get('/all', obtenerCarritoDetalle);
 
 // Obtener detalle por ID
-router.get(
-  '/one',
-  [
-    query('id')
-      .notEmpty()
-      .withMessage('El ID es obligatorio')
-      .isInt({ min: 1 })
-      .withMessage('El ID debe ser un número entero positivo'),
-  ],
-  obtenerCarritoDetallePorId
-);
+router.get('/one', [validarId], obtenerCarritoDetallePorId);
 
-// Crear detalle
+// Crear detalle (precio y subtotal los calcula el servidor)
 router.post(
   '/',
   [
     body('carrito_id')
       .notEmpty()
       .withMessage('El carrito es obligatorio')
-      .isInt({ min: 1 })
-      .withMessage('El carrito debe ser un número válido'),
+      .bail()
+      .isInt({ min: 1, max: MAX_INT })
+      .withMessage('El carrito debe ser un entero positivo válido'),
 
     body('producto_id')
       .notEmpty()
       .withMessage('El producto es obligatorio')
-      .isInt({ min: 1 })
-      .withMessage('El producto debe ser un número válido'),
+      .bail()
+      .isInt({ min: 1, max: MAX_INT })
+      .withMessage('El producto debe ser un entero positivo válido'),
 
-    body('cantidad')
-      .notEmpty()
-      .withMessage('La cantidad es obligatoria')
-      .isInt({ min: 1 })
-      .withMessage('La cantidad debe ser mayor a cero'),
-
-    body('precio_unitario')
-      .notEmpty()
-      .withMessage('El precio unitario es obligatorio')
-      .isFloat({ min: 0 })
-      .withMessage('El precio unitario debe ser válido'),
-
-    body('subtotal')
-      .notEmpty()
-      .withMessage('El subtotal es obligatorio')
-      .isFloat({ min: 0 })
-      .withMessage('El subtotal debe ser válido'),
+    validarCantidad,
+    soloCampos(['carrito_id', 'producto_id', 'cantidad']),
   ],
   crearCarritoDetalle
 );
 
-// Actualizar detalle
+// Actualizar cantidad
 router.put(
   '/',
-  [
-    query('id')
-      .notEmpty()
-      .withMessage('El ID es obligatorio')
-      .isInt({ min: 1 })
-      .withMessage('El ID debe ser un número entero positivo'),
-
-    body('carrito_id')
-      .optional()
-      .isInt({ min: 1 })
-      .withMessage('El carrito debe ser un número válido'),
-
-    body('producto_id')
-      .optional()
-      .isInt({ min: 1 })
-      .withMessage('El producto debe ser un número válido'),
-
-    body('cantidad')
-      .optional()
-      .isInt({ min: 1 })
-      .withMessage('La cantidad debe ser mayor a cero'),
-
-    body('precio_unitario')
-      .optional()
-      .isFloat({ min: 0 })
-      .withMessage('El precio unitario debe ser válido'),
-
-    body('subtotal')
-      .optional()
-      .isFloat({ min: 0 })
-      .withMessage('El subtotal debe ser válido'),
-  ],
+  [validarId, validarCantidad, soloCampos(['cantidad'])],
   actualizarCarritoDetalle
 );
 
 // Eliminar detalle
-router.delete(
-  '/',
-  [
-    query('id')
-      .notEmpty()
-      .withMessage('El ID es obligatorio')
-      .isInt({ min: 1 })
-      .withMessage('El ID debe ser un número entero positivo'),
-  ],
-  eliminarCarritoDetalle
-);
+router.delete('/', [validarId], eliminarCarritoDetalle);
 
 export default router;

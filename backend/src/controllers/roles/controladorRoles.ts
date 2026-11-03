@@ -21,9 +21,9 @@ export const getRoleById = async (req: Request, res: Response): Promise<Response
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { id } = req.query;
+  const { rolescod } = req.query;
   try {
-    const role = await Role.findByPk(id as string);
+    const role = await Role.findByPk(rolescod as string);
     if (!role) {
       return res.status(404).json(errorResponse("Rol no encontrado"));
     }
@@ -65,10 +65,10 @@ export const updateRole = async (req: Request, res: Response): Promise<Response>
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { id } = req.query;
+  const { rolescod } = req.query;
   const { rolesdsc, rolesest } = req.body;
   try {
-    const role = await Role.findByPk(id as string);
+    const role = await Role.findByPk(rolescod as string);
     if (!role) {
       return res.status(404).json(errorResponse("Rol no encontrado"));
     }
@@ -90,9 +90,9 @@ export const deleteRole = async (req: Request, res: Response): Promise<Response>
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { id } = req.query;
+  const { rolescod } = req.query;
   try {
-    const role = await Role.findByPk(id as string);
+    const role = await Role.findByPk(rolescod as string);
     if (!role) {
       return res.status(404).json(errorResponse("Rol no encontrado"));
     }

@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { body, query } from 'express-validator';
+import { body, query } from 'express-validator';
 import { verificarToken } from '../config/auth.middleware.js';
+
 
 import {
   obtenerProductoImagenes,
@@ -14,6 +16,7 @@ const router: Router = Router();
 
 router.use(verificarToken);
 
+// Obtener todas las imágenes
 // Obtener todas las imágenes
 router.get('/all', obtenerProductoImagenes);
 
