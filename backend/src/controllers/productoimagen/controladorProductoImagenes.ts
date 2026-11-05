@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import ProductoImagen from '../../models/modeloProductoImagen.js';
 import { errorResponse, successResponse } from '../../utils/sendResponses.js';
+import { subirImagenDrive, eliminarImagenDrive, } from '../../services/googleDrive.service.js';
 
 export const obtenerProductoImagenes = async (req: Request, res: Response): Promise<Response> => {
   try {
@@ -143,6 +144,74 @@ export const eliminarProductoImagene = async (req: Request, res: Response): Prom
     );
   } catch (error) {
     const msg = error instanceof Error ? error.message : 'Error al eliminar la imagen de producto';
+    return res.status(500).json(errorResponse(msg));
+  }
+};
+
+export const subirCrearProductoImagen = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  if (!req.file) {
+    return res.status(400).json(
+      errorResponse('Debes seleccionar una imagen')
+    );
+  }
+
+  const {
+    producto_id,
+    imagen_principal,
+    imagen_orden,
+    imagen_estado,
+  } = req.body;
+
+  let imagenUrl: string | undefined;
+
+  try {
+    if (
+      producto_id == null ||
+      imagen_principal == null ||
+      imagen_orden == null ||
+      !imagen_estado
+    ) {
+      return res.status(400).json(
+        errorResponse('Todos los campos son obligatorios')
+      );
+    }
+
+    imagenUrl = await subirImagenDrive(req.file);
+
+    const nuevaImagen = await ProductoImagen.create({
+      producto_id: Number(producto_id),
+      imagen_ruta: imagenUrl,
+      imagen_principal:
+        imagen_principal === true || imagen_principal === 'true',
+      imagen_orden: Number(imagen_orden),
+      imagen_estado,
+    });
+
+    return res.status(201).json(
+      successResponse(
+        nuevaImagen,
+        'Imagen subida a Google Drive y registrada correctamente'
+      )
+    );
+
+  } catch (error) {
+    if (imagenUrl) {
+      await eliminarImagenDrive(imagenUrl).catch(() => undefined);
+    }
+
+    const msg = error instanceof Error
+      ? error.message
+      : 'Error al subir la imagen';
+
     return res.status(500).json(errorResponse(msg));
   }
 };
