@@ -5521,6 +5521,63 @@
         ]
       }
     },
+        "/api/cambio-password/solicitar": {
+      "post": {
+        "tags": ["Autenticación"],
+        "summary": "Solicitar código de cambio de contraseña",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["useremail", "password"],
+                "properties": {
+                  "useremail": { "type": "string", "format": "email" },
+                  "password": { "type": "string", "format": "password", "minLength": 8, "maxLength": 72 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Código enviado (respuesta genérica)." },
+          "400": { "description": "Validación fallida o contraseña igual a la actual." },
+          "401": { "description": "Token no proporcionado." },
+          "429": { "description": "Solicitudes demasiado frecuentes." },
+          "500": { "description": "Error interno o fallo SMTP." }
+        }
+      }
+    },
+      "/api/cambio-password/confirmar": {
+        "post": {
+          "tags": ["Autenticación"],
+          "summary": "Confirmar cambio de contraseña con código",
+          "security": [{ "bearerAuth": [] }],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["useremail", "codigo"],
+                  "properties": {
+                    "useremail": { "type": "string", "format": "email" },
+                    "codigo": { "type": "string", "pattern": "^\\d{6}$" }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": { "description": "Contraseña actualizada." },
+            "400": { "description": "Código inválido, expirado o demasiados intentos." },
+            "401": { "description": "Token no proporcionado." },
+            "500": { "description": "Error interno." }
+          }
+        }
+      },
     "/api/auth/login": {
       "post": {
         "tags": [
