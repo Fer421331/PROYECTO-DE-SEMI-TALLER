@@ -1,4 +1,3 @@
-
 import 'dotenv/config';
 import { QueryTypes } from 'sequelize';
 import { DB_LACTAXUME } from '../config/db.js';

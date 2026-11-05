@@ -1,4 +1,3 @@
-
 import { QueryTypes } from 'sequelize';
 import { DB_LACTAXUME } from '../config/db.js';
 import { enviarFacturaPorCorreo } from './correo.service.js';
@@ -43,7 +42,7 @@ export async function enviarFacturaDeVenta(
     FROM ventas v
     INNER JOIN usuario u ON u.usercod = v.usercod
     WHERE v.venta_id = :ventaId
-      AND v.venta_estado = 'PAG'
+      AND v.venta_estado = 'APR'
     LIMIT 1`,
         {
             replacements: { ventaId },
