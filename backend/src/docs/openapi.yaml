@@ -5169,6 +5169,7 @@
         }
       }
     },
+<<<<<<< HEAD
         "/api/ventas/checkout": {
       "post": {
         "tags": [
@@ -5265,6 +5266,8 @@
         }
       }
     },
+=======
+>>>>>>> e63fe44 (cambios para api productoImagen)
     "/api/ventas/update": {
       "put": {
         "tags": [
@@ -5617,6 +5620,7 @@
         ]
       }
     },
+<<<<<<< HEAD
         "/api/cambio-password/solicitar": {
       "post": {
         "tags": ["Autenticación"],
@@ -5674,6 +5678,8 @@
           }
         }
       },
+=======
+>>>>>>> e63fe44 (cambios para api productoImagen)
     "/api/auth/login": {
       "post": {
         "tags": [
