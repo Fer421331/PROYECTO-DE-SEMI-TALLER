@@ -180,6 +180,11 @@ router.put(
       .isIn(['ACT', 'INA', 'ACT ', 'INA '])
       .withMessage('El campo activo debe ser ACT o INA'),
 
+
+
+
+
+      
     body('producto_estado')
       .optional()
       .isIn(['ACT', 'INA'])
