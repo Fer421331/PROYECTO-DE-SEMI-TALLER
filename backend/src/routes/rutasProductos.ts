@@ -175,9 +175,10 @@ router.put(
       .withMessage('El stock debe ser un entero mayor o igual a cero'),
 
     body('producto_activo')
-      .optional()
-      .isIn(['SÍ', 'NO', 'SÍ ', 'NO '])
-      .withMessage('El campo activo debe ser SÍ o NO'),
+      .notEmpty()
+      .withMessage('El campo activo es obligatorio')
+      .isIn(['ACT', 'INA', 'ACT ', 'INA '])
+      .withMessage('El campo activo debe ser ACT o INA'),
 
     body('producto_estado')
       .optional()
