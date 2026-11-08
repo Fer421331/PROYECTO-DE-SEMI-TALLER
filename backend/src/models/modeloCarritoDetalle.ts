@@ -8,6 +8,7 @@ class CarritoDetalle extends Model {
   declare cantidad: number;
   declare precio_unitario: number;
   declare subtotal: number;
+  declare descuento: number;
 }
 
 CarritoDetalle.init(
@@ -38,13 +39,18 @@ CarritoDetalle.init(
       type: DataTypes.DECIMAL,
       allowNull: false,
     },
+    descuento: {
+      type: DataTypes.DECIMAL,
+      allowNull: false,
+      defaultValue: 0,
+    },
   },
   {
     sequelize: DB_LACTAXUME,
     tableName: "carrito_detalle",
     modelName: "CarritoDetalle",
     timestamps: false,
-  }
+  },
 );
 
 export default CarritoDetalle;
