@@ -1,22 +1,33 @@
-import { Request, Response } from 'express';
-import { validationResult } from 'express-validator';
-import Venta from '../../models/modeloVenta.js';
-import { errorResponse, successResponse } from '../../utils/sendResponses.js';
+import { Request, Response } from "express";
+import { validationResult } from "express-validator";
+import Venta from "../../models/modeloVenta.js";
+import { errorResponse, successResponse } from "../../utils/sendResponses.js";
+import {
+  procesarCompraDelCarrito,
+  ErrorNegocio,
+} from "../../services/servicioCheckout.js";
 
-export const obtenerVentas = async (req: Request, res: Response): Promise<Response> => {
+export const obtenerVentas = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
   try {
     const ventas = await Venta.findAll({
-      order: [['venta_id', 'ASC']],
+      order: [["venta_id", "ASC"]],
     });
 
-    return res.json(successResponse(ventas, 'Ventas encontradas'));
+    return res.json(successResponse(ventas, "Ventas encontradas"));
   } catch (error) {
-    const msg = error instanceof Error ? error.message : 'Error al listar las ventas';
+    const msg =
+      error instanceof Error ? error.message : "Error al listar las ventas";
     return res.status(500).json(errorResponse(msg));
   }
 };
 
-export const obtenerVentaPorId = async (req: Request, res: Response): Promise<Response> => {
+export const obtenerVentaPorId = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -28,17 +39,21 @@ export const obtenerVentaPorId = async (req: Request, res: Response): Promise<Re
     const venta = await Venta.findByPk(venta_id as string);
 
     if (!venta) {
-      return res.status(404).json(errorResponse('Venta no encontrada'));
+      return res.status(404).json(errorResponse("Venta no encontrada"));
     }
 
-    return res.json(successResponse(venta, 'Venta encontrada'));
+    return res.json(successResponse(venta, "Venta encontrada"));
   } catch (error) {
-    const msg = error instanceof Error ? error.message : 'Error al obtener la venta';
+    const msg =
+      error instanceof Error ? error.message : "Error al obtener la venta";
     return res.status(500).json(errorResponse(msg));
   }
 };
 
-export const crearVenta = async (req: Request, res: Response): Promise<Response> => {
+export const crearVenta = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -47,16 +62,20 @@ export const crearVenta = async (req: Request, res: Response): Promise<Response>
   try {
     const nuevaVenta = await Venta.create(req.body);
 
-    return res.status(201).json(
-      successResponse(nuevaVenta, 'Venta creada correctamente')
-    );
+    return res
+      .status(201)
+      .json(successResponse(nuevaVenta, "Venta creada correctamente"));
   } catch (error) {
-    const msg = error instanceof Error ? error.message : 'Error al crear la venta';
+    const msg =
+      error instanceof Error ? error.message : "Error al crear la venta";
     return res.status(500).json(errorResponse(msg));
   }
 };
 
-export const actualizarVenta = async (req: Request, res: Response): Promise<Response> => {
+export const actualizarVenta = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -68,21 +87,23 @@ export const actualizarVenta = async (req: Request, res: Response): Promise<Resp
     const venta = await Venta.findByPk(venta_id as string);
 
     if (!venta) {
-      return res.status(404).json(errorResponse('Venta no encontrada'));
+      return res.status(404).json(errorResponse("Venta no encontrada"));
     }
 
     await venta.update(req.body);
 
-    return res.json(
-      successResponse(venta, 'Venta actualizada correctamente')
-    );
+    return res.json(successResponse(venta, "Venta actualizada correctamente"));
   } catch (error) {
-    const msg = error instanceof Error ? error.message : 'Error al actualizar la venta';
+    const msg =
+      error instanceof Error ? error.message : "Error al actualizar la venta";
     return res.status(500).json(errorResponse(msg));
   }
 };
 
-export const eliminarVenta = async (req: Request, res: Response): Promise<Response> => {
+export const eliminarVenta = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -94,16 +115,52 @@ export const eliminarVenta = async (req: Request, res: Response): Promise<Respon
     const venta = await Venta.findByPk(venta_id as string);
 
     if (!venta) {
-      return res.status(404).json(errorResponse('Venta no encontrada'));
+      return res.status(404).json(errorResponse("Venta no encontrada"));
     }
 
     await venta.destroy();
 
-    return res.json(
-      successResponse(null, 'Venta eliminada correctamente')
-    );
+    return res.json(successResponse(null, "Venta eliminada correctamente"));
   } catch (error) {
-    const msg = error instanceof Error ? error.message : 'Error al eliminar la venta';
+    const msg =
+      error instanceof Error ? error.message : "Error al eliminar la venta";
+    return res.status(500).json(errorResponse(msg));
+  }
+};
+
+export const checkoutCarrito = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  try {
+    const { usercod, direccion_id, metodo_pago_id, venta_observaciones } =
+      req.body;
+
+    const { venta, correoEnviado } = await procesarCompraDelCarrito({
+      usercod: Number(usercod),
+      direccion_id: Number(direccion_id),
+      metodo_pago_id: Number(metodo_pago_id),
+      observaciones: venta_observaciones,
+    });
+
+    return res
+      .status(201)
+      .json(
+        successResponse(
+          { venta, correoEnviado },
+          "Compra realizada correctamente",
+        ),
+      );
+  } catch (error) {
+    if (error instanceof ErrorNegocio) {
+    }
+    const msg =
+      error instanceof Error ? error.message : "Error al procesar la compra";
     return res.status(500).json(errorResponse(msg));
   }
 };

@@ -5169,6 +5169,102 @@
         }
       }
     },
+        "/api/ventas/checkout": {
+      "post": {
+        "tags": [
+          "/Ventas"
+        ],
+        "summary": "Checkout: convertir el carrito en venta",
+        "description": "Convierte el carrito activo del usuario en una venta: crea la venta y su detalle, descuenta el stock, registra los movimientos de inventario (SALIDA), vacía el carrito y envía el correo con el detalle de la compra. Todo ocurre en una sola transacción. Si el correo falla, la venta se conserva y la respuesta trae correoEnviado en false. Los totales los calcula el servidor, no se envían en el body.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "usercod",
+                  "direccion_id",
+                  "metodo_pago_id"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "usercod": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "example": 1
+                  },
+                  "direccion_id": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "example": 1
+                  },
+                  "metodo_pago_id": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "example": 1
+                  },
+                  "venta_observaciones": {
+                    "type": "string",
+                    "nullable": true,
+                    "maxLength": 500,
+                    "example": "Entregar en la tarde"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Compra realizada correctamente.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "data": {
+                    "venta": {
+                      "venta_id": 1,
+                      "usercod": 1,
+                      "direccion_id": 1,
+                      "metodo_pago_id": 1,
+                      "venta_subtotal": "290.00",
+                      "venta_impuesto": "42.75",
+                      "venta_descuento": "5.00",
+                      "venta_total": "327.75",
+                      "venta_estado": "PEN",
+                      "venta_observaciones": "Entregar en la tarde"
+                    },
+                    "correoEnviado": true
+                  },
+                  "message": "Compra realizada correctamente"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validación fallida, carrito vacío, stock insuficiente, producto no disponible o descuento inválido."
+          },
+          "401": {
+            "description": "Token no proporcionado."
+          },
+          "403": {
+            "description": "Token inválido o expirado."
+          },
+          "404": {
+            "description": "El usuario no tiene un carrito activo."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        }
+      }
+    },
     "/api/ventas/update": {
       "put": {
         "tags": [
@@ -5550,7 +5646,7 @@
         }
       }
     },
-      "/api/cambio-password/confirmar": {
+      "/api/cambio-password/confirmarr": {
         "post": {
           "tags": ["Autenticación"],
           "summary": "Confirmar cambio de contraseña con código",

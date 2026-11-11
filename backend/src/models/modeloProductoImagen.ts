@@ -8,6 +8,7 @@ class ProductoImagen extends Model {
   declare imagen_principal: boolean;
   declare imagen_orden: number;
   declare imagen_estado: string;
+  declare imagen_drive_id: string;
 }
 
 ProductoImagen.init(
@@ -36,6 +37,10 @@ ProductoImagen.init(
     },
     imagen_estado: {
       type: DataTypes.CHAR(3),
+      allowNull: false,
+    },
+    imagen_drive_id: {
+      type: DataTypes.STRING(100),
       allowNull: false,
     },
   },
