@@ -5646,7 +5646,7 @@
         }
       }
     },
-      "/api/cambio-password/confirmarr": {
+      "/api/cambio-password/confirmar": {
         "post": {
           "tags": ["Autenticación"],
           "summary": "Confirmar cambio de contraseña con código",
