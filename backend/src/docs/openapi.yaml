@@ -153,8 +153,9 @@
             "name": "rolescod",
             "required": true,
             "schema": {
-              "type": "integer",
-              "minimum": 1
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 3,
             },
             "description": "Identificador requerido por esta operación."
           }
