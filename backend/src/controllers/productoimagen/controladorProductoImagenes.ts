@@ -128,22 +128,45 @@ export const eliminarProductoImagene = async (req: Request, res: Response): Prom
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { id } = req.query;
+  const id = Number(req.query.id);
 
   try {
-    const productoImagen = await ProductoImagen.findByPk(id as string);
+    const productoImagen = await ProductoImagen.findByPk(id);
 
     if (!productoImagen) {
-      return res.status(404).json(errorResponse('Imagen de producto no encontrada'));
+      return res.status(404).json(
+        errorResponse('Imagen de producto no encontrada')
+      );
     }
 
+    const fileId = productoImagen.imagen_drive_id;
+
     await productoImagen.destroy();
+    try {
+
+      await eliminarImagenDrive(fileId);
+
+    } catch (errorDrive) {
+
+      console.error(
+        'No se pudo eliminar la imagen de Google Drive:',
+        errorDrive
+      );
+
+    }
 
     return res.json(
-      successResponse(null, 'Imagen de producto eliminada correctamente')
+      successResponse(
+        null,
+        'Imagen de producto eliminada correctamente'
+      )
     );
+
   } catch (error) {
-    const msg = error instanceof Error ? error.message : 'Error al eliminar la imagen de producto';
+
+    const msg = error instanceof Error
+      ? error.message
+      : 'Error al eliminar la imagen de producto';
     return res.status(500).json(errorResponse(msg));
   }
 };
@@ -171,7 +194,7 @@ export const subirCrearProductoImagen = async (
     imagen_estado,
   } = req.body;
 
-  let imagenUrl: string | undefined;
+  let imagenDriveId: string | undefined;
 
   try {
     if (
@@ -185,13 +208,20 @@ export const subirCrearProductoImagen = async (
       );
     }
 
-    imagenUrl = await subirImagenDrive(req.file);
+    const imagenDrive = await subirImagenDrive(req.file);
+
+    imagenDriveId = imagenDrive.fileId;
 
     const nuevaImagen = await ProductoImagen.create({
+
       producto_id: Number(producto_id),
-      imagen_ruta: imagenUrl,
+
+      imagen_drive_id: imagenDrive.fileId,
+      imagen_ruta: imagenDrive.url,
       imagen_principal:
-        imagen_principal === true || imagen_principal === 'true',
+        imagen_principal === true ||
+        imagen_principal === 'true',
+
       imagen_orden: Number(imagen_orden),
       imagen_estado,
     });
@@ -204,8 +234,16 @@ export const subirCrearProductoImagen = async (
     );
 
   } catch (error) {
-    if (imagenUrl) {
-      await eliminarImagenDrive(imagenUrl).catch(() => undefined);
+
+    if (imagenDriveId) {
+      try {
+        await eliminarImagenDrive(imagenDriveId);
+      } catch (errorEliminacion) {
+        console.error(
+          'No se pudo eliminar la imagen de Google Drive:',
+          errorEliminacion
+        );
+      }
     }
 
     const msg = error instanceof Error
