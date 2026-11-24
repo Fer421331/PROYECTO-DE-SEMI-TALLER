@@ -1,0 +1,332 @@
+.address-page {
+    width: min(100% - 44px, 1200px);
+    margin: 0 auto;
+    padding: 45px 0;
+    color: var(--axume-text);
+}
+
+/* ENCABEZADO */
+
+.address-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.address-header h1 {
+    margin: 0 0 10px;
+    color: var(--axume-green-dark);
+    font-size: clamp(28px, 4vw, 36px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+}
+
+.address-header p {
+    margin: 0;
+    color: var(--axume-muted);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* BOTÓN NUEVA DIRECCIÓN */
+
+.address-add-button {
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    border: 0;
+    border-radius: var(--axume-radius-sm);
+    background: var(--axume-green);
+    color: var(--axume-white);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.address-add-button:hover {
+    transform: translateY(-1px);
+    background: var(--axume-green-dark);
+}
+
+/* TARJETA */
+
+.address-card {
+    overflow: hidden;
+    border: 1px solid var(--axume-border);
+    border-radius: var(--axume-radius-lg);
+    background: var(--axume-white);
+    box-shadow: var(--axume-shadow-card);
+}
+
+.address-table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* TABLA */
+
+.address-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.address-table thead {
+    background: #f3f7f2;
+}
+
+.address-table th {
+    padding: 17px 15px;
+    color: var(--axume-green-dark);
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.address-table td {
+    padding: 18px 15px;
+    border-bottom: 1px solid var(--axume-border);
+    color: var(--axume-text);
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+.address-table tbody tr {
+    transition: background 0.2s;
+}
+
+.address-table tbody tr:hover {
+    background: #fcfdfb;
+}
+
+.address-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.address-table td strong {
+    color: var(--axume-green-dark);
+    font-weight: 800;
+}
+
+/* RUTA */
+
+.address-route {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--axume-muted);
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.address-route-arrow {
+    color: var(--axume-green);
+    font-size: 16px;
+    font-weight: 800;
+}
+
+/* DIRECCIÓN PRINCIPAL */
+
+.address-primary,
+.address-not-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 11px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.address-primary {
+    background: #eaf6ed;
+    color: var(--axume-success);
+}
+
+.address-not-primary {
+    background: #f1f3f0;
+    color: var(--axume-muted);
+}
+
+/* ACCIONES */
+
+.address-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-width: 230px;
+}
+
+.address-actions button {
+    min-height: 32px;
+    padding: 0 10px;
+    border: 1px solid transparent;
+    border-radius: var(--axume-radius-sm);
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.address-view {
+    border-color: var(--axume-border) !important;
+    background: var(--axume-white);
+    color: var(--axume-green);
+}
+
+.address-view:hover {
+    background: var(--axume-green);
+    color: var(--axume-white);
+}
+
+.address-edit {
+    background: #fff7e8;
+    color: #946515;
+}
+
+.address-edit:hover {
+    background: #f2dcae;
+}
+
+.address-use {
+    background: #eaf6ed;
+    color: var(--axume-success);
+}
+
+.address-use:hover:not(:disabled) {
+    background: var(--axume-success);
+    color: var(--axume-white);
+}
+
+.address-use:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.address-delete {
+    background: #fff0ef;
+    color: var(--axume-danger);
+}
+
+.address-delete:hover {
+    background: var(--axume-danger);
+    color: var(--axume-white);
+}
+
+/* ESTADO VACÍO */
+
+.address-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 55px 20px;
+    text-align: center;
+}
+
+.address-empty-icon {
+    width: 95px;
+    height: 95px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    background: var(--axume-green-light);
+    font-size: 40px;
+}
+
+.address-empty h2 {
+    margin: 0 0 10px;
+    color: var(--axume-green-dark);
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.address-empty p {
+    margin: 0 0 20px;
+    color: var(--axume-muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* FOOTER */
+
+.address-footer {
+    display: flex;
+    margin-top: 25px;
+}
+
+.address-back {
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 22px;
+    border: 1px solid var(--axume-border);
+    border-radius: var(--axume-radius-sm);
+    background: var(--axume-white);
+    color: var(--axume-green);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.address-back:hover {
+    background: var(--axume-green);
+    color: var(--axume-white);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 750px) {
+
+    .address-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .address-add-button {
+        width: 100%;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .address-page {
+        width: calc(100% - 32px);
+        padding: 30px 0;
+    }
+
+    .address-header h1 {
+        font-size: 27px;
+    }
+
+    .address-card {
+        border-radius: 15px;
+    }
+
+    .address-table th,
+    .address-table td {
+        padding: 14px 12px;
+    }
+
+    .address-footer {
+        width: 100%;
+    }
+
+    .address-back {
+        width: 100%;
+    }
+
+}
