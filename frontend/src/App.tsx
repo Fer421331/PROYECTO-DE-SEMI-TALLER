@@ -26,12 +26,67 @@ import Panel from './pages/admin/Panel/Panel';
 import DeliveryRoutesList from './pages/admin/Delivery routes/DeliveryRoutesList';
 import DeliveryRoutesDetail from './pages/admin/Delivery routes/DeliveryRoutesDetail';
 import Home from './pages/home/Home';
+import Register from './pages/auth/Register';
+import Checkout from './pages/checkout/Checkout';
+import Payment from './pages/checkout/Payment';
+import PurchaseConfirmation from './pages/checkout/PurchaseConfirmation';
+import Profile from './pages/profile/Profile';
+import History from './pages/history/History';
+import ForgotPassword from './pages/auth/ForgotPassword';
+import ResetPassword from './pages/auth/ResetPassword';
+import VerifyRecoveryCode from './pages/auth/VerifyRecoveryCode';
+import ProductsImages from './pages/products images/ProductsImages';
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
         <Home />
+        {/*
+        <Login />
+        <Register />
+
+        <ForgotPassword />
+        <ResetPassword />
+        <VerifyRecoveryCode />
+
+        <Catalog />
+
+        <Panel />
+
+        <AdminDashboard />
+        <Bitacora />
+        <Categories />
+        <CategorieDetail />
+        <ProductList />
+        <ProductDetail />
+        <ProductsImages />
+        
+        <SalesList />
+        <SaleDetail />
+        
+        <Functions />
+        <FunctionDetail />
+        <RolesList />
+        <RolesDetail />
+        <Users />
+        <UserRoles />
+        <FunctionsRoles />
+        <FunctionsRolesDetail />
+        <DeliveryRoutesList />
+        <DeliveryRoutesDetail />
+        
+        <Cart />
+        <Checkout />
+        <Payment />
+        <PurchaseConfirmation />
+
+        <Profile />
+        <History />
+        <Favorites />
+        <Address />
+        <AddressDetail />
+        */}
       </AuthProvider>
     </BrowserRouter>
   );
