@@ -1,13 +1,13 @@
-import { FormEvent, useState, ChangeEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
-import './Login.css';
+import { FormEvent, useState, ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import "./Login.css";
 
 function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [cargando, setCargando] = useState(false);
   const [mostrarPassword, setMostrarPassword] = useState(false);
 
@@ -16,23 +16,23 @@ function Login() {
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
 
     const usuario = username.trim();
 
     if (!usuario) {
-      setError('El nombre de usuario es obligatorio.');
+      setError("El nombre de usuario es obligatorio.");
       return;
     }
 
     if (!password) {
-      setError('La contraseña es obligatoria.');
+      setError("La contraseña es obligatoria.");
       return;
     }
 
     if (password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres.');
+      setError("La contraseña debe tener al menos 6 caracteres.");
       return;
     }
 
@@ -40,10 +40,12 @@ function Login() {
 
     try {
       await login(usuario, password);
-      setSuccess('Inicio de sesión exitoso.');
-      navigate('/', { replace: true });
+      setSuccess("Inicio de sesión exitoso.");
+      navigate("/", { replace: true });
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'No se pudo iniciar sesión.');
+      setError(
+        err instanceof Error ? err.message : "No se pudo iniciar sesión.",
+      );
     } finally {
       setCargando(false);
     }
@@ -51,14 +53,14 @@ function Login() {
 
   const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setUsername(e.target.value);
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
   };
 
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setPassword(e.target.value);
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
   };
 
   return (
@@ -77,7 +79,9 @@ function Login() {
         <div className="login-layout">
           <section className="login-intro">
             <span className="login-eyebrow">Bienvenido a Axúme</span>
-            <h2>El sabor de lo natural, <span>cerca de ti.</span></h2>
+            <h2>
+              El sabor de lo natural, <span>cerca de ti.</span>
+            </h2>
             <p>
               Accede a tu cuenta y descubre nuestros productos lácteos,
               preparados para acompañar cada momento.
@@ -110,7 +114,7 @@ function Login() {
                 <div className="password-container">
                   <input
                     id="password"
-                    type={mostrarPassword ? 'text' : 'password'}
+                    type={mostrarPassword ? "text" : "password"}
                     placeholder="Ingrese su contraseña"
                     value={password}
                     onChange={handlePasswordChange}
@@ -121,9 +125,13 @@ function Login() {
                     type="button"
                     className="password-toggle"
                     onClick={() => setMostrarPassword(!mostrarPassword)}
-                    aria-label={mostrarPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                    aria-label={
+                      mostrarPassword
+                        ? "Ocultar contraseña"
+                        : "Mostrar contraseña"
+                    }
                   >
-                    {mostrarPassword ? 'Ocultar' : 'Mostrar'}
+                    {mostrarPassword ? "Ocultar" : "Mostrar"}
                   </button>
                 </div>
               </div>
@@ -131,7 +139,11 @@ function Login() {
               <div className="forgot-password">
                 <button
                   type="button"
-                  onClick={() => setError('La recuperación de contraseña no está disponible en este momento.')}
+                  onClick={() =>
+                    setError(
+                      "La recuperación de contraseña no está disponible en este momento.",
+                    )
+                  }
                 >
                   ¿Olvidaste tu contraseña?
                 </button>
@@ -151,8 +163,12 @@ function Login() {
                 </div>
               )}
 
-              <button type="submit" className="login-button" disabled={cargando}>
-                {cargando ? 'VERIFICANDO...' : 'INGRESAR A MI CUENTA'}
+              <button
+                type="submit"
+                className="login-button"
+                disabled={cargando}
+              >
+                {cargando ? "VERIFICANDO..." : "INGRESAR A MI CUENTA"}
               </button>
             </form>
           </section>
