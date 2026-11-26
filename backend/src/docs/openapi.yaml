@@ -81,7 +81,7 @@
                     "in": "query",
                     "name": "rolescod",
                     "required": true,
-                    "schema": { "type": "integer", "minimum": 1 },
+                    "schema": { "type": "string", "minimum": 3 },
                     "description": "Identificador requerido por esta operación.",
                   },
                 ],

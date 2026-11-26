@@ -1,0 +1,205 @@
+.functions-roles-detail-page {
+    width: min(100% - 44px, 1150px);
+    margin: 0 auto;
+    padding: 45px 0;
+    color: var(--axume-text);
+}
+
+.functions-roles-detail-header {
+    margin-bottom: 30px;
+}
+
+.functions-roles-detail-header h1 {
+    margin: 0 0 15px;
+    color: var(--axume-green-dark);
+    font-size: clamp(28px, 4vw, 36px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+}
+
+.functions-roles-detail-header h2 {
+    margin: 0 0 5px;
+    color: var(--axume-green);
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.functions-roles-detail-header p {
+    margin: 0;
+    color: var(--axume-muted);
+    font-size: 13px;
+}
+
+.functions-roles-detail-card {
+    padding: clamp(22px, 4vw, 35px);
+    border: 1px solid var(--axume-border);
+    border-radius: var(--axume-radius-lg);
+    background: var(--axume-white);
+    box-shadow: var(--axume-shadow-card);
+}
+
+.functions-roles-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px;
+}
+
+.functions-column {
+    min-width: 0;
+}
+
+.functions-column h3 {
+    margin: 0 0 20px;
+    padding-bottom: 13px;
+    border-bottom: 1px solid var(--axume-border);
+    color: var(--axume-green);
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.functions-search {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin-bottom: 20px;
+}
+
+.functions-search label {
+    color: #405349;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.functions-search input {
+    width: 100%;
+    min-height: 46px;
+    padding: 12px 14px;
+    border: 1px solid var(--axume-border);
+    border-radius: var(--axume-radius-sm);
+    outline: none;
+    background: #fcfdfb;
+    color: var(--axume-text);
+    font-family: inherit;
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.functions-search input:focus {
+    border-color: var(--axume-green);
+    background: var(--axume-white);
+    box-shadow: 0 0 0 4px rgba(23, 77, 56, 0.09);
+}
+
+.functions-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--axume-border);
+    border-radius: var(--axume-radius-md);
+}
+
+.functions-table-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.functions-table-wrapper th {
+    padding: 15px 12px;
+    background: var(--axume-green-light);
+    color: var(--axume-green-dark);
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.functions-table-wrapper td {
+    padding: 14px 12px;
+    border-top: 1px solid var(--axume-border);
+    color: var(--axume-text);
+    font-size: 13px;
+}
+
+.functions-table-wrapper tbody tr:hover {
+    background: #fcfdfb;
+}
+
+.functions-btn-add,
+.functions-btn-remove {
+    min-height: 34px;
+    padding: 0 13px;
+    border: none;
+    border-radius: var(--axume-radius-sm);
+    color: white;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.functions-btn-add {
+    background: var(--axume-green);
+}
+
+.functions-btn-add:hover {
+    background: var(--axume-green-dark);
+    transform: translateY(-1px);
+}
+
+.functions-btn-remove {
+    background: var(--axume-danger);
+}
+
+.functions-btn-remove:hover {
+    filter: brightness(0.9);
+    transform: translateY(-1px);
+}
+
+.functions-detail-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+    padding-top: 22px;
+    border-top: 1px solid var(--axume-border);
+}
+
+.functions-btn-back {
+    min-height: 44px;
+    padding: 0 23px;
+    border: 1px solid var(--axume-border);
+    border-radius: var(--axume-radius-sm);
+    background: var(--axume-white);
+    color: var(--axume-green);
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.functions-btn-back:hover {
+    background: var(--axume-green);
+    color: var(--axume-white);
+}
+
+@media (max-width: 768px) {
+    .functions-roles-detail-page {
+        width: calc(100% - 32px);
+        padding: 30px 0;
+    }
+
+    .functions-roles-container {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+
+    .functions-roles-detail-card {
+        padding: 22px 17px;
+    }
+
+    .functions-detail-buttons {
+        justify-content: stretch;
+    }
+
+    .functions-btn-back {
+        width: 100%;
+    }
+}

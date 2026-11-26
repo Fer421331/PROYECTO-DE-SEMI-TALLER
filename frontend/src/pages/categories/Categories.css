@@ -1,0 +1,339 @@
+/* ======== ESTRUCTURA GLOBAL ======== */
+.categories-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(30px, 5vw, 60px) 22px;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(168, 197, 160, 0.24), transparent 28rem),
+    var(--axume-cream);
+  color: var(--axume-text);
+}
+
+.categories-main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.categories-container {
+  width: min(100%, 1200px);
+}
+
+.categories-title {
+  margin-bottom: 34px;
+}
+
+.categories-title h2 {
+  margin: 0;
+  color: var(--axume-green-dark);
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.categories-title p {
+  margin: 10px 0 0;
+  color: var(--axume-muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ======== MENSAJES (Igual que el Login) ======== */
+.message {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 24px;
+  padding: 14px 16px;
+  border-radius: var(--axume-radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.error-message {
+  border: 1px solid #f2c5c1;
+  background: #fff5f4;
+  color: var(--axume-danger);
+}
+
+.success-message {
+  border: 1px solid #c8e5d1;
+  background: #f1faf3;
+  color: var(--axume-success);
+}
+
+/* ======== LAYOUT DE COLUMNAS ======== */
+.categories-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.8fr;
+  gap: clamp(24px, 4vw, 40px);
+  align-items: start;
+}
+
+@media (max-width: 980px) {
+  .categories-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ======== TARJETAS ======== */
+.categories-card {
+  background: var(--axume-white);
+  border: 1px solid rgba(227, 232, 225, 0.9);
+  border-radius: var(--axume-radius-lg);
+  box-shadow: var(--axume-shadow-card);
+  padding: clamp(24px, 3vw, 36px);
+}
+
+.card-title {
+  margin-bottom: 26px;
+}
+
+.card-title h3 {
+  margin: 0 0 8px;
+  color: var(--axume-green-dark);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.card-title p {
+  margin: 0;
+  color: var(--axume-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* ======== FORMULARIO ======== */
+.category-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.form-group label {
+  color: #405349;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0 15px;
+  border: 1px solid var(--axume-border);
+  border-radius: var(--axume-radius-sm);
+  outline: none;
+  background: #fcfdfb;
+  color: var(--axume-text);
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.form-group input,
+.form-group select {
+  height: 51px;
+}
+
+.form-group textarea {
+  padding: 14px 15px;
+  min-height: 90px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #a0aaa3;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--axume-green);
+  background: var(--axume-white);
+  box-shadow: 0 0 0 4px rgba(23, 77, 56, 0.09);
+}
+
+.form-group input:disabled,
+.form-group select:disabled,
+.form-group textarea:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.char-count {
+  position: absolute;
+  bottom: -18px;
+  right: 0;
+  font-size: 11px;
+  color: #a0aaa3;
+  font-weight: 500;
+}
+
+/* ======== BOTONES DEL FORMULARIO ======== */
+.form-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.category-button {
+  width: 100%;
+  min-height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 0;
+  border-radius: var(--axume-radius-sm);
+  background: var(--axume-green);
+  color: var(--axume-white);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.category-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: var(--axume-green-dark);
+  box-shadow: 0 9px 20px rgba(23, 77, 56, 0.2);
+}
+
+.category-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.category-button.secondary {
+  background: transparent;
+  border: 1px solid var(--axume-border);
+  color: var(--axume-green-dark);
+}
+
+.category-button.secondary:hover:not(:disabled) {
+  background: #f4f6f3;
+  box-shadow: none;
+}
+
+/* ======== TABLA ======== */
+.table-responsive {
+  overflow-x: auto;
+  border-radius: var(--axume-radius-sm);
+}
+
+.categories-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+}
+
+.categories-table th {
+  padding: 14px 12px;
+  background: #f6f8f5;
+  color: #405349;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--axume-border);
+}
+
+.categories-table td {
+  padding: 16px 12px;
+  border-bottom: 1px solid rgba(227, 232, 225, 0.7);
+  color: var(--axume-text);
+  vertical-align: middle;
+}
+
+.categories-table tbody tr:hover {
+  background: #fafbf9;
+}
+
+.cell-name {
+  font-weight: 700;
+  color: var(--axume-green-dark);
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--axume-muted);
+  padding: 40px 20px;
+  font-size: 14px;
+  font-style: italic;
+}
+
+/* ======== BADGES DE ESTADO ======== */
+.badge {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.badge.act {
+  background: #e6f4ea;
+  color: #1b5e20;
+}
+
+.badge.ina {
+  background: #fdecec;
+  color: #b71c1c;
+}
+
+/* ======== BOTONES DE ACCIÓN ======== */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-edit,
+.btn-delete {
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.2s;
+}
+
+.btn-edit {
+  background: #e8f0ec;
+  color: var(--axume-green-dark);
+}
+
+.btn-edit:hover {
+  background: #d7e5dd;
+  transform: translateY(-1px);
+}
+
+.btn-delete {
+  background: #fdecec;
+  color: #b71c1c;
+}
+
+.btn-delete:hover {
+  background: #f9d6d6;
+  transform: translateY(-1px);
+}
