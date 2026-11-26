@@ -1,73 +1,205 @@
+
+import { useEffect, useState } from "react";
 import "./Home.css";
 
+import {
+    getCategoriasHome,
+    getProductosHome,
+    CategoriaHome,
+    ProductoHome
+} from "./home.service";
+
+
 export default function Home() {
-    const categorias = [
-        { icon: "🥛", nombre: "Leche" },
-        { icon: "🧀", nombre: "Quesos" },
-        { icon: "🧈", nombre: "Mantequilla" },
-        { icon: "🍦", nombre: "Yogures" },
-        { icon: "🥣", nombre: "Cremas" },
-        { icon: "🍶", nombre: "Otros lácteos" }
-    ];
+
+    const [categorias, setCategorias] = useState<CategoriaHome[]>([]);
+    const [productos, setProductos] = useState<ProductoHome[]>([]);
+    const [cargando, setCargando] = useState(true);
+    const [error, setError] = useState("");
+
+
+    useEffect(() => {
+
+        const cargarDatos = async () => {
+
+            try {
+
+                const datosCategorias = await getCategoriasHome();
+                const datosProductos = await getProductosHome();
+
+                const categoriasActivas = datosCategorias.filter(
+                    (categoria) => categoria.categoria_estado === "ACT"
+                );
+
+                setCategorias(categoriasActivas);
+
+                const productosActivos = datosProductos.filter(
+                    (producto) =>
+                        producto.producto_activo === "ACT" &&
+                        producto.producto_estado === "ACT" &&
+                        producto.producto_stock > 0
+                );
+
+                const productosDestacados: ProductoHome[] = [];
+
+                categoriasActivas.forEach((categoria) => {
+
+                    const producto = productosActivos.find(
+                        (item) => item.categoria_id === categoria.categoria_id
+                    );
+
+                    if (producto) {
+                        productosDestacados.push(producto);
+                    }
+
+                });
+
+                productosActivos.forEach((producto) => {
+
+                    if (
+                        productosDestacados.length < 4 &&
+                        !productosDestacados.some(
+                            (item) => item.producto_id === producto.producto_id
+                        )
+                    ) {
+                        productosDestacados.push(producto);
+                    }
+
+                });
+
+                setProductos(productosDestacados);
+
+            } catch (error) {
+
+                console.error("Error al cargar los datos:", error);
+                setError("No se pudo cargar la información.");
+
+            } finally {
+
+                setCargando(false);
+
+            }
+
+        };
+
+        cargarDatos();
+
+    }, []);
+
 
     const ventajas = [
         {
-            icon: "🚚",
+            
             titulo: "Entrega a domicilio",
             descripcion: "Recibe tus productos lácteos directamente en tu hogar."
         },
         {
-            icon: "🥛",
+            
             titulo: "Productos frescos",
             descripcion: "Productos seleccionados para garantizar su calidad."
         },
         {
-            icon: "💰",
+            
             titulo: "Precios accesibles",
             descripcion: "Encuentra productos de calidad a excelentes precios."
         },
         {
-            icon: "⭐",
+            
             titulo: "Calidad garantizada",
             descripcion: "Trabajamos para ofrecerte lo mejor en cada compra."
         }
     ];
 
-    const productos = [
-        {
-            nombre: "Leche Entera",
-            categoria: "Leche",
-            precio: "35.00",
-            imagen: "🥛"
-        },
-        {
-            nombre: "Queso Mozzarella",
-            categoria: "Quesos",
-            precio: "95.00",
-            imagen: "🧀"
-        },
-        {
-            nombre: "Yogur Natural",
-            categoria: "Yogures",
-            precio: "45.00",
-            imagen: "🍶"
-        },
-        {
-            nombre: "Mantequilla",
-            categoria: "Mantequilla",
-            precio: "65.00",
-            imagen: "🧈"
+
+    // Normalizar texto para comparar nombres
+    const normalizarTexto = (texto: string) => {
+
+        return texto
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "");
+
+    };
+
+
+    // Obtener imagen según la categoría
+    const obtenerIconoCategoria = (nombre: string) => {
+
+        const categoria = normalizarTexto(nombre);
+
+        if (categoria.includes("lacteo")) {
+            return "/img/lacteos.jpg";
         }
-    ];
+
+        if (categoria.includes("panaderia")) {
+            return "/img/panaderia.jpg";
+        }
+
+        if (categoria.includes("abarrote")) {
+            return "/img/abarrotes.jpg";
+        }
+
+        return "";
+
+    };
+
+
+    // Verificar si la categoría tiene una imagen
+    const esImagenCategoria = (nombre: string) => {
+
+        const categoria = normalizarTexto(nombre);
+
+        return (
+            categoria.includes("lacteo") ||
+            categoria.includes("panaderia") ||
+            categoria.includes("abarrote")
+        );
+
+    };
+
+
+    // Obtener imagen individual según el nombre del producto
+    const obtenerImagenProducto = (nombre: string) => {
+
+        const producto = normalizarTexto(nombre);
+
+        if (producto.includes("aguacate")) {
+            return "/img/aguacates.webp";
+        }
+
+        if (producto.includes("queso seco")) {
+            return "/img/queso-seco.jpeg";
+        }
+
+        if (
+            producto.includes("queso semi seco") ||
+            producto.includes("queso semiseco")
+        ) {
+            return "/img/quesosemiseco.webp";
+        }
+
+        if (producto.includes("queso blanco")) {
+            return "/img/queso-blanco.jpg";
+        }
+
+        if (producto.includes("tortilla")) {
+            return "/img/tortillaarina.jpg";
+        }
+
+        return "";
+
+    };
+
 
     return (
         <div className="home-page">
 
             <section className="hero-home">
+
                 <div className="hero-overlay">
 
                     <span className="hero-tag">
-                        🥛 Calidad y frescura para tu hogar
+                        Calidad y frescura para tu hogar
                     </span>
 
                     <h1>
@@ -85,6 +217,7 @@ export default function Home() {
                     </p>
 
                     <div className="hero-buttons">
+
                         <a href="/catalog" className="home-btn primary">
                             Explorar catálogo
                         </a>
@@ -92,124 +225,214 @@ export default function Home() {
                         <a href="/login" className="home-btn secondary">
                             Iniciar sesión
                         </a>
+
                     </div>
 
                 </div>
 
                 <div className="hero-image">
-                    <span>🥛</span>
-                    <span>🧀</span>
-                    <span>🧈</span>
+
+                    <img
+                        src="https://tse1.mm.bing.net/th/id/OIP.vbKsAYcoU6JfBU0EJN9SpQHaEJ?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
+                        alt="Variedad de productos lácteos"
+                    />
+
                 </div>
+
             </section>
+
 
             <section className="home-section categories-home">
 
                 <div className="home-section-header">
+
                     <span>EXPLORA NUESTRA VARIEDAD</span>
                     <h2>Nuestras categorías</h2>
+
                     <p>
                         Encuentra tus productos lácteos favoritos.
                     </p>
+
                 </div>
 
                 <div className="category-grid">
 
-                    {categorias.map((categoria, index) => (
-                        <article className="category-card" key={index}>
+                    {cargando && <p>Cargando categorías...</p>}
+
+                    {!cargando && categorias.map((categoria) => (
+
+                        <article
+                            className="category-card"
+                            key={categoria.categoria_id}
+                        >
+
                             <div className="category-icon">
-                                {categoria.icon}
+
+                                {esImagenCategoria(categoria.categoria_nombre) ? (
+
+                                    <img
+                                        src={obtenerIconoCategoria(categoria.categoria_nombre)}
+                                        alt={categoria.categoria_nombre}
+                                    />
+
+                                ) : (
+
+                                    "🧺"
+
+                                )}
+
                             </div>
 
-                            <h3>{categoria.nombre}</h3>
+                            <h3>{categoria.categoria_nombre}</h3>
 
                             <a href="/catalog">
                                 Ver productos →
                             </a>
+
                         </article>
+
                     ))}
+
+                    {!cargando && categorias.length === 0 && !error && (
+                        <p>No hay categorías disponibles.</p>
+                    )}
 
                 </div>
 
             </section>
 
+
             <section className="home-section advantages-home">
 
                 <div className="home-section-header">
+
                     <span>COMPROMETIDOS CONTIGO</span>
                     <h2>¿Por qué elegirnos?</h2>
+
                     <p>
                         Queremos llevar calidad y frescura hasta tu mesa.
                     </p>
+
                 </div>
 
                 <div className="advantages-grid">
 
                     {ventajas.map((ventaja, index) => (
+
                         <article className="advantage-card" key={index}>
+
                             <div className="advantage-icon">
                                 {ventaja.icon}
                             </div>
 
                             <h3>{ventaja.titulo}</h3>
-
                             <p>{ventaja.descripcion}</p>
+
                         </article>
+
                     ))}
 
                 </div>
 
             </section>
+
 
             <section className="home-section catalog-home">
 
                 <div className="home-section-header">
+
                     <span>LO MEJOR PARA TI</span>
                     <h2>Productos destacados</h2>
+
                     <p>
                         Conoce algunos de nuestros productos favoritos.
                     </p>
+
                 </div>
+
+                {error && <p>{error}</p>}
 
                 <div className="product-grid">
 
-                    {productos.map((producto, index) => (
-                        <article className="product-card" key={index}>
+                    {cargando && <p>Cargando productos...</p>}
 
-                            <div className="product-image">
-                                <span>{producto.imagen}</span>
-                            </div>
+                    {!cargando && productos.map((producto) => {
 
-                            <div className="product-info">
+                        const categoria = categorias.find(
+                            (item) => item.categoria_id === producto.categoria_id
+                        );
 
-                                <span className="product-category">
-                                    {producto.categoria}
-                                </span>
+                        const imagenProducto = obtenerImagenProducto(
+                            producto.producto_nombre
+                        );
 
-                                <h3>{producto.nombre}</h3>
+                        return (
 
-                                <div className="product-price">
-                                    L. {producto.precio}
+                            <article
+                                className="product-card"
+                                key={producto.producto_id}
+                            >
+
+                                <div className="product-image">
+
+                                    {imagenProducto ? (
+
+                                        <img
+                                            src={imagenProducto}
+                                            alt={producto.producto_nombre}
+                                            onError={(e) => {
+                                                e.currentTarget.style.display = "none";
+                                            }}
+                                        />
+
+                                    ) : (
+
+                                        <span>🧺</span>
+
+                                    )}
+
                                 </div>
 
-                                <a href="/catalog" className="product-button">
-                                    Ver catálogo
-                                </a>
+                                <div className="product-info">
 
-                            </div>
+                                    <span className="product-category">
+                                        {categoria?.categoria_nombre || "Producto"}
+                                    </span>
 
-                        </article>
-                    ))}
+                                    <h3>{producto.producto_nombre}</h3>
+
+                                    <div className="product-price">
+                                        L. {Number(producto.producto_precio).toFixed(2)}
+                                    </div>
+
+                                    <a href="/catalog" className="product-button">
+                                        Ver catálogo
+                                    </a>
+
+                                </div>
+
+                            </article>
+
+                        );
+
+                    })}
+
+                    {!cargando && productos.length === 0 && !error && (
+                        <p>No hay productos disponibles.</p>
+                    )}
 
                 </div>
 
                 <div className="catalog-footer">
+
                     <a href="/catalog" className="home-btn primary">
                         Ver todos los productos
                     </a>
+
                 </div>
 
             </section>
+
 
             <section className="home-cta">
 
@@ -230,4 +453,5 @@ export default function Home() {
 
         </div>
     );
+
 }

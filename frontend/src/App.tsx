@@ -4,6 +4,8 @@ import { AuthProvider } from "./context/AuthContext";
 // Importación de todas tus páginas
 import Login from "./pages/Login";
 import Home from "./pages/home/Home";
+import Footer from "./components/layout/Footer";
+import Navbar from "./components/layout/Navbar";
 import AdminDashboard from "./pages/admin/Dashboard/AdminDashboard";
 import CategorieDetail from "./pages/admin/Categories/CategorieDetail";
 import ProductList from "./pages/products/ProductList";
@@ -44,12 +46,15 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <Navbar />
         <Routes>
           {/* Ruta principal (Home) */}
           <Route path="/" element={<Home />} />
 
           {/* Ruta del Login */}
           <Route path="/login" element={<Login />} />
+
+          <Route path="/catalog" element={<Catalog />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path="/categories" element={<Categories />} />
@@ -101,6 +106,8 @@ function App() {
         <AddressDetail />
         */}
         </Routes>
+        {/* Footer general */}
+        <Footer />
       </AuthProvider>
     </BrowserRouter>
   );
