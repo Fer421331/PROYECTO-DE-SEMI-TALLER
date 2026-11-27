@@ -1,5 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import { DB_LACTAXUME } from "../config/db.js";
+import Producto from "./modeloProducto.js";
 
 class CarritoDetalle extends Model {
   declare detalle_id: number;
@@ -52,5 +53,10 @@ CarritoDetalle.init(
     timestamps: false,
   },
 );
+
+CarritoDetalle.belongsTo(Producto, {
+  foreignKey: "producto_id",
+  as: "producto",
+});
 
 export default CarritoDetalle;
