@@ -53,6 +53,7 @@ function App() {
 
           <Route element={<ProtectedRoute />}>
             <Route path="/categories" element={<Categories />} />
+            <Route path="/carrito" element={<Cart />} />
           </Route>
 
           {/*
