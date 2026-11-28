@@ -10,6 +10,9 @@ import {
     type CatalogProductoImagen
 } from "../../services/catalog.service";
 
+import { useFavorites } from "../../hooks/useFavorites";
+import { useCart } from "../../hooks/useCart";
+
 interface ProductoCatalogo {
     id: number;
     sku: string;
@@ -31,7 +34,9 @@ export default function Catalog() {
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("0");
     const [orden, setOrden] = useState("recientes");
 
-    const [favoritos, setFavoritos] = useState<number[]>([]);
+    const { esFavorito, alternarFavorito } = useFavorites();
+    const { agregarAlCarrito } = useCart();
+    const [mensaje, setMensaje] = useState("");
 
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState("");
@@ -48,68 +53,46 @@ export default function Catalog() {
             setCargando(true);
             setError("");
 
-            // Obtener productos
-            console.log("Consultando productos...");
-
             const productosData: CatalogProducto[] =
                 await getProductosCatalogo();
-
-            console.log("PRODUCTOS:", productosData);
 
             if (!Array.isArray(productosData)) {
                 throw new Error("La respuesta de productos no es un arreglo.");
             }
 
-            // Obtener categorías
             let categoriasData: CatalogCategoria[] = [];
 
             try {
-
                 categoriasData = await getCategoriasCatalogo();
-
-                console.log("CATEGORÍAS:", categoriasData);
 
                 if (!Array.isArray(categoriasData)) {
                     categoriasData = [];
                 }
-
             } catch (error) {
-
                 console.error("Error al consultar categorías:", error);
-
             }
 
-            // Obtener imágenes
             let imagenesData: CatalogProductoImagen[] = [];
 
             try {
-
                 imagenesData = await getImagenesCatalogo();
-
-                console.log("IMÁGENES:", imagenesData);
 
                 if (!Array.isArray(imagenesData)) {
                     imagenesData = [];
                 }
-
             } catch (error) {
-
                 console.error("Error al consultar imágenes:", error);
-
             }
 
-            // Relacionar todos los productos con categorías e imágenes
             const productosCompletos: ProductoCatalogo[] =
                 productosData.map((producto) => {
 
-                    // Buscar categoría
                     const categoria = categoriasData.find(
                         (item) =>
                             Number(item.categoria_id) ===
                             Number(producto.categoria_id)
                     );
 
-                    // Buscar imágenes del producto
                     const imagenesProducto = imagenesData
                         .filter(
                             (imagen) =>
@@ -119,14 +102,11 @@ export default function Catalog() {
                         )
                         .sort((a, b) => {
 
-                            if (
-                                a.imagen_principal === b.imagen_principal
-                            ) {
+                            if (a.imagen_principal === b.imagen_principal) {
                                 return a.imagen_orden - b.imagen_orden;
                             }
 
                             return a.imagen_principal ? -1 : 1;
-
                         });
 
                     return {
@@ -136,19 +116,15 @@ export default function Catalog() {
                         categoriaId: producto.categoria_id,
 
                         categoria:
-                            categoria?.categoria_nombre ??
-                            "Sin categoría",
+                            categoria?.categoria_nombre ?? "Sin categoría",
 
-                        descripcion:
-                            producto.producto_descripcion ?? "",
+                        descripcion: producto.producto_descripcion ?? "",
 
                         precio: Number(producto.producto_precio),
                         stock: Number(producto.producto_stock),
 
-                        imagen:
-                            imagenesProducto[0]?.imagen_ruta ?? ""
+                        imagen: imagenesProducto[0]?.imagen_ruta ?? ""
                     };
-
                 });
 
             const categoriasUnicas = categoriasData.filter(
@@ -164,19 +140,9 @@ export default function Catalog() {
             setCategorias(categoriasUnicas);
             setProductos(productosCompletos);
 
-            console.log(
-                "TOTAL DE PRODUCTOS CARGADOS:",
-                productosCompletos.length
-            );
-
-            console.log("PRODUCTOS DEL CATÁLOGO:", productosCompletos);
-
         } catch (error: any) {
 
             console.error("ERROR AL CARGAR CATÁLOGO:", error);
-            console.error("URL:", error.config?.url);
-            console.error("ESTADO HTTP:", error.response?.status);
-            console.error("RESPUESTA:", error.response?.data);
 
             setError(
                 error.response?.data?.message?.value ||
@@ -190,7 +156,6 @@ export default function Catalog() {
             setCargando(false);
 
         }
-
     };
 
     // Buscar y filtrar productos
@@ -209,7 +174,6 @@ export default function Catalog() {
                 producto.categoriaId.toString() === categoriaSeleccionada;
 
             return coincideBusqueda && coincideCategoria;
-
         })
         .sort((a, b) => {
 
@@ -228,8 +192,7 @@ export default function Catalog() {
                     return b.precio - a.precio;
 
                 case "favoritos":
-                    return Number(favoritos.includes(b.id)) -
-                        Number(favoritos.includes(a.id));
+                    return Number(esFavorito(b.id)) - Number(esFavorito(a.id));
 
                 case "mas_populares":
                     return b.stock - a.stock;
@@ -237,20 +200,33 @@ export default function Catalog() {
                 case "recientes":
                 default:
                     return b.id - a.id;
-
             }
-
         });
 
-    // Agregar o quitar favoritos
-    const cambiarFavorito = (id: number) => {
+    // Convertir producto del catálogo al formato guardado
+    const aProductoGuardado = (p: ProductoCatalogo) => ({
+        id: p.id,
+        sku: p.sku,
+        nombre: p.nombre,
+        categoria: p.categoria,
+        descripcion: p.descripcion,
+        precio: p.precio,
+        stock: p.stock,
+        imagen: p.imagen
+    });
 
-        setFavoritos((actuales) =>
-            actuales.includes(id)
-                ? actuales.filter((favorito) => favorito !== id)
-                : [...actuales, id]
+    // Agregar al carrito
+    const manejarAgregarCarrito = (p: ProductoCatalogo) => {
+
+        const agregado = agregarAlCarrito(aProductoGuardado(p));
+
+        setMensaje(
+            agregado
+                ? `${p.nombre} se agregó al carrito.`
+                : `Ya agregaste todo el stock disponible de ${p.nombre}.`
         );
 
+        setTimeout(() => setMensaje(""), 2500);
     };
 
     // Obtener ruta de imagen
@@ -267,7 +243,6 @@ export default function Catalog() {
         }
 
         return `/${ruta}`;
-
     };
 
     return (
@@ -286,6 +261,8 @@ export default function Catalog() {
                 </p>
 
             </div>
+
+            {mensaje && <div className="catalog-toast">{mensaje}</div>}
 
             {/* FILTROS */}
 
@@ -343,7 +320,7 @@ export default function Catalog() {
                         <option value="nombre_desc">Nombre Z-A</option>
                         <option value="precio_asc">Precio menor a mayor</option>
                         <option value="precio_desc">Precio mayor a menor</option>
-                        <option value="favoritos"> Favoritos</option>
+                        <option value="favoritos">Favoritos</option>
                         <option value="mas_populares">Más populares</option>
                     </select>
 
@@ -455,11 +432,7 @@ export default function Catalog() {
                                         type="button"
                                         className="catalog-add-cart"
                                         disabled={producto.stock <= 0}
-                                        onClick={() => {
-                                            alert(
-                                                `Agregaste ${producto.nombre} al carrito.`
-                                            );
-                                        }}
+                                        onClick={() => manejarAgregarCarrito(producto)}
                                     >
                                         Agregar al carrito
                                     </button>
@@ -468,11 +441,11 @@ export default function Catalog() {
                                         type="button"
                                         className="catalog-add-favorite"
                                         onClick={() =>
-                                            cambiarFavorito(producto.id)
+                                            alternarFavorito(aProductoGuardado(producto))
                                         }
                                     >
-                                        {favoritos.includes(producto.id)
-                                            ? " En favoritos"
+                                        {esFavorito(producto.id)
+                                            ? "En favoritos"
                                             : "Agregar a favorito"}
                                     </button>
 

@@ -1,12 +1,12 @@
-
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./Home.css";
+import { useAuth } from "../../hooks/useAuth";
 
 import {
     getCategoriasHome,
     getProductosHome,
-    CategoriaHome,
-    ProductoHome
+    type CategoriaHome,
+    type ProductoHome
 } from "./home.service";
 
 
@@ -16,6 +16,17 @@ export default function Home() {
     const [productos, setProductos] = useState<ProductoHome[]>([]);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState("");
+    const { estaLogueado } = useAuth();
+
+    const carruselRef = useRef<HTMLDivElement>(null);
+
+    // Mover el carrusel de productos
+    const desplazar = (direccion: number) => {
+        carruselRef.current?.scrollBy({
+            left: direccion * 320,
+            behavior: "smooth"
+        });
+    };
 
 
     useEffect(() => {
@@ -57,7 +68,7 @@ export default function Home() {
                 productosActivos.forEach((producto) => {
 
                     if (
-                        productosDestacados.length < 4 &&
+                        productosDestacados.length < 10 &&
                         !productosDestacados.some(
                             (item) => item.producto_id === producto.producto_id
                         )
@@ -89,22 +100,18 @@ export default function Home() {
 
     const ventajas = [
         {
-            
             titulo: "Entrega a domicilio",
             descripcion: "Recibe tus productos lácteos directamente en tu hogar."
         },
         {
-            
             titulo: "Productos frescos",
             descripcion: "Productos seleccionados para garantizar su calidad."
         },
         {
-            
             titulo: "Precios accesibles",
             descripcion: "Encuentra productos de calidad a excelentes precios."
         },
         {
-            
             titulo: "Calidad garantizada",
             descripcion: "Trabajamos para ofrecerte lo mejor en cada compra."
         }
@@ -194,6 +201,8 @@ export default function Home() {
     return (
         <div className="home-page">
 
+            {/* HERO */}
+
             <section className="hero-home">
 
                 <div className="hero-overlay">
@@ -222,9 +231,11 @@ export default function Home() {
                             Explorar catálogo
                         </a>
 
-                        <a href="/login" className="home-btn secondary">
-                            Iniciar sesión
-                        </a>
+                        {!estaLogueado && (
+                            <a href="/login" className="home-btn secondary">
+                                Iniciar sesión
+                            </a>
+                        )}
 
                     </div>
 
@@ -233,14 +244,16 @@ export default function Home() {
                 <div className="hero-image">
 
                     <img
-                        src="https://tse1.mm.bing.net/th/id/OIP.vbKsAYcoU6JfBU0EJN9SpQHaEJ?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
-                        alt="Variedad de productos lácteos"
+                        src="/img/logolacteos.png"
+                        alt="Logo Lácteos Axúme"
                     />
 
                 </div>
 
             </section>
 
+
+            {/* CATEGORÍAS */}
 
             <section className="home-section categories-home">
 
@@ -250,23 +263,30 @@ export default function Home() {
                     <h2>Nuestras categorías</h2>
 
                     <p>
-                        Encuentra tus productos lácteos favoritos.
+                        Encuentra tus productos favoritos, frescos y de calidad.
                     </p>
 
                 </div>
 
                 <div className="category-grid">
 
-                    {cargando && <p>Cargando categorías...</p>}
+                    {cargando && (
+                        <>
+                            <div className="category-skeleton"></div>
+                            <div className="category-skeleton"></div>
+                            <div className="category-skeleton"></div>
+                        </>
+                    )}
 
                     {!cargando && categorias.map((categoria) => (
 
-                        <article
+                        <a
+                            href="/catalog"
                             className="category-card"
                             key={categoria.categoria_id}
                         >
 
-                            <div className="category-icon">
+                            <div className="category-media">
 
                                 {esImagenCategoria(categoria.categoria_nombre) ? (
 
@@ -277,19 +297,25 @@ export default function Home() {
 
                                 ) : (
 
-                                    "🧺"
+                                    <div className="category-placeholder"></div>
 
                                 )}
 
                             </div>
 
-                            <h3>{categoria.categoria_nombre}</h3>
+                            <div className="category-overlay"></div>
 
-                            <a href="/catalog">
-                                Ver productos →
-                            </a>
+                            <div className="category-content">
 
-                        </article>
+                                <h3>{categoria.categoria_nombre}</h3>
+
+                                <span className="category-link">
+                                    Ver productos
+                                </span>
+
+                            </div>
+
+                        </a>
 
                     ))}
 
@@ -301,6 +327,8 @@ export default function Home() {
 
             </section>
 
+
+            {/* VENTAJAS */}
 
             <section className="home-section advantages-home">
 
@@ -321,10 +349,6 @@ export default function Home() {
 
                         <article className="advantage-card" key={index}>
 
-                            <div className="advantage-icon">
-                                {ventaja.icon}
-                            </div>
-
                             <h3>{ventaja.titulo}</h3>
                             <p>{ventaja.descripcion}</p>
 
@@ -336,6 +360,8 @@ export default function Home() {
 
             </section>
 
+
+            {/* PRODUCTOS DESTACADOS CON SCROLL */}
 
             <section className="home-section catalog-home">
 
@@ -352,87 +378,103 @@ export default function Home() {
 
                 {error && <p>{error}</p>}
 
-                <div className="product-grid">
+                <div className="product-carousel">
 
-                    {cargando && <p>Cargando productos...</p>}
+                    <button
+                        type="button"
+                        className="carousel-btn carousel-prev"
+                        onClick={() => desplazar(-1)}
+                        aria-label="Anterior"
+                    >
+                        &lt;
+                    </button>
 
-                    {!cargando && productos.map((producto) => {
+                    <div className="product-grid" ref={carruselRef}>
 
-                        const categoria = categorias.find(
-                            (item) => item.categoria_id === producto.categoria_id
-                        );
+                        {cargando && <p>Cargando productos...</p>}
 
-                        const imagenProducto = obtenerImagenProducto(
-                            producto.producto_nombre
-                        );
+                        {!cargando && productos.map((producto) => {
 
-                        return (
+                            const categoria = categorias.find(
+                                (item) => item.categoria_id === producto.categoria_id
+                            );
 
-                            <article
-                                className="product-card"
-                                key={producto.producto_id}
-                            >
+                            const imagenProducto = obtenerImagenProducto(
+                                producto.producto_nombre
+                            );
 
-                                <div className="product-image">
+                            return (
 
-                                    {imagenProducto ? (
+                                <article
+                                    className="product-card"
+                                    key={producto.producto_id}
+                                >
 
-                                        <img
-                                            src={imagenProducto}
-                                            alt={producto.producto_nombre}
-                                            onError={(e) => {
-                                                e.currentTarget.style.display = "none";
-                                            }}
-                                        />
+                                    <div className="product-image">
 
-                                    ) : (
+                                        {imagenProducto ? (
 
-                                        <span>🧺</span>
+                                            <img
+                                                src={imagenProducto}
+                                                alt={producto.producto_nombre}
+                                                onError={(e) => {
+                                                    e.currentTarget.style.display = "none";
+                                                }}
+                                            />
 
-                                    )}
+                                        ) : (
 
-                                </div>
+                                            <span>Sin imagen</span>
 
-                                <div className="product-info">
+                                        )}
 
-                                    <span className="product-category">
-                                        {categoria?.categoria_nombre || "Producto"}
-                                    </span>
-
-                                    <h3>{producto.producto_nombre}</h3>
-
-                                    <div className="product-price">
-                                        L. {Number(producto.producto_precio).toFixed(2)}
                                     </div>
 
-                                    <a href="/catalog" className="product-button">
-                                        Ver catálogo
-                                    </a>
+                                    <div className="product-info">
 
-                                </div>
+                                        <span className="product-category">
+                                            {categoria?.categoria_nombre || "Producto"}
+                                        </span>
 
-                            </article>
+                                        <h3>{producto.producto_nombre}</h3>
 
-                        );
+                                        <div className="product-price">
+                                            L. {Number(producto.producto_precio).toFixed(2)}
+                                        </div>
 
-                    })}
+                                        <a href="/catalog" className="product-button">
+                                            Ver catálogo
+                                        </a>
 
-                    {!cargando && productos.length === 0 && !error && (
-                        <p>No hay productos disponibles.</p>
-                    )}
+                                    </div>
 
-                </div>
+                                </article>
 
-                <div className="catalog-footer">
+                            );
 
-                    <a href="/catalog" className="home-btn primary">
-                        Ver todos los productos
-                    </a>
+                        })}
+
+                        {!cargando && productos.length === 0 && !error && (
+                            <p>No hay productos disponibles.</p>
+                        )}
+
+                    </div>
+
+                    <button
+                        type="button"
+                        className="carousel-btn carousel-next"
+                        onClick={() => desplazar(1)}
+                        aria-label="Siguiente"
+                    >
+                        &gt;
+                    </button>
 
                 </div>
 
             </section>
 
+
+            {/* LLAMADO A LA ACCIÓN */}
 
             <section className="home-cta">
 
