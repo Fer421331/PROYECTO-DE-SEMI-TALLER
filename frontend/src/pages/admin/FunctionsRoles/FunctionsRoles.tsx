@@ -1,43 +1,76 @@
-import { useState } from "react";
-import "./FunctionsRoles.css";
 
-const rolesIniciales = [
-    {
-        codigo: "ROL001",
-        descripcion: "Administrador",
-        estado: "ACT"
-    },
-    {
-        codigo: "ROL002",
-        descripcion: "Gestor de inventario",
-        estado: "ACT"
-    },
-    {
-        codigo: "ROL003",
-        descripcion: "Vendedor",
-        estado: "ACT"
-    },
-    {
-        codigo: "ROL004",
-        descripcion: "Supervisor",
-        estado: "INA"
-    },
-    {
-        codigo: "ROL005",
-        descripcion: "Consulta",
-        estado: "ACT"
-    }
-];
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import {
+    Rol,
+    getRoles,
+} from "../../../services/functionroles.service";
+
+import "./FunctionsRoles.css";
 
 export default function FunctionsRoles() {
 
+    const navigate = useNavigate();
+
+    const [roles, setRoles] = useState<Rol[]>([]);
     const [buscar, setBuscar] = useState("");
 
-    const rolesFiltrados = rolesIniciales.filter((rol) =>
-        `${rol.codigo} ${rol.descripcion} ${rol.estado}`
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    // Cargar roles
+    const cargarRoles = useCallback(async () => {
+
+        try {
+
+            setLoading(true);
+            setError("");
+
+            const rolesData = await getRoles();
+
+            setRoles(rolesData);
+
+        } catch (error) {
+
+            console.error("Error al cargar roles:", error);
+
+            setError(
+                "No se pudieron cargar los roles. Verifica la conexión."
+            );
+
+        } finally {
+
+            setLoading(false);
+
+        }
+
+    }, []);
+
+    useEffect(() => {
+        cargarRoles();
+    }, [cargarRoles]);
+
+    // Filtrar roles
+    const rolesFiltrados = roles.filter((rol) =>
+        `${rol.rolescod} ${rol.rolesdsc} ${rol.rolesest}`
             .toLowerCase()
             .includes(buscar.toLowerCase().trim())
     );
+
+    // Contar roles activos
+    const rolesActivos = roles.filter(
+        (rol) => rol.rolesest === "ACT"
+    ).length;
+
+    // Administrar funciones
+    const administrarFunciones = (rol: Rol) => {
+
+        navigate(
+            `/admin/functions-roles/detail?rolescod=${encodeURIComponent(rol.rolescod)}`
+        );
+
+    };
 
     return (
 
@@ -56,10 +89,6 @@ export default function FunctionsRoles() {
                     </p>
                 </div>
 
-                <div className="functions-roles-header-icon">
-                    🔐
-                </div>
-
             </div>
 
             {/* RESUMEN */}
@@ -68,12 +97,8 @@ export default function FunctionsRoles() {
 
                 <div className="functions-roles-summary-card">
 
-                    <div className="functions-roles-summary-icon">
-                        👥
-                    </div>
-
                     <div>
-                        <strong>{rolesIniciales.length}</strong>
+                        <strong>{roles.length}</strong>
                         <span>Roles registrados</span>
                     </div>
 
@@ -86,15 +111,21 @@ export default function FunctionsRoles() {
                     </div>
 
                     <div>
-                        <strong>
-                            {rolesIniciales.filter(rol => rol.estado === "ACT").length}
-                        </strong>
+                        <strong>{rolesActivos}</strong>
                         <span>Roles activos</span>
                     </div>
 
                 </div>
 
             </div>
+
+            {/* ERROR */}
+
+            {error && (
+                <div className="functions-roles-error" role="alert">
+                    {error}
+                </div>
+            )}
 
             {/* TABLA */}
 
@@ -112,8 +143,6 @@ export default function FunctionsRoles() {
 
                     <div className="functions-roles-search">
 
-                        <span>🔎</span>
-
                         <input
                             type="text"
                             placeholder="Buscar rol..."
@@ -130,43 +159,64 @@ export default function FunctionsRoles() {
                     <table className="functions-roles-table">
 
                         <thead>
-
                             <tr>
                                 <th>Código</th>
                                 <th>Rol</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
-
                         </thead>
 
                         <tbody>
 
-                            {rolesFiltrados.length > 0 ? (
+                            {loading ? (
+
+                                <tr>
+                                    <td colSpan={4} className="functions-roles-empty">
+                                        Cargando roles...
+                                    </td>
+                                </tr>
+
+                            ) : error ? (
+
+                                <tr>
+                                    <td colSpan={4} className="functions-roles-empty">
+
+                                        <button
+                                            type="button"
+                                            onClick={cargarRoles}
+                                        >
+                                            Reintentar
+                                        </button>
+
+                                    </td>
+                                </tr>
+
+                            ) : rolesFiltrados.length > 0 ? (
 
                                 rolesFiltrados.map((rol) => (
 
-                                    <tr key={rol.codigo}>
+                                    <tr key={rol.rolescod}>
 
                                         <td>
                                             <span className="functions-roles-code">
-                                                {rol.codigo}
+                                                {rol.rolescod}
                                             </span>
                                         </td>
 
                                         <td>
-                                            <strong>{rol.descripcion}</strong>
+                                            <strong>{rol.rolesdsc}</strong>
                                         </td>
 
                                         <td>
 
                                             <span
-                                                className={`functions-roles-status ${rol.estado === "ACT"
-                                                        ? "active"
-                                                        : "inactive"
+                                                className={`functions-roles-status ${rol.rolesest === "ACT"
+                                                    ? "active"
+                                                    : "inactive"
                                                     }`}
                                             >
-                                                {rol.estado === "ACT"
+                                                {rol.rolesest === "ACT"
                                                     ? "Activo"
                                                     : "Inactivo"}
                                             </span>
@@ -178,6 +228,10 @@ export default function FunctionsRoles() {
                                             <button
                                                 type="button"
                                                 className="functions-roles-manage"
+                                                disabled={rol.rolesest !== "ACT"}
+                                                onClick={() =>
+                                                    administrarFunciones(rol)
+                                                }
                                             >
                                                 ⚙ Administrar funciones
                                             </button>
@@ -207,12 +261,8 @@ export default function FunctionsRoles() {
 
                 </div>
 
-                {/* PIE */}
-
                 <div className="functions-roles-footer">
-
-                    Mostrando {rolesFiltrados.length} de {rolesIniciales.length} roles
-
+                    Mostrando {rolesFiltrados.length} de {roles.length} roles
                 </div>
 
             </div>
@@ -224,6 +274,7 @@ export default function FunctionsRoles() {
                 <button
                     type="button"
                     className="functions-roles-back"
+                    onClick={() => navigate("/admin/panel")}
                 >
                     ← Regresar
                 </button>

@@ -1,46 +1,64 @@
-import { useState } from "react";
-import "./Users.css";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const usuariosIniciales = [
-    {
-        codigo: "USR001",
-        correo: "admin@axume.com",
-        nombre: "Administrador General",
-        estado: "ACT",
-        tipo: "Administrador"
-    },
-    {
-        codigo: "USR002",
-        correo: "empleado@axume.com",
-        nombre: "Carlos Martínez",
-        estado: "ACT",
-        tipo: "Empleado"
-    },
-    {
-        codigo: "USR003",
-        correo: "cliente@gmail.com",
-        nombre: "María López",
-        estado: "ACT",
-        tipo: "Cliente"
-    },
-    {
-        codigo: "USR004",
-        correo: "usuario@gmail.com",
-        nombre: "Juan Hernández",
-        estado: "INA",
-        tipo: "Cliente"
-    }
-];
+import {
+    Usuario,
+    getUsuarios,
+} from "../../../services/users.service";
+
+import "./Users.css";
 
 export default function Users() {
 
-    const [buscar, setBuscar] = useState("");
+    const navigate = useNavigate();
 
-    const usuariosFiltrados = usuariosIniciales.filter((usuario) =>
-        `${usuario.codigo} ${usuario.correo} ${usuario.nombre} ${usuario.estado} ${usuario.tipo}`
+    const [usuarios, setUsuarios] = useState<Usuario[]>([]);
+    const [buscar, setBuscar] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    const cargarUsuarios = async () => {
+        try {
+            setLoading(true);
+            setError("");
+
+            const data = await getUsuarios();
+
+            setUsuarios(Array.isArray(data) ? data : []);
+
+        } catch (error) {
+            console.error("Error al cargar usuarios:", error);
+
+            setError(
+                "No se pudieron cargar los usuarios. Verifica la conexión."
+            );
+
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        cargarUsuarios();
+    }, []);
+
+    // Buscar usuarios
+    const usuariosFiltrados = usuarios.filter((usuario) =>
+        `${usuario.usercod} ${usuario.useremail} ${usuario.username} ${usuario.userest} ${usuario.usertipo}`
             .toLowerCase()
             .includes(buscar.toLowerCase().trim())
     );
+
+    // Administrar roles del usuario
+    const handleAdministrarRoles = (usuario: Usuario) => {
+        navigate(
+            `/admin/user-roles?usercod=${usuario.usercod}`
+        );
+    };
+
+    const handleBack = () => {
+        navigate("/admin/panel");
+    };
 
     return (
 
@@ -59,10 +77,6 @@ export default function Users() {
                     </p>
                 </div>
 
-                <div className="users-header-icon">
-                    👤
-                </div>
-
             </div>
 
             {/* TARJETA */}
@@ -75,114 +89,137 @@ export default function Users() {
 
                     <div className="users-search">
 
-                        <span>🔎</span>
-
                         <input
                             type="text"
                             placeholder="Buscar por ID, correo, nombre o tipo..."
                             value={buscar}
-                            onChange={(e) => setBuscar(e.target.value)}
+                            onChange={(e) =>
+                                setBuscar(e.target.value)
+                            }
                         />
 
                     </div>
 
                 </div>
 
+                {/* ERROR */}
+
+                {error && (
+                    <div className="users-error" role="alert">
+                        {error}
+                    </div>
+                )}
+
                 {/* TABLA */}
 
                 <div className="users-table-container">
 
-                    <table className="users-table">
+                    {loading ? (
 
-                        <thead>
+                        <p className="users-empty">
+                            Cargando usuarios...
+                        </p>
 
-                            <tr>
-                                <th>ID</th>
-                                <th>Correo</th>
-                                <th>Nombre</th>
-                                <th>Estado</th>
-                                <th>Tipo</th>
-                                <th>Acciones</th>
-                            </tr>
+                    ) : (
 
-                        </thead>
+                        <table className="users-table">
 
-                        <tbody>
-
-                            {usuariosFiltrados.length > 0 ? (
-
-                                usuariosFiltrados.map((usuario) => (
-
-                                    <tr key={usuario.codigo}>
-
-                                        <td>
-                                            <span className="users-code">
-                                                {usuario.codigo}
-                                            </span>
-                                        </td>
-
-                                        <td>
-                                            {usuario.correo}
-                                        </td>
-
-                                        <td>
-                                            <strong>
-                                                {usuario.nombre}
-                                            </strong>
-                                        </td>
-
-                                        <td>
-
-                                            <span
-                                                className={`users-status ${usuario.estado === "ACT"
-                                                        ? "active"
-                                                        : "inactive"
-                                                    }`}
-                                            >
-                                                {usuario.estado === "ACT"
-                                                    ? "Activo"
-                                                    : "Inactivo"}
-                                            </span>
-
-                                        </td>
-
-                                        <td>
-                                            <span className="users-type">
-                                                {usuario.tipo}
-                                            </span>
-                                        </td>
-
-                                        <td>
-
-                                            <button
-                                                type="button"
-                                                className="users-roles-button"
-                                            >
-                                                ⚙ Administrar roles
-                                            </button>
-
-                                        </td>
-
-                                    </tr>
-
-                                ))
-
-                            ) : (
+                            <thead>
 
                                 <tr>
-                                    <td
-                                        colSpan={6}
-                                        className="users-empty"
-                                    >
-                                        No se encontraron usuarios.
-                                    </td>
+                                    <th>ID</th>
+                                    <th>Correo</th>
+                                    <th>Nombre</th>
+                                    <th>Estado</th>
+                                    <th>Tipo</th>
+                                    <th>Acciones</th>
                                 </tr>
 
-                            )}
+                            </thead>
 
-                        </tbody>
+                            <tbody>
 
-                    </table>
+                                {usuariosFiltrados.length > 0 ? (
+
+                                    usuariosFiltrados.map((usuario) => (
+
+                                        <tr key={usuario.usercod}>
+
+                                            <td>
+                                                <span className="users-code">
+                                                    {usuario.usercod}
+                                                </span>
+                                            </td>
+
+                                            <td>
+                                                {usuario.useremail}
+                                            </td>
+
+                                            <td>
+                                                <strong>
+                                                    {usuario.username}
+                                                </strong>
+                                            </td>
+
+                                            <td>
+
+                                                <span
+                                                    className={`users-status ${usuario.userest === "ACT"
+                                                            ? "active"
+                                                            : "inactive"
+                                                        }`}
+                                                >
+                                                    {usuario.userest === "ACT"
+                                                        ? "Activo"
+                                                        : "Inactivo"}
+                                                </span>
+
+                                            </td>
+
+                                            <td>
+                                                <span className="users-type">
+                                                    {usuario.usertipo === "ADM"
+                                                        ? "Administrador"
+                                                        : "Cliente"}
+                                                </span>
+                                            </td>
+
+                                            <td>
+
+                                                <button
+                                                    type="button"
+                                                    className="users-roles-button"
+                                                    onClick={() =>
+                                                        handleAdministrarRoles(usuario)
+                                                    }
+                                                >
+                                                    ⚙ Administrar roles
+                                                </button>
+
+                                            </td>
+
+                                        </tr>
+
+                                    ))
+
+                                ) : (
+
+                                    <tr>
+                                        <td
+                                            colSpan={6}
+                                            className="users-empty"
+                                        >
+                                            No se encontraron usuarios.
+                                        </td>
+                                    </tr>
+
+                                )}
+
+                            </tbody>
+
+                        </table>
+
+                    )}
 
                 </div>
 
@@ -191,7 +228,7 @@ export default function Users() {
                 <div className="users-footer">
 
                     <span>
-                        Mostrando {usuariosFiltrados.length} de {usuariosIniciales.length} usuarios
+                        Mostrando {usuariosFiltrados.length} de {usuarios.length} usuarios
                     </span>
 
                 </div>
@@ -205,6 +242,7 @@ export default function Users() {
                 <button
                     type="button"
                     className="users-back"
+                    onClick={handleBack}
                 >
                     ← Regresar
                 </button>
