@@ -1,0 +1,219 @@
+.ax-code-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: radial-gradient(circle at 50% 20%, #e9f1e7 0, transparent 29rem), var(--axume-cream);
+    color: var(--axume-text)
+}
+
+.ax-code-header {
+    height: 78px;
+    padding: 0 clamp(18px, 6vw, 86px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--axume-green);
+    color: #fff
+}
+
+.ax-code-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #fff
+}
+
+.ax-code-brand>span {
+    width: 43px;
+    height: 43px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: #fff;
+    color: var(--axume-green);
+    font-weight: 900
+}
+
+.ax-code-brand strong {
+    font-size: 17px
+}
+
+.ax-code-brand small {
+    display: block;
+    margin-top: 3px;
+    color: #ffffffb8;
+    font-size: 10px;
+    font-weight: 400
+}
+
+.ax-code-header>a:last-child {
+    color: #ffffffd9;
+    font-size: 12px;
+    font-weight: 700
+}
+
+.ax-code-layout {
+    display: grid;
+    place-items: center;
+    flex: 1;
+    padding: 38px 18px
+}
+
+.ax-code-card {
+    width: min(480px, 100%);
+    padding: 39px;
+    border: 1px solid var(--axume-border);
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: var(--axume-shadow-card);
+    text-align: center
+}
+
+.ax-code-icon {
+    width: 55px;
+    height: 55px;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 21px;
+    border-radius: 16px;
+    background: #edf4eb;
+    color: var(--axume-green);
+    font-size: 24px
+}
+
+.ax-code-kicker {
+    color: var(--axume-green);
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: .15em
+}
+
+.ax-code-card h1 {
+    margin: 10px 0;
+    color: var(--axume-green-dark);
+    font-size: 29px;
+    letter-spacing: -.04em
+}
+
+.ax-code-description {
+    margin: 0 auto 18px;
+    color: var(--axume-muted);
+    font-size: 12px;
+    line-height: 1.75
+}
+
+.ax-code-email {
+    display: inline-flex;
+    gap: 9px;
+    margin: 0 auto 23px;
+    padding: 10px 13px;
+    border-radius: 9px;
+    background: #f4f7f1;
+    color: var(--axume-green);
+    font-size: 11px
+}
+
+.ax-code-email strong {
+    color: var(--axume-green-dark)
+}
+
+.ax-code-label {
+    margin-bottom: 12px;
+    color: #405349;
+    font-size: 11px;
+    font-weight: 800
+}
+
+.ax-code-inputs {
+    display: flex;
+    justify-content: center;
+    gap: 9px
+}
+
+.ax-code-inputs input {
+    width: 47px;
+    height: 53px;
+    border: 1px solid var(--axume-border);
+    border-radius: 10px;
+    outline: none;
+    background: #fcfdfb;
+    color: var(--axume-green-dark);
+    font-size: 21px;
+    font-weight: 800;
+    text-align: center
+}
+
+.ax-code-inputs input:focus {
+    border-color: var(--axume-green);
+    box-shadow: 0 0 0 3px rgba(23, 77, 56, .08)
+}
+
+.ax-code-submit {
+    width: 100%;
+    height: 49px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+    border: 0;
+    border-radius: 9px;
+    background: var(--axume-green);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: .07em
+}
+
+.ax-code-resend {
+    margin: 20px 0 0;
+    color: var(--axume-muted);
+    font-size: 11px
+}
+
+.ax-code-resend a {
+    color: var(--axume-green);
+    font-weight: 800
+}
+
+.ax-code-hint {
+    margin: 9px 0 0;
+    color: #9aa49c;
+    font-size: 10px
+}
+
+.ax-code-footer {
+    padding: 20px;
+    border-top: 1px solid var(--axume-border);
+    color: var(--axume-muted);
+    font-size: 11px;
+    text-align: center
+}
+
+@media(max-width:540px) {
+    .ax-code-header {
+        height: 70px;
+        padding: 0 14px
+    }
+
+    .ax-code-brand strong {
+        font-size: 14px
+    }
+
+    .ax-code-header>a:last-child {
+        font-size: 10px
+    }
+
+    .ax-code-card {
+        padding: 29px 18px
+    }
+
+    .ax-code-inputs {
+        gap: 6px
+    }
+
+    .ax-code-inputs input {
+        width: 40px;
+        height: 48px
+    }
+}

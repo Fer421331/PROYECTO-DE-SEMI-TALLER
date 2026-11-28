@@ -1,0 +1,389 @@
+.home-page {
+    width: 100%;
+    color: #26352c;
+    font-family: inherit;
+}
+
+/* HERO */
+
+.hero-home {
+    min-height: 460px;
+    padding: 65px 8%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    background: linear-gradient(120deg, #e8f5e9, #f8fff8);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.hero-overlay {
+    max-width: 600px;
+}
+
+.hero-tag {
+    display: inline-block;
+    background: #d0ead5;
+    color: #28643b;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.hero-home h1 {
+    font-size: 46px;
+    line-height: 1.2;
+    color: #205c35;
+    margin-bottom: 18px;
+}
+
+.hero-subtitle {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.hero-description {
+    color: #65736a;
+    line-height: 1.7;
+    font-size: 16px;
+    margin-bottom: 28px;
+}
+
+.hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.home-btn {
+    display: inline-block;
+    padding: 13px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.home-btn.primary {
+    background: #287b43;
+    color: white;
+}
+
+.home-btn.primary:hover {
+    background: #1d6033;
+    transform: translateY(-3px);
+}
+
+.home-btn.secondary {
+    border: 2px solid #287b43;
+    color: #287b43;
+}
+
+.home-btn.secondary:hover {
+    background: #287b43;
+    color: white;
+}
+
+.hero-image {
+    min-width: 280px;
+    height: 280px;
+    width: 280px;
+    border-radius: 50%;
+    background: #d4ebd7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 15px 40px rgba(35, 100, 55, 0.12);
+}
+
+.hero-image span {
+    font-size: 65px;
+}
+
+/* SECCIONES */
+
+.home-section {
+    padding: 75px 5%;
+}
+
+.home-section-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.home-section-header span {
+    color: #38834e;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.home-section-header h2 {
+    color: #205c35;
+    font-size: 32px;
+    margin: 12px 0;
+}
+
+.home-section-header p {
+    color: #78847b;
+    font-size: 15px;
+}
+
+/* CATEGORIAS */
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.category-card {
+    background: white;
+    border: 1px solid #e1eee3;
+    padding: 30px 20px;
+    text-align: center;
+    border-radius: 14px;
+    transition: 0.3s;
+}
+
+.category-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(35, 100, 55, 0.12);
+    border-color: #80bd8b;
+}
+
+.category-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.category-card h3 {
+    color: #28643b;
+    margin-bottom: 12px;
+}
+
+.category-card a {
+    text-decoration: none;
+    color: #39854d;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* VENTAJAS */
+
+.advantages-home {
+    background: #f4faf4;
+}
+
+.advantages-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+}
+
+.advantage-card {
+    background: white;
+    padding: 28px 20px;
+    text-align: center;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.advantage-icon {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.advantage-card h3 {
+    color: #28643b;
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.advantage-card p {
+    color: #78847b;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* PRODUCTOS */
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.product-card {
+    background: white;
+    border: 1px solid #e5eee6;
+    border-radius: 14px;
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(35, 100, 55, 0.12);
+}
+
+.product-image {
+    height: 190px;
+    background: #f0f8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-image span {
+    font-size: 85px;
+}
+
+.product-info {
+    padding: 22px;
+}
+
+.product-category {
+    color: #438951;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.product-info h3 {
+    color: #294d34;
+    font-size: 18px;
+    margin: 12px 0;
+}
+
+.product-price {
+    color: #287b43;
+    font-size: 21px;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.product-button {
+    display: block;
+    text-align: center;
+    background: #287b43;
+    color: white;
+    padding: 11px;
+    border-radius: 7px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.product-button:hover {
+    background: #1d6033;
+}
+
+.catalog-footer {
+    text-align: center;
+    margin-top: 40px;
+}
+
+/* LLAMADO FINAL */
+
+.home-cta {
+    background: #205c35;
+    color: white;
+    text-align: center;
+    padding: 60px 25px;
+    border-radius: 16px;
+    margin: 20px 5% 60px;
+}
+
+.home-cta h2 {
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.home-cta p {
+    color: #dcebdd;
+    margin-bottom: 25px;
+}
+
+.home-cta .home-btn {
+    background: white;
+    color: #205c35;
+}
+
+.home-cta .home-btn:hover {
+    background: #e5f2e6;
+    transform: translateY(-3px);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .advantages-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero-home h1 {
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 700px) {
+    .hero-home {
+        flex-direction: column;
+        text-align: center;
+        padding: 45px 20px;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .hero-image {
+        min-width: 220px;
+        width: 220px;
+        height: 220px;
+    }
+
+    .hero-image span {
+        font-size: 48px;
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .home-section {
+        padding: 50px 15px;
+    }
+
+    .home-section-header h2 {
+        font-size: 26px;
+    }
+}
+
+@media (max-width: 450px) {
+
+    .product-grid,
+    .advantages-grid,
+    .category-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-home h1 {
+        font-size: 30px;
+    }
+
+    .home-cta h2 {
+        font-size: 24px;
+    }
+}

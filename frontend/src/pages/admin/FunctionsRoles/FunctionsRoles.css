@@ -1,0 +1,341 @@
+.functions-roles-page {
+    width: min(100% - 44px, 1150px);
+    margin: 0 auto;
+    padding: 45px 0;
+    color: var(--axume-text);
+}
+
+/* ENCABEZADO */
+
+.functions-roles-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.functions-roles-header h1 {
+    margin: 0 0 10px;
+    color: var(--axume-green-dark);
+    font-size: clamp(28px, 4vw, 36px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+}
+
+.functions-roles-header p {
+    margin: 0;
+    color: var(--axume-muted);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.functions-roles-header-icon {
+    width: 60px;
+    height: 60px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    border-radius: var(--axume-radius-md);
+    background: var(--axume-green-light);
+    font-size: 27px;
+}
+
+/* RESUMEN */
+
+.functions-roles-summary {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.functions-roles-summary-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    border: 1px solid var(--axume-border);
+    border-radius: var(--axume-radius-md);
+    background: var(--axume-white);
+}
+
+.functions-roles-summary-icon {
+    width: 45px;
+    height: 45px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: var(--axume-green-light);
+    color: var(--axume-green);
+    font-size: 21px;
+}
+
+.functions-roles-summary-icon.active-icon {
+    background: #e9f6ed;
+    color: #287a43;
+}
+
+.functions-roles-summary-card div:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.functions-roles-summary-card strong {
+    color: var(--axume-green-dark);
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.functions-roles-summary-card span {
+    color: var(--axume-muted);
+    font-size: 12px;
+}
+
+/* TARJETA PRINCIPAL */
+
+.functions-roles-card {
+    overflow: hidden;
+    border: 1px solid var(--axume-border);
+    border-radius: var(--axume-radius-lg);
+    background: var(--axume-white);
+    box-shadow: var(--axume-shadow-card);
+}
+
+/* BARRA SUPERIOR */
+
+.functions-roles-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 24px;
+    border-bottom: 1px solid var(--axume-border);
+}
+
+.functions-roles-toolbar h2 {
+    margin: 0 0 6px;
+    color: var(--axume-green-dark);
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.functions-roles-toolbar p {
+    margin: 0;
+    color: var(--axume-muted);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* BUSCADOR */
+
+.functions-roles-search {
+    width: min(100%, 300px);
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 13px;
+    border: 1px solid var(--axume-border);
+    border-radius: var(--axume-radius-sm);
+    background: #fcfdfb;
+}
+
+.functions-roles-search span {
+    font-size: 15px;
+}
+
+.functions-roles-search input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--axume-text);
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.functions-roles-search:focus-within {
+    border-color: var(--axume-green);
+    box-shadow: 0 0 0 4px rgba(23, 77, 56, 0.09);
+}
+
+/* TABLA */
+
+.functions-roles-table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.functions-roles-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.functions-roles-table thead {
+    background: #f5f8f4;
+}
+
+.functions-roles-table th {
+    padding: 17px 20px;
+    color: #405349;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+}
+
+.functions-roles-table td {
+    padding: 18px 20px;
+    border-top: 1px solid var(--axume-border);
+    color: var(--axume-text);
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.functions-roles-table tbody tr {
+    transition: background 0.2s;
+}
+
+.functions-roles-table tbody tr:hover {
+    background: #f9fbf8;
+}
+
+.functions-roles-table td strong {
+    font-weight: 700;
+}
+
+/* CÓDIGO */
+
+.functions-roles-code {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: var(--axume-green-light);
+    color: var(--axume-green);
+    font-size: 11px;
+    font-weight: 800;
+}
+
+/* ESTADO */
+
+.functions-roles-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.functions-roles-status.active {
+    background: #e9f6ed;
+    color: #287a43;
+}
+
+.functions-roles-status.inactive {
+    background: #fcebea;
+    color: #b4433d;
+}
+
+/* ADMINISTRAR */
+
+.functions-roles-manage {
+    min-height: 37px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 14px;
+    border: 1px solid var(--axume-border);
+    border-radius: 6px;
+    background: var(--axume-white);
+    color: var(--axume-green);
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.functions-roles-manage:hover {
+    border-color: var(--axume-green);
+    background: var(--axume-green);
+    color: var(--axume-white);
+}
+
+/* SIN RESULTADOS */
+
+.functions-roles-empty {
+    padding: 40px 20px !important;
+    color: var(--axume-muted) !important;
+    text-align: center;
+}
+
+/* PIE */
+
+.functions-roles-footer {
+    padding: 17px 24px;
+    border-top: 1px solid var(--axume-border);
+    background: #fcfdfb;
+    color: var(--axume-muted);
+    font-size: 12px;
+}
+
+/* REGRESAR */
+
+.functions-roles-bottom {
+    margin-top: 23px;
+}
+
+.functions-roles-back {
+    min-height: 45px;
+    padding: 0 22px;
+    border: 1px solid var(--axume-border);
+    border-radius: var(--axume-radius-sm);
+    background: var(--axume-white);
+    color: var(--axume-green);
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.functions-roles-back:hover {
+    background: var(--axume-green);
+    color: var(--axume-white);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 700px) {
+
+    .functions-roles-page {
+        width: calc(100% - 32px);
+        padding: 30px 0;
+    }
+
+    .functions-roles-header h1 {
+        font-size: 27px;
+    }
+
+    .functions-roles-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .functions-roles-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .functions-roles-search {
+        width: 100%;
+    }
+
+    .functions-roles-table th,
+    .functions-roles-table td {
+        padding: 14px;
+    }
+
+}

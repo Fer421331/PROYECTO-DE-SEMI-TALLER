@@ -1,99 +1,66 @@
-import { FormEvent, useState, ChangeEvent } from 'react';
-import axios, { AxiosError } from 'axios';
-import './Login.css';
-
-interface UsuarioRespuesta {
-  usercod: number;
-  useremail: string;
-  username: string;
-  usertipo: string;
-}
-
-interface LoginResponse {
-  mensaje: string;
-  token: string;
-  usuario: UsuarioRespuesta;
-}
-
-interface ErrorResponse {
-  mensaje?: string;
-}
+import { FormEvent, useState, ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import "./Login.css";
 
 function Login() {
-  const [useremail, setUseremail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [error, setError] = useState<string>('');
-  const [success, setSuccess] = useState<string>('');
-  const [cargando, setCargando] = useState<boolean>(false);
-  const [mostrarPassword, setMostrarPassword] = useState<boolean>(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [cargando, setCargando] = useState(false);
+  const [mostrarPassword, setMostrarPassword] = useState(false);
+
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
 
-    const correo = useremail.trim();
+    const usuario = username.trim();
 
-    if (!correo) {
-      setError('El correo electrónico es obligatorio.');
+    if (!usuario) {
+      setError("El nombre de usuario es obligatorio.");
       return;
     }
 
     if (!password) {
-      setError('La contraseña es obligatoria.');
-      return;
-    }
-
-    const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo);
-
-    if (!correoValido) {
-      setError('Ingrese un correo electrónico válido.');
+      setError("La contraseña es obligatoria.");
       return;
     }
 
     if (password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres.');
+      setError("La contraseña debe tener al menos 6 caracteres.");
       return;
     }
 
     setCargando(true);
 
     try {
-      const respuesta = await axios.post<LoginResponse>(
-        'http://localhost:3000/api/auth/login',
-        { useremail: correo, password },
-        { timeout: 8000 }
+      await login(usuario, password);
+      setSuccess("Inicio de sesión exitoso.");
+      navigate("/", { replace: true });
+    } catch (err: unknown) {
+      setError(
+        err instanceof Error ? err.message : "No se pudo iniciar sesión.",
       );
-
-      localStorage.setItem('token', respuesta.data.token);
-      localStorage.setItem('usuario', JSON.stringify(respuesta.data.usuario));
-      setSuccess('Inicio de sesión exitoso.');
-      console.log('Usuario autenticado:', respuesta.data.usuario);
-    } catch (error: unknown) {
-      const axiosError = error as AxiosError<ErrorResponse>;
-
-      if (axiosError.code === 'ECONNABORTED') {
-        setError('El servidor tardó demasiado en responder.');
-      } else if (axiosError.response) {
-        setError(axiosError.response.data?.mensaje || 'No se pudo iniciar sesión.');
-      } else {
-        setError('No se pudo conectar con el servidor.');
-      }
     } finally {
       setCargando(false);
     }
   };
 
-  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setUseremail(e.target.value);
-    setError('');
-    setSuccess('');
+  const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    setUsername(e.target.value);
+    setError("");
+    setSuccess("");
   };
 
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setPassword(e.target.value);
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
   };
 
   return (
@@ -103,84 +70,109 @@ function Login() {
           <div className="brand-icon">LA</div>
           <div>
             <h1>Lácteos Axúme</h1>
-            <span>E-commerce</span>
+            <span>Calidad que nace de lo natural</span>
           </div>
         </div>
       </header>
 
       <main className="login-main">
-        <section className="login-card">
-          <div className="login-title">
-            <h2>Iniciar sesión</h2>
-            <p>Ingresa tus datos para acceder a tu cuenta.</p>
-          </div>
+        <div className="login-layout">
+          <section className="login-intro">
+            <span className="login-eyebrow">Bienvenido a Axúme</span>
+            <h2>
+              El sabor de lo natural, <span>cerca de ti.</span>
+            </h2>
+            <p>
+              Accede a tu cuenta y descubre nuestros productos lácteos,
+              preparados para acompañar cada momento.
+            </p>
+            <div className="login-accent" />
+          </section>
 
-          <form onSubmit={handleLogin} className="login-form" noValidate>
-            <div className="form-group">
-              <label htmlFor="useremail">Correo electrónico</label>
-              <input
-                id="useremail"
-                type="email"
-                placeholder="Ingrese su correo"
-                value={useremail}
-                onChange={handleEmailChange}
-                autoComplete="email"
-                disabled={cargando}
-              />
+          <section className="login-card">
+            <div className="login-title">
+              <h3>Iniciar sesión</h3>
+              <p>Ingresa tus credenciales para continuar.</p>
             </div>
 
-            <div className="form-group">
-              <label htmlFor="password">Contraseña</label>
-              <div className="password-container">
+            <form onSubmit={handleLogin} className="login-form" noValidate>
+              <div className="form-group">
+                <label htmlFor="username">Nombre de usuario</label>
                 <input
-                  id="password"
-                  type={mostrarPassword ? 'text' : 'password'}
-                  placeholder="Ingrese su contraseña"
-                  value={password}
-                  onChange={handlePasswordChange}
-                  autoComplete="current-password"
+                  id="username"
+                  type="text"
+                  placeholder="Ingrese su nombre de usuario"
+                  value={username}
+                  onChange={handleUsernameChange}
+                  autoComplete="username"
                   disabled={cargando}
                 />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="password">Contraseña</label>
+                <div className="password-container">
+                  <input
+                    id="password"
+                    type={mostrarPassword ? "text" : "password"}
+                    placeholder="Ingrese su contraseña"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    autoComplete="current-password"
+                    disabled={cargando}
+                  />
+                  <button
+                    type="button"
+                    className="password-toggle"
+                    onClick={() => setMostrarPassword(!mostrarPassword)}
+                    aria-label={
+                      mostrarPassword
+                        ? "Ocultar contraseña"
+                        : "Mostrar contraseña"
+                    }
+                  >
+                    {mostrarPassword ? "Ocultar" : "Mostrar"}
+                  </button>
+                </div>
+              </div>
+
+              <div className="forgot-password">
                 <button
                   type="button"
-                  className="password-toggle"
-                  onClick={() => setMostrarPassword(!mostrarPassword)}
-                  tabIndex={-1}
-                  aria-label={mostrarPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                  onClick={() =>
+                    setError(
+                      "La recuperación de contraseña no está disponible en este momento.",
+                    )
+                  }
                 >
-                  {mostrarPassword ? 'Ocultar' : 'Ver'}
+                  ¿Olvidaste tu contraseña?
                 </button>
               </div>
-            </div>
 
-            <div className="forgot-password">
+              {error && (
+                <div className="message error-message" role="alert">
+                  <span aria-hidden="true">!</span>
+                  <span>{error}</span>
+                </div>
+              )}
+
+              {success && (
+                <div className="message success-message" role="status">
+                  <span aria-hidden="true">✓</span>
+                  <span>{success}</span>
+                </div>
+              )}
+
               <button
-                type="button"
-                onClick={() => setError('La recuperación de contraseña estará disponible próximamente.')}
+                type="submit"
+                className="login-button"
+                disabled={cargando}
               >
-                ¿Olvidaste tu contraseña?
+                {cargando ? "VERIFICANDO..." : "INGRESAR A MI CUENTA"}
               </button>
-            </div>
-
-            {error && (
-              <div className="message error-message">
-                <span>⚠</span>
-                <span>{error}</span>
-              </div>
-            )}
-
-            {success && (
-              <div className="message success-message">
-                <span>✓</span>
-                <span>{success}</span>
-              </div>
-            )}
-
-            <button type="submit" className="login-button" disabled={cargando}>
-              {cargando ? 'Verificando...' : 'INGRESAR'}
-            </button>
-          </form>
-        </section>
+            </form>
+          </section>
+        </div>
       </main>
 
       <footer className="login-footer">

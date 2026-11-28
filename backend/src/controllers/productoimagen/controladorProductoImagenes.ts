@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import ProductoImagen from '../../models/modeloProductoImagen.js';
 import { errorResponse, successResponse } from '../../utils/sendResponses.js';
+import { subirImagenDrive, eliminarImagenDrive, } from '../../services/googleDrive.service.js';
 
 export const obtenerProductoImagenes = async (req: Request, res: Response): Promise<Response> => {
   try {
@@ -127,22 +128,128 @@ export const eliminarProductoImagene = async (req: Request, res: Response): Prom
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { id } = req.query;
+  const id = Number(req.query.id);
 
   try {
-    const productoImagen = await ProductoImagen.findByPk(id as string);
+    const productoImagen = await ProductoImagen.findByPk(id);
 
     if (!productoImagen) {
-      return res.status(404).json(errorResponse('Imagen de producto no encontrada'));
+      return res.status(404).json(
+        errorResponse('Imagen de producto no encontrada')
+      );
     }
 
+    const fileId = productoImagen.imagen_drive_id;
+
     await productoImagen.destroy();
+    try {
+
+      await eliminarImagenDrive(fileId);
+
+    } catch (errorDrive) {
+
+      console.error(
+        'No se pudo eliminar la imagen de Google Drive:',
+        errorDrive
+      );
+
+    }
 
     return res.json(
-      successResponse(null, 'Imagen de producto eliminada correctamente')
+      successResponse(
+        null,
+        'Imagen de producto eliminada correctamente'
+      )
     );
+
   } catch (error) {
-    const msg = error instanceof Error ? error.message : 'Error al eliminar la imagen de producto';
+
+    const msg = error instanceof Error
+      ? error.message
+      : 'Error al eliminar la imagen de producto';
+    return res.status(500).json(errorResponse(msg));
+  }
+};
+
+export const subirCrearProductoImagen = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  if (!req.file) {
+    return res.status(400).json(
+      errorResponse('Debes seleccionar una imagen')
+    );
+  }
+
+  const {
+    producto_id,
+    imagen_principal,
+    imagen_orden,
+    imagen_estado,
+  } = req.body;
+
+  let imagenDriveId: string | undefined;
+
+  try {
+    if (
+      producto_id == null ||
+      imagen_principal == null ||
+      imagen_orden == null ||
+      !imagen_estado
+    ) {
+      return res.status(400).json(
+        errorResponse('Todos los campos son obligatorios')
+      );
+    }
+
+    const imagenDrive = await subirImagenDrive(req.file);
+
+    imagenDriveId = imagenDrive.fileId;
+
+    const nuevaImagen = await ProductoImagen.create({
+
+      producto_id: Number(producto_id),
+
+      imagen_drive_id: imagenDrive.fileId,
+      imagen_ruta: imagenDrive.url,
+      imagen_principal:
+        imagen_principal === true ||
+        imagen_principal === 'true',
+
+      imagen_orden: Number(imagen_orden),
+      imagen_estado,
+    });
+
+    return res.status(201).json(
+      successResponse(
+        nuevaImagen,
+        'Imagen subida a Google Drive y registrada correctamente'
+      )
+    );
+
+  } catch (error) {
+
+    if (imagenDriveId) {
+      try {
+        await eliminarImagenDrive(imagenDriveId);
+      } catch (errorEliminacion) {
+        console.error(
+          'No se pudo eliminar la imagen de Google Drive:',
+          errorEliminacion
+        );
+      }
+    }
+
+    const msg = error instanceof Error
+      ? error.message
+      : 'Error al subir la imagen';
+
     return res.status(500).json(errorResponse(msg));
   }
 };

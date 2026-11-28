@@ -58,38 +58,24 @@ router.post(
       .optional({ nullable: true, checkFalsy: true })
       .isString()
       .withMessage('La observación debe ser texto')
-      .trim(),
-
-    body('bittipo')
-      .notEmpty()
-      .withMessage('El tipo de bitácora es obligatorio')
-      .isString()
-      .withMessage('El tipo debe ser texto')
-      .trim(),
-
-    body('bitusuario')
-      .notEmpty()
-      .withMessage('El usuario es obligatorio')
-      .isInt({ min: 1 })
-      .withMessage('El usuario debe ser un número entero positivo'),
-      
-    body('bitobservacion')
-      .optional({ values: 'null' })
-      .isString()
-      .withMessage('La observación debe ser texto')
-      .bail()
+      .trim()
       .isLength({ max: 255 })
       .withMessage('La observación no puede superar los 255 caracteres'),
 
     body('bittipo')
       .notEmpty()
       .withMessage('El tipo de bitácora es obligatorio')
-      .bail()
       .isString()
       .withMessage('El tipo de bitácora debe ser texto')
-      .bail()
+      .trim()
       .isLength({ min: 3, max: 3 })
       .withMessage('El tipo de bitácora debe tener exactamente 3 caracteres'),
+
+    body('bitusuario')
+      .notEmpty()
+      .withMessage('El usuario es obligatorio')
+      .isInt({ min: 1 })
+      .withMessage('El usuario debe ser un número entero positivo'),
   ],
   crearBitacora
 );
@@ -128,14 +114,18 @@ router.put(
       .optional({ nullable: true, checkFalsy: true })
       .isString()
       .withMessage('La observación debe ser texto')
-      .trim(),
+      .trim()
+      .isLength({ max: 255 })
+      .withMessage('La observación no puede superar los 255 caracteres'),
 
     body('bittipo')
       .notEmpty()
       .withMessage('El tipo de bitácora es obligatorio')
       .isString()
-      .withMessage('El tipo debe ser texto')
-      .trim(),
+      .withMessage('El tipo de bitácora debe ser texto')
+      .trim()
+      .isLength({ min: 3, max: 3 })
+      .withMessage('El tipo de bitácora debe tener exactamente 3 caracteres'),
 
     body('bitusuario')
       .notEmpty()
