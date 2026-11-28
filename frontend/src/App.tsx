@@ -1,13 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 
-// Importación de todas tus páginas
 import Login from "./pages/Login";
 import Home from "./pages/home/Home";
 import Footer from "./components/layout/Footer";
 import Navbar from "./components/layout/Navbar";
 import AdminDashboard from "./pages/admin/Dashboard/AdminDashboard";
-import CategorieDetail from "./pages/admin/Categories/CategorieDetail";
 import ProductList from "./pages/products/ProductList";
 import ProductDetail from "./pages/products/ProductDetail";
 import Cart from "./pages/cart/Cart";
@@ -39,76 +37,106 @@ import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 import VerifyRecoveryCode from "./pages/auth/VerifyRecoveryCode";
 import ProductsImages from "./pages/products images/ProductsImages";
-import Categories from "./pages/categories/Categories";
+import Categories from "./pages/admin/Categories/Categories";
+import CategorieDetail from "./pages/admin/Categories/CategorieDetail";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+
         <Navbar />
         <Routes>
-          {/* Ruta principal (Home) */}
+          {/* Ruta principal */}
           <Route path="/" element={<Home />} />
 
-          {/* Ruta del Login */}
+          {/* Autenticación */}
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/verify-recovery-code" element={<VerifyRecoveryCode />} />
 
+          {/* Catálogo */}
           <Route path="/catalog" element={<Catalog />} />
 
+          {/* Productos */}
+          <Route path="/admin/productos" element={<ProductList />} />
+          <Route path="/admin/productos/detalle" element={<ProductDetail />} />
+
+          {/* Categorías */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/admin/categories" element={<Categories />} />
+            <Route
+              path="/admin/categories/detail"
+              element={<CategorieDetail />}
+            />
+          </Route>
+
+          {/* Administración */}
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/panel" element={<Panel />} />
+
+          <Route path="/admin/sales" element={<SalesList />} />
+          <Route path="/admin/sales/detail" element={<SaleDetail />} />
+
+          <Route path="/admin/bitacora" element={<Bitacora />} />
+
+          <Route element={<ProtectedRoute />}>
+            <Route
+              path="/admin/functions"
+              element={<Functions />}
+            />
+
+            <Route
+              path="/admin/functions/detail"
+              element={<FunctionDetail />}
+            />
+          </Route>
+
+          {/* Roles */}
+          <Route path="/admin/roles" element={<RolesList />} />
+
+          <Route
+            path="/admin/roles/detail"
+            element={<RolesDetail />}
+          />
+
+          <Route path="/admin/users" element={<Users />} />
+          <Route path="/admin/user-roles" element={<UserRoles />} />
+
+          <Route path="/admin/functions-roles" element={<FunctionsRoles />} />
+          <Route path="/admin/functions-roles/detail" element={<FunctionsRolesDetail />} />
+
+          <Route path="/admin/delivery-routes" element={<DeliveryRoutesList />} />
+          <Route path="/admin/delivery-routes/detail" element={<DeliveryRoutesDetail />} />
+
+          {/* Imágenes de productos */}
+          <Route path="/admin/product-images" element={<ProductsImages />} />
+
+          {/* Compras */}
           <Route element={<ProtectedRoute />}>
             <Route path="/categories" element={<Categories />} />
             <Route path="/carrito" element={<Cart />} />
           </Route>
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/payment" element={<Payment />} />
+          <Route path="/purchase-confirmation" element={<PurchaseConfirmation />} />
 
-          {/*
-       
-        <Register />
+          {/* Perfil */}
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/favorites" element={<Favorites />} />
 
-        <ForgotPassword />
-        <ResetPassword />
-        <VerifyRecoveryCode />
+          {/* Direcciones */}
+          <Route path="/address" element={<Address />} />
+          <Route path="/address/detail" element={<AddressDetail />} />
 
-        <Catalog />
-
-        <Panel />
-
-        <AdminDashboard />
-        <Bitacora />
-        <Categories />
-        <CategorieDetail />
-        <ProductList />
-        <ProductDetail />
-        <ProductsImages />
-        
-        <SalesList />
-        <SaleDetail />
-        
-        <Functions />
-        <FunctionDetail />
-        <RolesList />
-        <RolesDetail />
-        <Users />
-        <UserRoles />
-        <FunctionsRoles />
-        <FunctionsRolesDetail />
-        <DeliveryRoutesList />
-        <DeliveryRoutesDetail />
-        
-        <Cart />
-        <Checkout />
-        <Payment />
-        <PurchaseConfirmation />
-
-        <Profile />
-        <History />
-        <Favorites />
-        <Address />
-        <AddressDetail />
-        */}
         </Routes>
-        {/* Footer general */}
+
         <Footer />
+
       </AuthProvider>
     </BrowserRouter>
   );

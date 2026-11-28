@@ -16,8 +16,8 @@ function Navbar() {
       </nav>
 
       <div className="navbar-actions">
-        <Link to="/cart" className="navbar-cart">
-          🛒 Carrito
+        <Link to="/carrito" className="navbar-cart">
+          Carrito
         </Link>
         <Link to="/login" className="navbar-login">
           Iniciar sesión

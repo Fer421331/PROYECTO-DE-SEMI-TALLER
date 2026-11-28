@@ -1,54 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+    Categoria,
+    getCategorias,
+    deleteCategoria,
+} from "../../../services/categories.service";
+
 import "./Categories.css";
 
-interface Category {
-    id: number;
-    name: string;
-    description: string;
-    status: "ACT" | "INA";
-    createdAt: string;
-}
-
-const initialCategories: Category[] = [
-    {
-        id: 1,
-        name: "Leche",
-        description: "Leche entera, descremada y deslactosada",
-        status: "ACT",
-        createdAt: "2026-01-15",
-    },
-    {
-        id: 2,
-        name: "Quesos",
-        description: "Quesos frescos, semisecos y maduros",
-        status: "ACT",
-        createdAt: "2026-01-18",
-    },
-    {
-        id: 3,
-        name: "Yogures",
-        description: "Yogures naturales, griegos y saborizados",
-        status: "ACT",
-        createdAt: "2026-02-02",
-    },
-    {
-        id: 4,
-        name: "Mantequillas",
-        description: "Mantequilla y productos derivados de la crema",
-        status: "ACT",
-        createdAt: "2026-02-10",
-    },
-    {
-        id: 5,
-        name: "Cremas",
-        description: "Crema de leche y crema ácida",
-        status: "INA",
-        createdAt: "2026-02-15",
-    },
-];
-
 export default function Categories() {
-    const [categories, setCategories] = useState(initialCategories);
+    const navigate = useNavigate();
+
+    const [categories, setCategories] = useState<Categoria[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
     const [search, setSearch] = useState("");
     const [status, setStatus] = useState("");
@@ -57,14 +22,38 @@ export default function Categories() {
 
     const itemsPerPage = 5;
 
+    // Cargar categorías desde el backend
+    const cargarCategorias = async () => {
+        try {
+            setLoading(true);
+            setError("");
+
+            const data = await getCategorias();
+
+            setCategories(Array.isArray(data) ? data : []);
+        } catch (err: unknown) {
+            console.error("Error al cargar categorías:", err);
+
+            setError(
+                "No se pudieron cargar las categorías. Verifica la conexión."
+            );
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        cargarCategorias();
+    }, []);
+
     // Filtrar categorías
     const filteredCategories = categories.filter((category) => {
-        const matchesName = category.name
+        const matchesName = category.categoria_nombre
             .toLowerCase()
             .includes(search.toLowerCase().trim());
 
         const matchesStatus =
-            status === "" || category.status === status;
+            status === "" || category.categoria_estado === status;
 
         return matchesName && matchesStatus;
     });
@@ -79,60 +68,63 @@ export default function Categories() {
         currentPage * itemsPerPage
     );
 
-    // Eliminar categoría de prueba
-    const handleDelete = (id: number) => {
+    // Abrir formulario de nueva categoría
+    const handleAdd = () => {
+        navigate("/admin/categories/detail?mode=INS");
+    };
+
+    // Ver categoría
+    const handleView = (category: Categoria) => {
+        navigate(
+            `/admin/categories/detail?mode=DSP&categoria_id=${category.categoria_id}`
+        );
+    };
+
+    // Editar categoría
+    const handleEdit = (category: Categoria) => {
+        navigate(
+            `/admin/categories/detail?mode=UPD&categoria_id=${category.categoria_id}`
+        );
+    };
+
+    // Eliminar categoría
+    const handleDelete = async (id: number) => {
         const confirmed = window.confirm(
-            "¿Estás seguro de eliminar esta categoría?"
+            "¿Estás seguro de que deseas eliminar esta categoría?"
         );
 
-        if (confirmed) {
-            setCategories((previous) =>
-                previous.filter((category) => category.id !== id)
-            );
+        if (!confirmed) return;
+
+        try {
+            setError("");
+
+            await deleteCategoria(id);
+
+            alert("Categoría eliminada correctamente.");
+
+            await cargarCategorias();
 
             setCurrentPage(1);
+        } catch (err: unknown) {
+            console.error("Error al eliminar categoría:", err);
+
+            setError(
+                "No se pudo eliminar la categoría. Puede tener productos asociados."
+            );
         }
-    };
-
-    // Acciones de prueba
-    const handleView = (category: Category) => {
-        alert(
-            `Categoría: ${category.name}\nDescripción: ${category.description}`
-        );
-    };
-
-    const handleEdit = (category: Category) => {
-        alert(`Editar categoría: ${category.name}`);
-    };
-
-    // Nueva categoría de prueba
-    const handleAdd = () => {
-        const name = window.prompt("Nombre de la categoría:");
-
-        if (!name || !name.trim()) return;
-
-        const newCategory: Category = {
-            id: Math.max(0, ...categories.map((item) => item.id)) + 1,
-            name: name.trim(),
-            description: "Nueva categoría",
-            status: "ACT",
-            createdAt: new Date().toISOString().split("T")[0],
-        };
-
-        setCategories((previous) => [
-            ...previous,
-            newCategory,
-        ]);
-
-        setSearch("");
-        setStatus("");
-        setCurrentPage(1);
     };
 
     return (
         <div className="categories-page">
 
             <h1>Categorías</h1>
+
+            {/* Mensaje de error */}
+            {error && (
+                <div className="categories-error" role="alert">
+                    {error}
+                </div>
+            )}
 
             {/* Filtros */}
             <section className="categories-filters">
@@ -196,98 +188,119 @@ export default function Categories() {
             {/* Tabla */}
             <section className="categories-table-container">
 
-                <table className="categories-table">
+                {loading ? (
+                    <p className="categories-empty">
+                        Cargando categorías...
+                    </p>
+                ) : (
 
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Descripción</th>
-                            <th>Estado</th>
-                            <th>Fecha Creación</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
+                    <table className="categories-table">
 
-                    <tbody>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Estado</th>
+                                <th>Fecha Creación</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
 
-                        {paginatedCategories.length > 0 ? (
-                            paginatedCategories.map((category) => (
+                        <tbody>
 
-                                <tr key={category.id}>
+                            {paginatedCategories.length > 0 ? (
 
-                                    <td>{category.id}</td>
+                                paginatedCategories.map((category) => (
 
-                                    <td>{category.name}</td>
+                                    <tr key={category.categoria_id}>
 
-                                    <td>{category.description}</td>
+                                        <td>{category.categoria_id}</td>
 
-                                    <td>
-                                        <span
-                                            className={`categories-status ${category.status === "ACT"
-                                                ? "categories-status-active"
-                                                : "categories-status-inactive"
-                                                }`}
-                                        >
-                                            {category.status === "ACT"
-                                                ? "Activo"
-                                                : "Inactivo"}
-                                        </span>
+                                        <td>{category.categoria_nombre}</td>
+
+                                        <td>
+                                            {category.categoria_descripcion || "—"}
+                                        </td>
+
+                                        <td>
+                                            <span
+                                                className={`categories-status ${category.categoria_estado === "ACT"
+                                                    ? "categories-status-active"
+                                                    : "categories-status-inactive"
+                                                    }`}
+                                            >
+                                                {category.categoria_estado === "ACT"
+                                                    ? "Activo"
+                                                    : "Inactivo"}
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            {category.categoria_fecha_creacion
+                                                ? new Date(
+                                                    category.categoria_fecha_creacion
+                                                ).toLocaleDateString()
+                                                : "—"}
+                                        </td>
+
+                                        <td>
+                                            <div className="categories-actions">
+
+                                                <button
+                                                    type="button"
+                                                    className="categories-action-button categories-action-view"
+                                                    onClick={() => handleView(category)}
+                                                >
+                                                    Ver
+                                                </button>
+
+                                                <button
+                                                    type="button"
+                                                    className="categories-action-button categories-action-edit"
+                                                    onClick={() => handleEdit(category)}
+                                                >
+                                                    Editar
+                                                </button>
+
+                                                <button
+                                                    type="button"
+                                                    className="categories-action-button categories-action-delete"
+                                                    onClick={() =>
+                                                        handleDelete(category.categoria_id)
+                                                    }
+                                                >
+                                                    Eliminar
+                                                </button>
+
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                ))
+
+                            ) : (
+
+                                <tr>
+                                    <td colSpan={6} className="categories-empty">
+                                        No hay categorías registradas.
                                     </td>
-
-                                    <td>{category.createdAt}</td>
-
-                                    <td>
-                                        <div className="categories-actions">
-
-                                            <button
-                                                type="button"
-                                                className="categories-action-button categories-action-view"
-                                                onClick={() => handleView(category)}
-                                            >
-                                                Ver
-                                            </button>
-
-                                            <button
-                                                type="button"
-                                                className="categories-action-button categories-action-edit"
-                                                onClick={() => handleEdit(category)}
-                                            >
-                                                Editar
-                                            </button>
-
-                                            <button
-                                                type="button"
-                                                className="categories-action-button categories-action-delete"
-                                                onClick={() => handleDelete(category.id)}
-                                            >
-                                                Eliminar
-                                            </button>
-
-                                        </div>
-                                    </td>
-
                                 </tr>
 
-                            ))
-                        ) : (
+                            )}
 
-                            <tr>
-                                <td colSpan={6} className="categories-empty">
-                                    No hay categorías registradas.
-                                </td>
-                            </tr>
+                        </tbody>
 
-                        )}
+                    </table>
 
-                    </tbody>
-
-                </table>
+                )}
 
             </section>
 
             {/* Paginación */}
-            {totalPages > 1 && (
+            {!loading && totalPages > 1 && (
+
                 <div className="categories-pagination">
 
                     <button
@@ -315,11 +328,11 @@ export default function Categories() {
                     </button>
 
                 </div>
+
             )}
 
             <hr className="categories-divider" />
 
-            {/* Regresar */}
             <a href="/" className="categories-back-button">
                 Regresar
             </a>

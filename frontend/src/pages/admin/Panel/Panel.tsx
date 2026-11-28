@@ -1,4 +1,6 @@
+
 import "./Panel.css";
+import { Link } from "react-router-dom";
 
 export default function Panel() {
 
@@ -6,62 +8,62 @@ export default function Panel() {
         {
             titulo: "Dashboards",
             descripcion: "Visualiza indicadores, estadísticas y el resumen general del negocio.",
-            icono: "📊"
+            ruta: "/admin/dashboard"
         },
         {
             titulo: "Categorías",
             descripcion: "Administra las categorías de productos lácteos.",
-            icono: "📁"
+            ruta: "/admin/categories"
         },
         {
             titulo: "Productos",
             descripcion: "Gestiona los productos, precios, costos e inventario.",
-            icono: "🥛"
+            ruta: "/admin/productos"
         },
         {
             titulo: "Usuarios",
             descripcion: "Administra los usuarios registrados en el sistema.",
-            icono: "👥"
+            ruta: "/admin/users"
         },
         {
             titulo: "Roles",
             descripcion: "Gestiona los roles y permisos de los usuarios.",
-            icono: "🛡️"
+            ruta: "/admin/roles"
         },
         {
             titulo: "Funciones",
             descripcion: "Administra las funciones disponibles del sistema.",
-            icono: "⚙️"
+            ruta: "/admin/functions"
         },
         {
             titulo: "Funciones Roles",
             descripcion: "Asigna y administra las funciones correspondientes a cada rol.",
-            icono: "🔐"
+            ruta: "/admin/functions-roles"
         },
         {
             titulo: "Rutas Entrega",
             descripcion: "Gestiona las rutas y destinos de entrega de productos.",
-            icono: "🚚"
+            ruta: "/admin/delivery-routes"
         },
         {
             titulo: "Bitácora",
             descripcion: "Consulta el registro de actividades realizadas en el sistema.",
-            icono: "📋"
+            ruta: "/admin/bitacora"
         },
         {
             titulo: "Historial",
             descripcion: "Consulta el historial de operaciones y movimientos.",
-            icono: "📜"
+            ruta: "/history"
         },
         {
             titulo: "Ventas",
             descripcion: "Consulta y administra las ventas realizadas.",
-            icono: "💰"
+            ruta: "/admin/sales"
         },
         {
             titulo: "Perfil",
             descripcion: "Consulta y administra la información de tu perfil.",
-            icono: "👤"
+            ruta: "/profile"
         }
     ];
 
@@ -85,10 +87,6 @@ export default function Panel() {
 
                         <article className="panel-category-card" key={index}>
 
-                            <div className="panel-icon">
-                                {item.icono}
-                            </div>
-
                             <h2>
                                 {item.titulo}
                             </h2>
@@ -97,10 +95,9 @@ export default function Panel() {
                                 {item.descripcion}
                             </p>
 
-                            <a href="#" className="panel-btn">
+                            <Link to={item.ruta} className="panel-btn">
                                 Ingresar
-                                <span> →</span>
-                            </a>
+                            </Link>
 
                         </article>
 
