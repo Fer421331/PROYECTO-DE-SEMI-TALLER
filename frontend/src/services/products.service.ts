@@ -1,39 +1,89 @@
-import api from './api';
+import api from "./api";
 
-export interface ProductoBackend {
+// ===============================
+// INTERFACES
+// ===============================
+
+export interface Producto {
     producto_id: number;
     categoria_id: number;
-    marca_id: number;
     producto_sku: string;
     producto_nombre: string;
     producto_slug: string;
     producto_descripcion: string | null;
-    producto_costo: number | string;
-    producto_precio: number | string;
+    producto_costo: number;
+    producto_precio: number;
     producto_stock: number;
     producto_activo: string;
     producto_estado: string;
-    producto_fecha_creacion: string;
-    producto_fecha_actualizacion: string;
 }
 
-interface ProductosResponse {
-    success: {
-        code: number;
-        data: ProductoBackend[];
-        message: {
-            value: string;
-        };
-    };
+export interface Categoria {
+    categoria_id: number;
+    categoria_nombre: string;
+    categoria_descripcion: string | null;
+    categoria_estado: string;
 }
 
-// Obtener todos los productos
-export const obtenerProductos = async (): Promise<ProductoBackend[]> => {
-    const response = await api.get<ProductosResponse>('/productos/all');
+export interface ProductoImagen {
+    imagen_id: number;
+    producto_id: number;
+    imagen_ruta: string;
+    imagen_principal: boolean;
+    imagen_orden: number;
+    imagen_estado: string;
+}
 
-    if (response.data.success?.code !== 1) {
-        throw new Error('No se pudieron obtener los productos');
-    }
+// ===============================
+// OBTENER DATOS DE LA RESPUESTA
+// ===============================
 
-    return response.data.success.data;
+const obtenerDatos = (respuesta: any) => {
+    return respuesta?.success?.data ??
+        respuesta?.data ??
+        respuesta;
+};
+
+// ===============================
+// OBTENER TODOS LOS PRODUCTOS
+// ===============================
+
+export const getProductos = async (): Promise<Producto[]> => {
+    const respuesta = await api.get("/productos/all");
+
+    return obtenerDatos(respuesta.data);
+};
+
+// ===============================
+// OBTENER TODAS LAS CATEGORÍAS
+// ===============================
+
+export const getCategorias = async (): Promise<Categoria[]> => {
+    const respuesta = await api.get("/categorias/all");
+
+    return obtenerDatos(respuesta.data);
+};
+
+// ===============================
+// OBTENER IMÁGENES DE PRODUCTOS
+// ===============================
+
+export const getProductoImagenes = async (): Promise<ProductoImagen[]> => {
+    const respuesta = await api.get("/producto-imagenes/all");
+
+    return obtenerDatos(respuesta.data);
+};
+
+// ===============================
+// DESACTIVAR PRODUCTO
+// ===============================
+
+export const desactivarProducto = async (
+    id: number
+): Promise<void> => {
+
+    await api.put(`/productos/update?id=${id}`, {
+        producto_activo: "INA",
+        producto_estado: "INA"
+    });
 };

@@ -3,11 +3,14 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import api from "../../services/api";
 import "./ProductDetail.css";
+import {
+    getCategorias,
+    type Categoria,
+} from "../../services/products.service";
 
 interface Producto {
     producto_id: number;
     categoria_id: number;
-    marca_id: number;
     producto_sku: string;
     producto_nombre: string;
     producto_slug: string;
@@ -24,6 +27,7 @@ type Accion = "nuevo" | "ver" | "editar" | "desactivar";
 export default function ProductDetail() {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
+    const [categorias, setCategorias] = useState<Categoria[]>([]);
 
     const id = searchParams.get("id");
     const accion = (searchParams.get("accion") || "ver") as Accion;
@@ -38,7 +42,6 @@ export default function ProductDetail() {
     const productoInicial: Producto = {
         producto_id: 0,
         categoria_id: 0,
-        marca_id: 0,
         producto_sku: "",
         producto_nombre: "",
         producto_slug: "",
@@ -107,6 +110,20 @@ export default function ProductDetail() {
         obtenerProducto();
     }, [id, esNuevo]);
 
+    // Obtener categorías desde el backend
+    useEffect(() => {
+        const cargarCategorias = async () => {
+            try {
+                const data = await getCategorias();
+                setCategorias(data);
+            } catch (err) {
+                console.error("Error al cargar categorías:", err);
+            }
+        };
+
+        cargarCategorias();
+    }, []);
+
     // Actualizar campos
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -132,7 +149,6 @@ export default function ProductDetail() {
                 "/productos/update",
                 {
                     categoria_id: Number(producto.categoria_id),
-                    marca_id: Number(producto.marca_id),
                     producto_sku: producto.producto_sku,
                     producto_nombre: producto.producto_nombre,
                     producto_slug: producto.producto_slug,
@@ -327,6 +343,7 @@ export default function ProductDetail() {
                             />
                         </div>
 
+                        {/* Categoría ID */}
                         <div className="product-detail-group">
                             <label>Categoría (ID)</label>
 
@@ -341,17 +358,19 @@ export default function ProductDetail() {
                             />
                         </div>
 
+                        {/* Nombre de categoría */}
                         <div className="product-detail-group">
-                            <label>Marca (ID)</label>
+                            <label>Nombre de categoría</label>
 
                             <input
-                                type="number"
-                                name="marca_id"
-                                min="1"
-                                value={producto.marca_id}
-                                onChange={handleChange}
-                                readOnly={deshabilitado}
-                                required
+                                type="text"
+                                value={
+                                    categorias.find(
+                                        (categoria) =>
+                                            categoria.categoria_id === Number(producto.categoria_id)
+                                    )?.categoria_nombre || "Categoría no encontrada"
+                                }
+                                readOnly
                             />
                         </div>
 
@@ -519,4 +538,4 @@ export default function ProductDetail() {
 
         </div>
     );
-};
+}

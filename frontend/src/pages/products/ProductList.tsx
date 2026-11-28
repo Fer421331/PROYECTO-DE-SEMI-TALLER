@@ -1,11 +1,13 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./ProductList.css";
+
 import {
-    obtenerProductos,
-    type ProductoBackend,
+    getProductos,
+    getCategorias,
+    type Producto,
+    type Categoria,
 } from "../../services/products.service";
 
 interface Product {
@@ -18,7 +20,6 @@ interface Product {
     stock: number;
     web: "ACT" | "INA";
     status: "ACT" | "INA";
-    image: string;
 }
 
 export default function ProductList() {
@@ -36,20 +37,34 @@ export default function ProductList() {
                 setLoading(true);
                 setError("");
 
-                const data: ProductoBackend[] = await obtenerProductos();
+                // Obtener productos y categorías
+                const [dataProductos, dataCategorias]: [
+                    Producto[],
+                    Categoria[]
+                ] = await Promise.all([
+                    getProductos(),
+                    getCategorias()
+                ]);
 
-                const productosAdaptados: Product[] = data.map((producto) => ({
-                    id: producto.producto_id,
-                    sku: producto.producto_sku,
-                    name: producto.producto_nombre,
-                    category: `Categoría ${producto.categoria_id}`,
-                    cost: Number(producto.producto_costo),
-                    price: Number(producto.producto_precio),
-                    stock: producto.producto_stock,
-                    web: producto.producto_activo.trim() === "ACT" ? "ACT" : "INA",
-                    status: producto.producto_estado.trim() === "ACT" ? "ACT" : "INA",
-                    image: "🥛",
-                }));
+                // Adaptar productos con el nombre de su categoría
+                const productosAdaptados: Product[] = dataProductos.map((producto) => {
+
+                    const categoria = dataCategorias.find(
+                        (cat) => cat.categoria_id === producto.categoria_id
+                    );
+
+                    return {
+                        id: producto.producto_id,
+                        sku: producto.producto_sku,
+                        name: producto.producto_nombre,
+                        category: categoria?.categoria_nombre || "Sin categoría",
+                        cost: Number(producto.producto_costo),
+                        price: Number(producto.producto_precio),
+                        stock: producto.producto_stock,
+                        web: producto.producto_activo.trim() === "ACT" ? "ACT" : "INA",
+                        status: producto.producto_estado.trim() === "ACT" ? "ACT" : "INA",
+                    };
+                });
 
                 setProducts(productosAdaptados);
 
@@ -187,7 +202,6 @@ export default function ProductList() {
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Imagen</th>
                                 <th>SKU</th>
                                 <th>Producto</th>
                                 <th>Categoría</th>
@@ -231,12 +245,6 @@ export default function ProductList() {
                                         </td>
 
                                         <td>
-                                            <span className="producto-avatar">
-                                                {product.image}
-                                            </span>
-                                        </td>
-
-                                        <td>
                                             <span className="producto-sku">
                                                 {product.sku}
                                             </span>
@@ -274,8 +282,8 @@ export default function ProductList() {
                                         <td>
                                             <span
                                                 className={`producto-estado ${product.web === "ACT"
-                                                        ? "producto-estado-web"
-                                                        : "producto-estado-oculto"
+                                                    ? "producto-estado-web"
+                                                    : "producto-estado-oculto"
                                                     }`}
                                             >
                                                 {product.web === "ACT"
@@ -287,8 +295,8 @@ export default function ProductList() {
                                         <td>
                                             <span
                                                 className={`producto-estado ${product.status === "ACT"
-                                                        ? ""
-                                                        : "producto-estado-inactivo"
+                                                    ? ""
+                                                    : "producto-estado-inactivo"
                                                     }`}
                                             >
                                                 {product.status === "ACT"
