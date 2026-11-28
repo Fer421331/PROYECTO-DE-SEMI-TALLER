@@ -425,7 +425,7 @@ export default function Functions() {
                 <button
                     type="button"
                     className="functions-back-button"
-                    onClick={() => navigate("/admin/dashboard")}
+                    onClick={() => navigate("/admin/panel")}
                 >
                     Regresar
                 </button>

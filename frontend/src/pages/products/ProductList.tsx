@@ -374,7 +374,7 @@ export default function ProductList() {
 
             <br />
 
-            <a href="/" className="productos-back">
+            <a href="/admin/panel" className="productos-back">
                 Regresar
             </a>
 

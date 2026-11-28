@@ -333,7 +333,7 @@ export default function Categories() {
 
             <hr className="categories-divider" />
 
-            <a href="/" className="categories-back-button">
+            <a href="/admin/panel" className="categories-back-button">
                 Regresar
             </a>
 

@@ -78,8 +78,16 @@ function App() {
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/panel" element={<Panel />} />
 
-          <Route path="/admin/sales" element={<SalesList />} />
-          <Route path="/admin/sales/detail" element={<SaleDetail />} />
+          {/* Ventas */}
+          <Route
+            path="/admin/sales"
+            element={<SalesList />}
+          />
+
+          <Route
+            path="/admin/sales/:venta_id"
+            element={<SaleDetail />}
+          />
 
           <Route path="/admin/bitacora" element={<Bitacora />} />
 
@@ -109,8 +117,18 @@ function App() {
           <Route path="/admin/functions-roles" element={<FunctionsRoles />} />
           <Route path="/admin/functions-roles/detail" element={<FunctionsRolesDetail />} />
 
+          {/* Rutas de entrega */}
           <Route path="/admin/delivery-routes" element={<DeliveryRoutesList />} />
-          <Route path="/admin/delivery-routes/detail" element={<DeliveryRoutesDetail />} />
+
+          <Route
+            path="/admin/delivery-routes/new"
+            element={<DeliveryRoutesDetail />}
+          />
+
+          <Route
+            path="/admin/delivery-routes/:id"
+            element={<DeliveryRoutesDetail />}
+          />
 
           {/* Imágenes de productos */}
           <Route path="/admin/product-images" element={<ProductsImages />} />
