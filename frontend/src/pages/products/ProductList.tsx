@@ -1,13 +1,18 @@
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./ProductList.css";
+import {
+    obtenerProductos,
+    type ProductoBackend,
+} from "../../services/products.service";
 
 interface Product {
     id: number;
     sku: string;
     name: string;
     category: string;
-    brand: string;
-    presentation: string;
     cost: number;
     price: number;
     stock: number;
@@ -16,82 +21,68 @@ interface Product {
     image: string;
 }
 
-const initialProducts: Product[] = [
-    {
-        id: 1,
-        sku: "LAC-001",
-        name: "Leche Entera",
-        category: "Leche",
-        brand: "Sula",
-        presentation: "1 Litro",
-        cost: 28.00,
-        price: 35.00,
-        stock: 120,
-        web: "ACT",
-        status: "ACT",
-        image: "🥛",
-    },
-    {
-        id: 2,
-        sku: "LAC-002",
-        name: "Queso Fresco",
-        category: "Quesos",
-        brand: "Leyde",
-        presentation: "500 g",
-        cost: 75.00,
-        price: 95.00,
-        stock: 45,
-        web: "ACT",
-        status: "ACT",
-        image: "🧀",
-    },
-    {
-        id: 3,
-        sku: "LAC-003",
-        name: "Yogur Natural",
-        category: "Yogures",
-        brand: "Sula",
-        presentation: "1 Litro",
-        cost: 42.00,
-        price: 55.00,
-        stock: 60,
-        web: "ACT",
-        status: "ACT",
-        image: "🥛",
-    },
-    {
-        id: 4,
-        sku: "LAC-004",
-        name: "Mantequilla",
-        category: "Mantequillas",
-        brand: "Leyde",
-        presentation: "250 g",
-        cost: 48.00,
-        price: 62.00,
-        stock: 30,
-        web: "INA",
-        status: "ACT",
-        image: "🧈",
-    },
-    {
-        id: 5,
-        sku: "LAC-005",
-        name: "Crema de Leche",
-        category: "Cremas",
-        brand: "Sula",
-        presentation: "500 ml",
-        cost: 35.00,
-        price: 48.00,
-        stock: 0,
-        web: "INA",
-        status: "INA",
-        image: "🥛",
-    },
-];
-
 export default function ProductList() {
-    const [products, setProducts] = useState(initialProducts);
+    const navigate = useNavigate();
+
+    const [products, setProducts] = useState<Product[]>([]);
     const [search, setSearch] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    // Obtener productos desde el backend
+    useEffect(() => {
+        const cargarProductos = async () => {
+            try {
+                setLoading(true);
+                setError("");
+
+                const data: ProductoBackend[] = await obtenerProductos();
+
+                const productosAdaptados: Product[] = data.map((producto) => ({
+                    id: producto.producto_id,
+                    sku: producto.producto_sku,
+                    name: producto.producto_nombre,
+                    category: `Categoría ${producto.categoria_id}`,
+                    cost: Number(producto.producto_costo),
+                    price: Number(producto.producto_precio),
+                    stock: producto.producto_stock,
+                    web: producto.producto_activo.trim() === "ACT" ? "ACT" : "INA",
+                    status: producto.producto_estado.trim() === "ACT" ? "ACT" : "INA",
+                    image: "🥛",
+                }));
+
+                setProducts(productosAdaptados);
+
+            } catch (err: unknown) {
+                console.error("Error al cargar productos:", err);
+
+                if (axios.isAxiosError(err)) {
+                    if (
+                        err.response?.status === 401 ||
+                        err.response?.status === 403
+                    ) {
+                        setError(
+                            "Tu sesión no es válida o no tienes autorización."
+                        );
+                    } else {
+                        setError(
+                            err.response?.data?.error?.message?.value ||
+                            "No se pudieron cargar los productos."
+                        );
+                    }
+                } else if (err instanceof Error) {
+                    setError(err.message);
+                } else {
+                    setError("Ocurrió un error inesperado.");
+                }
+
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        cargarProductos();
+    }, []);
 
     // Búsqueda de productos
     const filteredProducts = products.filter((product) => {
@@ -100,47 +91,33 @@ export default function ProductList() {
         return (
             product.name.toLowerCase().includes(searchText) ||
             product.sku.toLowerCase().includes(searchText) ||
-            product.category.toLowerCase().includes(searchText) ||
-            product.brand.toLowerCase().includes(searchText)
+            product.category.toLowerCase().includes(searchText)
         );
     });
 
     // Nuevo producto
     const handleAdd = () => {
-        alert("Aquí se abrirá el formulario de nuevo producto.");
+        navigate("/admin/productos/detalle?accion=nuevo");
     };
 
     // Ver producto
     const handleView = (product: Product) => {
-        alert(
-            `Producto: ${product.name}\n` +
-            `SKU: ${product.sku}\n` +
-            `Categoría: ${product.category}\n` +
-            `Marca: ${product.brand}\n` +
-            `Presentación: ${product.presentation}\n` +
-            `Precio: L ${product.price.toFixed(2)}`
+        navigate(
+            `/admin/productos/detalle?id=${product.id}&accion=ver`
         );
     };
 
     // Editar producto
     const handleEdit = (product: Product) => {
-        alert(`Aquí se abrirá la edición de: ${product.name}`);
+        navigate(
+            `/admin/productos/detalle?id=${product.id}&accion=editar`
+        );
     };
 
     // Desactivar producto
     const handleDeactivate = (product: Product) => {
-        const confirmed = window.confirm(
-            `¿Deseas desactivar el producto "${product.name}"?`
-        );
-
-        if (!confirmed) return;
-
-        setProducts((previous) =>
-            previous.map((item) =>
-                item.id === product.id
-                    ? { ...item, status: "INA", web: "INA" }
-                    : item
-            )
+        navigate(
+            `/admin/productos/detalle?id=${product.id}&accion=desactivar`
         );
     };
 
@@ -214,8 +191,6 @@ export default function ProductList() {
                                 <th>SKU</th>
                                 <th>Producto</th>
                                 <th>Categoría</th>
-                                <th>Marca</th>
-                                <th>Presentación</th>
                                 <th>Costo</th>
                                 <th>Precio</th>
                                 <th>Stock</th>
@@ -227,7 +202,23 @@ export default function ProductList() {
 
                         <tbody>
 
-                            {filteredProducts.length > 0 ? (
+                            {loading ? (
+
+                                <tr>
+                                    <td colSpan={11} className="productos-empty">
+                                        Cargando productos...
+                                    </td>
+                                </tr>
+
+                            ) : error ? (
+
+                                <tr>
+                                    <td colSpan={11} className="productos-empty">
+                                        {error}
+                                    </td>
+                                </tr>
+
+                            ) : filteredProducts.length > 0 ? (
 
                                 filteredProducts.map((product) => (
 
@@ -262,14 +253,6 @@ export default function ProductList() {
 
                                         <td>{product.category}</td>
 
-                                        <td>{product.brand}</td>
-
-                                        <td>
-                                            <span className="producto-presentacion">
-                                                {product.presentation}
-                                            </span>
-                                        </td>
-
                                         <td>
                                             <span className="producto-costo">
                                                 L {product.cost.toFixed(2)}
@@ -291,8 +274,8 @@ export default function ProductList() {
                                         <td>
                                             <span
                                                 className={`producto-estado ${product.web === "ACT"
-                                                    ? "producto-estado-web"
-                                                    : "producto-estado-oculto"
+                                                        ? "producto-estado-web"
+                                                        : "producto-estado-oculto"
                                                     }`}
                                             >
                                                 {product.web === "ACT"
@@ -304,8 +287,8 @@ export default function ProductList() {
                                         <td>
                                             <span
                                                 className={`producto-estado ${product.status === "ACT"
-                                                    ? ""
-                                                    : "producto-estado-inactivo"
+                                                        ? ""
+                                                        : "producto-estado-inactivo"
                                                     }`}
                                             >
                                                 {product.status === "ACT"
@@ -353,7 +336,7 @@ export default function ProductList() {
                             ) : (
 
                                 <tr>
-                                    <td colSpan={13} className="productos-empty">
+                                    <td colSpan={11} className="productos-empty">
                                         No se encontraron productos.
                                     </td>
                                 </tr>
@@ -377,9 +360,13 @@ export default function ProductList() {
 
             </div>
 
+            <br />
+
             <hr className="categories-divider" />
 
-            <a href="/" className="categories-back-button">
+            <br />
+
+            <a href="/" className="productos-back">
                 Regresar
             </a>
 

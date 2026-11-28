@@ -65,15 +65,15 @@ function Login() {
 
   return (
     <div className="login-page">
-      <header className="login-header-bar">
-        <div className="brand">
+      {/*<header className="login-header-bar">
+       <div className="brand">
           <div className="brand-icon">LA</div>
           <div>
             <h1>Lácteos Axúme</h1>
             <span>Calidad que nace de lo natural</span>
           </div>
         </div>
-      </header>
+      </header>*/}
 
       <main className="login-main">
         <div className="login-layout">

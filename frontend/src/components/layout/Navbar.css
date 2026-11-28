@@ -1,0 +1,75 @@
+.navbar {
+  width: 100%;
+  min-height: 75px;
+  padding: 15px 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #205C35;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+}
+
+.navbar-logo {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+}
+.navbar-logo p {
+  font-size: 0.7rem;   /* prueba 0.75rem o 0.7rem si lo quieres más pequeño */
+  font-weight: 400;
+  margin: 0;
+}
+
+.navbar-logo span {
+  color: #a8c99a;
+}
+
+.navbar-links,
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.navbar-links a,
+.navbar-cart {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navbar-links a:hover,
+.navbar-cart:hover {
+  color: #b8d7a8;
+}
+
+.navbar-login {
+  padding: 10px 20px;
+  background-color: #ffffff;
+  color: #174f3b;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-login:hover {
+  background-color: #e6eee4;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .navbar-links,
+  .navbar-actions {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+}

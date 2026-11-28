@@ -1,0 +1,160 @@
+/* ==============================
+   FOOTER - LÁCTEOS AXÚME
+============================== */
+
+.footer {
+    background: #205C35;
+    color: #ffffff;
+    padding: 55px 6% 20px;
+    margin-top: 55px;
+    font-family: inherit;
+}
+
+/* Contenedor principal */
+
+.footer-container {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr 1.4fr 1fr;
+    gap: 45px;
+    max-width: 1250px;
+    margin: 0 auto;
+}
+
+/* Secciones */
+
+.footer-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.footer-brand h2 {
+    font-size: 27px;
+    font-weight: 700;
+    margin: 0 0 18px;
+    letter-spacing: 0.3px;
+}
+
+.footer-section h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 5px 0 22px;
+    position: relative;
+}
+
+/* Línea decorativa de los títulos */
+
+.footer-section h3::after {
+    content: "";
+    display: block;
+    width: 35px;
+    height: 3px;
+    background: #e6c98b;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* Descripción */
+
+.footer-section p {
+    color: #e4eee7;
+    font-size: 14px;
+    line-height: 1.8;
+    margin: 0;
+    max-width: 320px;
+}
+
+/* Listas */
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 15px;
+    color: #e4eee7;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Enlaces */
+
+.footer-section a {
+    color: #e4eee7;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.footer-section a:hover {
+    color: #e6c98b;
+    transform: translateX(5px);
+}
+
+/* Redes sociales */
+
+.footer-social {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Parte inferior */
+
+.footer-bottom {
+    max-width: 1250px;
+    margin: 45px auto 0;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255, 255, 255, 0.22);
+    text-align: center;
+}
+
+.footer-bottom p {
+    color: #e4eee7;
+    font-size: 13px;
+    margin: 0;
+    line-height: 1.7;
+}
+
+/* ==============================
+   TABLETS
+============================== */
+
+@media (max-width: 900px) {
+    .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 35px;
+    }
+}
+
+/* ==============================
+   CELULARES
+============================== */
+
+@media (max-width: 550px) {
+    .footer {
+        padding: 40px 7% 20px;
+        margin-top: 35px;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .footer-brand h2 {
+        font-size: 24px;
+    }
+
+    .footer-section h3 {
+        margin-bottom: 16px;
+    }
+
+    .footer-bottom {
+        margin-top: 30px;
+        padding-top: 18px;
+    }
+}
